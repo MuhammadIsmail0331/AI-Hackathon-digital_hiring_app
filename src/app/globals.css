@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-urdu: "Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", serif;
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-secondary: #16a34a;
+  --color-secondary-dark: #15803d;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+[dir="rtl"] body {
+  font-family: var(--font-urdu);
+}
+
+/* Accessible default focus indicator for links, buttons, and other
+   interactive elements that don't provide their own focus ring.
+   Components that manage focus themselves (e.g. Button, Input) opt out
+   with `outline-none` utilities, which take precedence over this base rule. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}

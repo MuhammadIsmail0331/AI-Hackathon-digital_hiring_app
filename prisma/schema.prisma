@@ -1,0 +1,250 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─── User ────────────────────────────────────────────────
+model User {
+  id             String   @id @default(uuid())
+  name           String
+  email          String   @unique
+  phone          String   @unique
+  passwordHash   String
+  // "WORKER" | "EMPLOYER"
+  role           String   @default("WORKER")
+  // "en" | "ur"
+  language       String   @default("en")
+  isBlocked      Boolean  @default(false)
+  isAdmin        Boolean  @default(false)
+  phoneVerified  Boolean  @default(false)
+  avatarUrl      String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  workerProfile  WorkerProfile?
+  jobsCreated    Job[]              @relation("EmployerJobs")
+  offers         JobOffer[]
+  notifications  Notification[]
+  feedbacksGiven Feedback[]         @relation("FeedbackAuthor")
+  feedbacksRecv  Feedback[]         @relation("FeedbackSubject")
+  blocked        BlockedUser[]      @relation("BlockedUser")
+  issueReports   IssueReport[]
+  otps           OTPVerification[]
+}
+
+// ─── Worker Profile ──────────────────────────────────────
+model WorkerProfile {
+  id           String  @id @default(uuid())
+  userId       String  @unique
+  // Category: "painter", "plumber", etc.
+  workerType   String
+  // JSON array of skill IDs, e.g. '["painting","wallpaper"]'
+  skills       String  @default("[]")
+  experience   Int     @default(0)
+  locationLat  Float?
+  locationLng  Float?
+  locationName String?
+  // PKR per day
+  expectedWage Int     @default(0)
+  isAvailable  Boolean @default(true)
+  // JSON array of day abbreviations, e.g. '["mon","tue","wed"]'
+  availableDays String @default("[]")
+  bio          String?
+  avatarUrl    String?
+  avgRating    Float   @default(0)
+  totalJobs    Int     @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relation
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ─── Job ─────────────────────────────────────────────────
+model Job {
+  id                        String    @id @default(uuid())
+  employerId                String
+  title                     String
+  description               String?
+  // Category of worker needed
+  workerType                String
+  // JSON array of required skill IDs
+  requiredSkills            String    @default("[]")
+  numberOfWorkers           Int       @default(1)
+  // Job date (date part only)
+  date                      DateTime
+  // Start time components
+  startTimeHour             Int
+  startTimeMinute           Int
+  startTimePeriod           String    @default("AM")
+  // End time components
+  endTimeHour               Int
+  endTimeMinute             Int
+  endTimePeriod             String    @default("PM")
+  // Wage per worker in PKR
+  wage                      Int
+  // JSON array of tool IDs
+  toolsRequired             String    @default("[]")
+  locationLat               Float?
+  locationLng               Float?
+  locationName              String?
+  // "DRAFT" | "OPEN" | "MATCHING" | "OFFERS_SENT" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED"
+  status                    String    @default("DRAFT")
+  aiDescription             String?
+  // Background search tracking
+  backgroundSearchUntil     DateTime?
+  backgroundSearchExtensions Int      @default(0)
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt
+
+  // Relations
+  employer     User           @relation("EmployerJobs", fields: [employerId], references: [id], onDelete: Cascade)
+  offers       JobOffer[]
+  payment      Payment?
+  feedbacks    Feedback[]
+}
+
+// ─── Job Offer ───────────────────────────────────────────
+model JobOffer {
+  id         String   @id @default(uuid())
+  jobId      String
+  workerId   String
+  // "PENDING" | "ACCEPTED" | "DECLINED"
+  status     String   @default("PENDING")
+  matchScore Float?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  job    Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  worker User @relation(fields: [workerId], references: [id], onDelete: Cascade)
+
+  @@unique([jobId, workerId])
+}
+
+// ─── Payment (Simulated Escrow) ──────────────────────────
+model Payment {
+  id          String    @id @default(uuid())
+  jobId       String    @unique
+  totalAmount Int
+  // "PENDING" | "SECURED" | "HELD" | "RELEASED" | "CANCELLED"
+  status      String    @default("PENDING")
+  securedAt   DateTime?
+  releasedAt  DateTime?
+  createdAt   DateTime  @default(now())
+
+  // Relation
+  job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+// ─── System Config (admin-tunable settings) ────────────
+// To change the 50 km matching radius, update the row where key = "SEARCH_RADIUS_KM"
+// via Prisma Studio, direct DB update, or the admin panel (when available).
+// File: prisma/schema.prisma — this model
+// Logic: src/lib/system-config.ts → getSearchRadiusKm()
+model SystemConfig {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  label     String?
+  updatedAt DateTime @updatedAt
+}
+
+// ─── OTP Verification (phone number verification) ──────
+model OTPVerification {
+  id          String    @id @default(uuid())
+  userId      String?
+  phone       String
+  // bcrypt hash of the OTP code
+  code        String
+  // "REGISTRATION" | "PASSWORD_RESET"
+  purpose     String    @default("REGISTRATION")
+  expiresAt   DateTime
+  verified    Boolean   @default(false)
+  // Failed verification attempt counter (locks after 5)
+  attempts    Int       @default(0)
+  // Lockout timestamp (set after max failed attempts)
+  lockedUntil DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([phone, purpose])
+}
+
+// ─── Notification ───────────────────────────────────────
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  // "JOB_OFFER" | "JOB_ACCEPTED" | "JOB_DECLINED" | "JOB_COMPLETED"
+  // "NEW_JOB_MATCH" | "REMINDER" | "FEEDBACK_REQUEST" | "SYSTEM"
+  type      String
+  title     String
+  message   String
+  // JSON: { jobId?, offerId?, fromUserName? }
+  data      String   @default("{}")
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
+}
+
+// ─── Feedback (post-job-completion ratings) ─────────────
+model Feedback {
+  id              String   @id @default(uuid())
+  jobId           String
+  // Who wrote the feedback
+  authorId        String
+  // Who the feedback is about
+  subjectId       String
+  // "EMPLOYER_TO_WORKER" | "WORKER_TO_EMPLOYER"
+  type            String
+  // Star rating 1-5
+  overallRating   Int
+  // Individual ratings (1-5 or 0/1 for yes/no)
+  punctuality     Int?
+  attitude        Int?
+  workQuality     Int?
+  paymentOnTime   Int?
+  fairTreatment   Int?
+  // Optional comment
+  comment         String?
+  createdAt       DateTime @default(now())
+
+  job     Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  author  User @relation("FeedbackAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  subject User @relation("FeedbackSubject", fields: [subjectId], references: [id], onDelete: Cascade)
+
+  @@unique([jobId, authorId])
+}
+
+// ─── Blocked User (admin-controlled) ───────────────────
+model BlockedUser {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  reason      String?
+  blockedAt   DateTime @default(now())
+
+  user   User  @relation("BlockedUser", fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ─── Issue Report ───────────────────────────────────────
+model IssueReport {
+  id          String   @id @default(uuid())
+  userId      String
+  subject     String
+  description String
+  // "OPEN" | "RESOLVED" | "CLOSED"
+  status      String   @default("OPEN")
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
