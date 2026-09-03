@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "eslint src",
+    "setup": "npm install && prisma db push && prisma db seed",
     "postinstall": "prisma generate"
   },
   "dependencies": {

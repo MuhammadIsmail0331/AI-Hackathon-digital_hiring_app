@@ -10,6 +10,25 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  {
+    // Non-application code that must never be linted:
+    // - .node/    → portable Node runtime (thousands of vendored JS files)
+    // - tmp/      → one-off DB/CLI helper scripts (CJS)
+    // - scripts/  → ad-hoc maintenance scripts (CJS)
+    // - public/   → static assets
+    // - *.cjs     → CommonJS utilities at repo root
+    ignores: [
+      "node_modules/**",
+      ".next/**",
+      ".node/**",
+      "tmp/**",
+      "scripts/**",
+      "public/**",
+      "*.cjs",
+      "next-env.d.ts",
+      "tsconfig.tsbuildinfo",
+    ],
+  },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
