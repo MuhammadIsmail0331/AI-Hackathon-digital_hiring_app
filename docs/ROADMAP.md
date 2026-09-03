@@ -69,3 +69,5 @@
 | 2026-09-03 | Tooling note: this machine's shell output capture intermittently replays stale command output — always use markers/timestamps when verifying |
 | 2026-09-03 | GitHub API token upgraded by owner: issues #1–#7 created via MCP; sub-issue hierarchy endpoint still 403 (needs broader scope) — checklist refs used instead |
 | 2026-09-03 | Local dev server verified: `npm run dev` → HTTP 200 on `/en` with seeded data — owner starts manual demo-user testing against `localhost:3000` (Vercel URL still serves old `main` + ephemeral SQLite until Phase 1 deploy) |
+| 2026-09-03 | **Neon Postgres migration complete**: schema provider → postgresql; libsql adapter + deps removed; schema pushed + seeded on Neon (verified 16/12/6/5/3/3/8/1); build green; local server stopped per owner preference (live-URL testing only) |
+| 2026-09-03 | **Secrets incident handled**: `tmp/vercel-env.cjs` with hardcoded AUTH_SECRET/CRON_SECRET/Turso token was committed → removed from repo; values rotated; Turso abandoned (token moot); security headers added; vercel.json cron added. Deploy pending Vercel CLI auth |
