@@ -88,7 +88,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             <BrandAccent height="sm" />
             <div className="bg-surface py-3 pb-20 text-center sm:pb-3">
               <p className="text-xs text-muted">
-                Developed and tested by <span className="font-semibold text-ink">Nasir</span>
+                Developed and Tested by Students of <span className="font-semibold text-ink">NUST</span> <span className="text-muted">(Nasir Ud Din &amp; Sh. M. Ismail)</span>
               </p>
             </div>
           </footer>
