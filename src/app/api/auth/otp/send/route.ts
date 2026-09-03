@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { generateOTP, checkOTPSendAllowed } from "@/lib/otp";
 import { db } from "@/lib/db";
 
@@ -77,7 +77,7 @@ export async function POST(request: Request) {
       },
       { status: 200 }
     );
-  } catch {
+  } catch (err) {
     return NextResponse.json(
       { error: "Failed to send OTP. Please try again." },
       { status: 500 }
