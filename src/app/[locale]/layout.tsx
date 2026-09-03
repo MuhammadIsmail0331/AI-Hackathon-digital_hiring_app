@@ -20,6 +20,7 @@ const naskh = Noto_Naskh_Arabic({ subsets: ["arabic"], variable: "--font-naskh",
 
 export const metadata: Metadata = {
   title: { default: "Digital Hiring (Rozgaar) · Find Workers. Find Work.", template: "%s · Digital Hiring" },
+  manifest: "/manifest.webmanifest",
   description:
     "Rozgaar connects employers with skilled daily-wage workers across Pakistan — AI matching, escrow-protected payments, and ratings you can trust.",
 };

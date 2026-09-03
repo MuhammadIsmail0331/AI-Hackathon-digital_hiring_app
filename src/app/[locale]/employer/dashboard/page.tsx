@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -30,6 +30,7 @@ export default function EmployerDashboardPage() {
 
   const [user, setUser] = useState<SessionUser | null>(null);
   const [jobs, setJobs] = useState<JobItem[]>([]);
+  const [wallet, setWallet] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -149,6 +150,9 @@ export default function EmployerDashboardPage() {
         </Link>
           </div>
 
+        <div className="mb-4 inline-flex items-center gap-2 rounded-xl bg-accentsoft px-4 py-2 text-sm font-semibold text-accent">
+          <span>💳</span> Wallet: {wallet !== null ? `${wallet.toLocaleString()} PKR` : "..."}
+        </div>
         {recentJobs.length > 0 ? (
           <div>
             <div className="mb-3 flex items-center justify-between">

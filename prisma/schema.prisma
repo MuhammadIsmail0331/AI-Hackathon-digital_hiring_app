@@ -21,6 +21,7 @@ model User {
   isBlocked      Boolean  @default(false)
   isAdmin        Boolean  @default(false)
   phoneVerified  Boolean  @default(false)
+  walletBalance  Int      @default(0)
   avatarUrl      String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
@@ -97,6 +98,9 @@ model Job {
   // "DRAFT" | "OPEN" | "MATCHING" | "OFFERS_SENT" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED"
   status                    String    @default("DRAFT")
   aiDescription             String?
+  // Boosted listings (Phase 4 monetization)
+  boosted                   Boolean   @default(false)
+  boostedAt                 DateTime?
   // Background search tracking
   backgroundSearchUntil     DateTime?
   backgroundSearchExtensions Int      @default(0)
@@ -138,6 +142,8 @@ model Payment {
   status      String    @default("PENDING")
   securedAt   DateTime?
   releasedAt  DateTime?
+  platformFee Int?
+  workerPayout Int?
   createdAt   DateTime  @default(now())
 
   // Relation

@@ -53,7 +53,7 @@ export async function GET(request: Request) {
     const [jobs, total] = await Promise.all([
       db.job.findMany({
         where,
-        orderBy: { createdAt: "desc" },
+        orderBy: [{ boosted: "desc" }, { createdAt: "desc" }],
         skip,
         take: limit,
         include: {
