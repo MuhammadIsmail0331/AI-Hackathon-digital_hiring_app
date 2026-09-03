@@ -22,6 +22,25 @@ interface WorkerCard {
   isAvailable: boolean;
 }
 
+interface DetailData {
+  worker: {
+    id: string;
+    name: string;
+    memberSince: string;
+    profiles: Array<{
+      workerType: string;
+      skills: string[];
+      experience: number;
+      locationName: string | null;
+      expectedWage: number;
+      isAvailable: boolean;
+      availableDays: string[];
+      bio: string | null;
+      avgRating: number;
+      totalJobs: number;
+    }>;
+  };
+}
 interface EmployerJob {
   id: string;
   title: string;
@@ -41,6 +60,20 @@ export default function FindProfessionalsPage() {
   const [minRating, setMinRating] = useState(0);
   const [picked, setPicked] = useState<{ workerId: string; jobId: string } | null>(null);
   const [sentTo, setSentTo] = useState<Record<string, boolean>>({});
+  const [detail, setDetail] = useState<DetailData | null>(null);
+  const [detailId, setDetailId] = useState<string | null>(null);
+
+  async function openDetail(workerId: string) {
+    setDetailId(workerId);
+    setDetail(null);
+    try {
+      const res = await fetch(`/api/employer/workers/${workerId}`);
+      const data = await res.json();
+      if (res.ok) setDetail(data);
+    } catch {
+      /* noop */
+    }
+  }
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -61,7 +94,18 @@ export default function FindProfessionalsPage() {
 
   useEffect(() => {
     const id = setTimeout(load, 250);
-    return () => clearTimeout(id);
+    async function openDetail(workerId: string) {
+    setDetailId(workerId);
+    setDetail(null);
+    try {
+      const res = await fetch(`/api/employer/workers/${workerId}`);
+      const data = await res.json();
+      if (res.ok) setDetail(data);
+    } catch {
+      /* noop */
+    }
+  }
+  return () => clearTimeout(id);
   }, [load]);
 
   useEffect(() => {
@@ -136,7 +180,7 @@ export default function FindProfessionalsPage() {
         ) : (
           <div className="space-y-4">
             {workers.map((w) => (
-              <div key={w.userId} className="flex items-start gap-4 rounded-2xl border border-line bg-surface p-5 shadow-sm transition hover:shadow-md">
+              <div key={w.userId} onClick={() => openDetail(w.userId)} className="flex cursor-pointer items-start gap-4 rounded-2xl border border-line bg-surface p-5 shadow-sm transition hover:shadow-md">
                 <WorkerCharacter type={(w.workerType as never) || "generic"} className="w-16 shrink-0" />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
@@ -198,6 +242,111 @@ export default function FindProfessionalsPage() {
           </div>
         )}
       </main>
+      {/* Worker detail modal */}
+      {detailId && (
+        <div
+          className="fixed inset-0 z-[60] flex items-end justify-center bg-black/50 backdrop-blur-sm sm:items-center sm:p-4"
+          onClick={() => {
+            setDetailId(null);
+            setDetail(null);
+          }}
+        >
+          <div
+            className="max-h-[88vh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-line bg-surface p-6 shadow-2xl sm:rounded-3xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {detail ? (
+              <>
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <WorkerCharacter
+                      type={(detail.worker.profiles[0]?.workerType as never) || "generic"}
+                      className="w-14 shrink-0"
+                    />
+                    <div>
+                      <h3 className="text-xl font-bold text-ink">{detail.worker.name}</h3>
+                      <p className="text-xs text-muted">
+                        {L("Member since", "عضویت سے")}{" "}
+                        {new Date(detail.worker.memberSince).toLocaleDateString(
+                          isUr ? "ur-PK" : "en-PK",
+                          { month: "long", year: "numeric" }
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDetailId(null);
+                      setDetail(null);
+                    }}
+                    className="rounded-xl p-2 text-muted transition hover:bg-surface2 hover:text-ink"
+                    aria-label={L("Close", "بند کریں")}
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="mt-5 space-y-4">
+                  {detail.worker.profiles.map((p, i) => (
+                    <div key={i} className="rounded-2xl border border-line bg-surface2/50 p-4">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-base font-bold capitalize text-ink">{p.workerType}</h4>
+                        {p.totalJobs > 0 && (
+                          <span className="rounded-full bg-accentsoft px-2.5 py-0.5 text-xs font-semibold text-accent">
+                            ★ {p.avgRating.toFixed(1)} · {p.totalJobs} {isUr ? "کام" : "jobs"}
+                          </span>
+                        )}
+                      </div>
+                      <p className="mt-1 text-sm font-semibold text-primary">
+                        {p.expectedWage.toLocaleString()} PKR / {isUr ? "دن" : "day"} · {p.experience}+ {isUr ? "سال تجربہ" : "yrs exp"}
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {p.skills.map((s) => (
+                          <span key={s} className="rounded-full bg-surface2 px-2 py-0.5 text-[11px] text-muted">{s}</span>
+                        ))}
+                      </div>
+                      {p.bio && <p className="mt-2 text-xs leading-relaxed text-muted">{p.bio}</p>}
+                      {p.isAvailable && (
+                        <p className="mt-2 text-xs font-semibold text-success">
+                          ✓ {isUr ? "دستیاب" : "Available now"}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {jobs.length > 0 && !sentTo[detail.worker.id] && (
+                  <div className="mt-5">
+                    <p className="mb-2 text-xs font-semibold text-muted">
+                      {L("Send an offer for:", "پیشکش بھیجیں برائے:")}
+                    </p>
+                    <select
+                      className="w-full rounded-xl border border-line bg-surface px-3 py-2.5 text-sm text-ink"
+                      defaultValue=""
+                      onChange={(e) => {
+                        if (e.target.value) sendOffer(detail.worker.id, e.target.value);
+                      }}
+                    >
+                      <option value="">{L("Choose a job...", "نوکری چنیں...")}</option>
+                      {jobs.map((j) => (
+                        <option key={j.id} value={j.id}>{j.title}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+                {sentTo[detail.worker.id] && (
+                  <p className="mt-4 text-center text-sm font-semibold text-success">
+                    ✓ {L("Offer sent", "پیشکش بھیج دی گئی")}
+                  </p>
+                )}
+              </>
+            ) : (
+              <p className="py-10 text-center text-sm text-muted">...</p>
+            )}
+          </div>
+        </div>
+      )}
       <EmployerBottomNav />
     </>
   );

@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 
 /** Minimum time (ms) the loading video stays visible */
-const MIN_DISPLAY_MS = 800;
+const MIN_DISPLAY_MS = 1400;
 
 /**
  * Shows a loading-video overlay during page transitions.
