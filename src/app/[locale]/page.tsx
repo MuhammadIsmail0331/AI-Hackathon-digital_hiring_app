@@ -29,7 +29,7 @@ async function getStats() {
       reviews: reviews,
     };
   } catch {
-    return { jobs: 0, workers: 0, rating: 0 };
+    return { jobs: 0, workers: 0, rating: 0, reviews: 0 };
   }
 }
 
