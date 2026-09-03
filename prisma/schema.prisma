@@ -250,8 +250,9 @@ model IssueReport {
   userId      String
   subject     String
   description String
-  // "OPEN" | "RESOLVED" | "CLOSED"
+  // "OPEN" | "IN_PROGRESS" | "RESOLVED" | "CLOSED"
   status      String   @default("OPEN")
+  adminResponse String?
   createdAt   DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
