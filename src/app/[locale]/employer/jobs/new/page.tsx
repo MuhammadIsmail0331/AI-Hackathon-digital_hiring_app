@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -353,7 +353,7 @@ export default function CreateJobPage() {
         <h1 className="mb-6 text-2xl font-bold text-ink">{t("createJob")}</h1>
 
         {error && (
-          <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-700">
+          <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-medium text-danger">
             {error}
           </div>
         )}
@@ -395,7 +395,7 @@ export default function CreateJobPage() {
               onChange={(e) => setTitle(e.target.value)}
               placeholder={t("jobTitlePlaceholder")}
               maxLength={100}
-              className="w-full rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              className="w-full rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-primarysoft"
             />
           </div>
 
@@ -446,7 +446,7 @@ export default function CreateJobPage() {
               value={date}
               onChange={(e) => setDate(e.target.value)}
               min={new Date().toISOString().split("T")[0]}
-              className="w-full rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              className="w-full rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-primarysoft"
             />
           </div>
 
@@ -484,7 +484,7 @@ export default function CreateJobPage() {
                 onChange={(e) => setWage(e.target.value.replace(/[^0-9]/g, ""))}
                 min={100}
                 max={100000}
-                className="w-full rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                className="w-full rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-primarysoft"
               />
               <span className="whitespace-nowrap text-sm font-semibold text-muted">PKR</span>
             </div>
@@ -526,7 +526,7 @@ export default function CreateJobPage() {
               type="button"
               onClick={requestLocation}
               disabled={gpsStatus === "requesting"}
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-gray-50 px-4 py-3 text-sm font-medium text-ink transition hover:bg-surface2 disabled:opacity-50"
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-surface2 px-4 py-3 text-sm font-medium text-ink transition hover:bg-surface2 disabled:opacity-50"
             >
               {gpsStatus === "requesting" ? (
                 <>
@@ -568,7 +568,7 @@ export default function CreateJobPage() {
               placeholder={t("descriptionPlaceholder")}
               maxLength={1000}
               rows={3}
-              className="w-full resize-none rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              className="w-full resize-none rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-primarysoft"
             />
           </div>
         </div>

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -110,7 +110,7 @@ export default function FeedbackPage() {
               onClick={() => onChange(star)}
               aria-label={t("starRating", { stars: star })}
               aria-pressed={value === star}
-              className={`text-2xl transition ${star <= value ? "text-yellow-400" : "text-gray-300"} hover:text-yellow-500`}
+              className={`text-2xl transition ${star <= value ? "text-accent" : "text-line"} hover:text-accent`}
             >
               ★
             </button>
@@ -221,7 +221,7 @@ export default function FeedbackPage() {
         )}
 
         {error && (
-          <div role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</div>
+          <div role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-danger">{error}</div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -234,7 +234,7 @@ export default function FeedbackPage() {
                 <button key={star} type="button" onClick={() => setOverallRating(star)}
                   aria-label={t("starRating", { stars: star })}
                   aria-pressed={overallRating === star}
-                  className={`text-4xl transition ${star <= overallRating ? "text-yellow-400" : "text-gray-300"} hover:text-yellow-500`}>
+                  className={`text-4xl transition ${star <= overallRating ? "text-accent" : "text-line"} hover:text-accent`}>
                   ★
                 </button>
               ))}
@@ -294,7 +294,7 @@ export default function FeedbackPage() {
             <p className="mb-3 text-xs text-muted" dir="rtl">{t("commentUrdu")}</p>
             <textarea value={comment} onChange={(e) => setComment(e.target.value)} maxLength={500}
               rows={3} placeholder={t("commentPlaceholder")}
-              className="w-full rounded-xl border border-line px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200" />
+              className="w-full rounded-xl border border-line px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-primarysoft" />
           </div>
 
           <button type="submit" disabled={loading || overallRating === 0} data-testid="feedback-submit"

@@ -18,9 +18,6 @@ export async function GET(_req: Request, { params }: RouteContext) {
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    if (user.role !== "WORKER") {
-      return NextResponse.json({ error: "Workers only" }, { status: 403 });
-    }
 
     const { jobId } = await params;
 

@@ -178,4 +178,9 @@ h1, h2, h3 {
 .animate-drift-b { animation: drift-b 20s ease-in-out infinite alternate; }
 .animate-birds { animation: birds 14s ease-in-out infinite alternate; }
 .animate-twinkle { animation: twinkle 2.6s ease-in-out infinite; }
-.animate-float { animation: float-y 5s ease-in-out infinite; }
+.animate-float { animation: float-y 5s ease-in-out infinite; }/* ─── SideGarland sway ─────────── */
+@keyframes sway {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+.animate-sway { animation: sway 3.2s ease-in-out infinite; }

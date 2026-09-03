@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -230,7 +230,7 @@ export default function WorkerMyJobDetailPage() {
               </h2>
               <Badge tone={payment!.tone}>{payment!.label}</Badge>
             </div>
-            <div className="rounded-xl bg-gray-50 p-3">
+            <div className="rounded-xl bg-surface2 p-3">
               <div className="text-xs text-muted">{paymentT("total")}</div>
               <div className="mt-0.5 text-lg font-bold text-ink">
                 {job.payment.totalAmount.toLocaleString()} PKR
@@ -285,7 +285,7 @@ export default function WorkerMyJobDetailPage() {
           )}
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl bg-gray-50 p-3">
+            <div className="rounded-xl bg-surface2 p-3">
               <div className="text-xs text-muted">{jobsT("jobDate")}</div>
               <div className="mt-0.5 text-sm font-semibold text-ink">
                 {new Date(job.date).toLocaleDateString(locale === "ur" ? "ur-PK" : "en-PK", {
@@ -293,7 +293,7 @@ export default function WorkerMyJobDetailPage() {
                 })}
               </div>
             </div>
-            <div className="rounded-xl bg-gray-50 p-3">
+            <div className="rounded-xl bg-surface2 p-3">
               <div className="text-xs text-muted">{jobsT("peopleNeeded")}</div>
               <div className="mt-0.5 text-sm font-semibold text-ink">
                 {job.acceptedWorkers}/{job.numberOfWorkers}
@@ -302,13 +302,13 @@ export default function WorkerMyJobDetailPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl bg-gray-50 p-3">
+            <div className="rounded-xl bg-surface2 p-3">
               <div className="text-xs text-muted">{jobsT("startTime")}</div>
               <div className="mt-0.5 text-sm font-semibold text-ink">
                 {formatTime(job.startTimeHour, job.startTimeMinute, job.startTimePeriod)}
               </div>
             </div>
-            <div className="rounded-xl bg-gray-50 p-3">
+            <div className="rounded-xl bg-surface2 p-3">
               <div className="text-xs text-muted">{jobsT("endTime")}</div>
               <div className="mt-0.5 text-sm font-semibold text-ink">
                 {formatTime(job.endTimeHour, job.endTimeMinute, job.endTimePeriod)}

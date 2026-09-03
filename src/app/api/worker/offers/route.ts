@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
 
@@ -11,9 +11,6 @@ export async function GET() {
     const user = await resolveSessionUser();
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    if (user.role !== "WORKER") {
-      return NextResponse.json({ error: "Workers only" }, { status: 403 });
     }
 
     const offers = await db.jobOffer.findMany({

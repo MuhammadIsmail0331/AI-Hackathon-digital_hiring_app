@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -155,7 +155,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <AuthPageWrapper>
-    <div className="overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-xl shadow-gray-200/40 backdrop-blur-sm">
+    <div className="overflow-hidden rounded-3xl border border-white/60 bg-surface/90 shadow-xl shadow-gray-200/40 backdrop-blur-sm">
       {/* Gradient header changes per step */}
       <div className="bg-gradient-to-r from-primary to-primarystrong px-8 py-6 text-center">
         {step === "phone" && (
@@ -233,20 +233,20 @@ export default function ForgotPasswordPage() {
               </button>
 
               <div className="flex items-center gap-3">
-                <div className="h-px flex-1 bg-gray-200" />
-                <span className="text-xs text-gray-400">{common("or")}</span>
-                <div className="h-px flex-1 bg-gray-200" />
+                <div className="h-px flex-1 bg-line" />
+                <span className="text-xs text-muted">{common("or")}</span>
+                <div className="h-px flex-1 bg-line" />
               </div>
 
               <button
                 type="button"
                 onClick={() => setStep("newPassword")}
                 disabled={loading || !phone}
-                className="w-full rounded-xl border-2 border-gray-200 bg-white px-6 py-3.5 text-base font-semibold text-ink transition hover:border-gray-300 hover:bg-gray-50 disabled:opacity-50"
+                className="w-full rounded-xl border-2 border-line bg-surface px-6 py-3.5 text-base font-semibold text-ink transition hover:border-line hover:bg-surface2 disabled:opacity-50"
               >
                 {t("continueWithoutOTP")}
               </button>
-              <p className="text-center text-xs text-gray-400">{t("skipOTPDescription")}</p>
+              <p className="text-center text-xs text-muted">{t("skipOTPDescription")}</p>
             </form>
 
             <p className="mt-6 text-center text-sm text-muted">

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -96,16 +96,17 @@ const CATEGORY_ICONS: Record<WorkerCategoryId, React.ReactNode> = {
 };
 
 interface CategorySelectorProps {
+  disabled?: boolean;
   value?: WorkerCategoryId | "";
   onChange: (categoryId: WorkerCategoryId) => void;
 }
 
-export function CategorySelector({ value, onChange }: CategorySelectorProps) {
+export function CategorySelector({ value, onChange, disabled = false }: CategorySelectorProps) {
   const t = useTranslations("Categories");
 
   return (
     <div className="space-y-3">
-      <label className="block text-sm font-medium text-gray-700">
+      <label className="block text-sm font-medium text-ink">
         {t("title")}
       </label>
       <div
@@ -125,6 +126,7 @@ export function CategorySelector({ value, onChange }: CategorySelectorProps) {
               className={cn(
                 "flex flex-col items-center gap-2 rounded-xl border-2 p-4 text-center transition",
                 "hover:shadow-md active:scale-[0.97]",
+                disabled && "opacity-60 cursor-not-allowed",
                 isSelected
                   ? "border-primary bg-primarysoft text-primary shadow-sm ring-2 ring-primary/20"
                   : "border-line bg-surface text-muted hover:border-muted/50"

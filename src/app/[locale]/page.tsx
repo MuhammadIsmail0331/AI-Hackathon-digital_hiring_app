@@ -1,4 +1,4 @@
-﻿import { use } from "react";
+import { use } from "react";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";

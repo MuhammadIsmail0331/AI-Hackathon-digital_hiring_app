@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -70,7 +70,7 @@ export default function RegisterPage() {
       ? "bg-success"
       : pwStrength === "medium"
       ? "bg-accent"
-      : "bg-red-500";
+      : "bg-danger";
   const pwWidth =
     password.length === 0 ? "0%" : pwStrength === "strong" ? "100%" : pwStrength === "medium" ? "60%" : "30%";
 
@@ -247,7 +247,7 @@ export default function RegisterPage() {
             {/* Employer Card */}
             <button
               onClick={() => handleRoleSelect("EMPLOYER")}
-              className="group overflow-hidden rounded-2xl border-2 border-gray-200 bg-white text-start shadow-sm transition hover:border-blue-400 hover:shadow-lg hover:shadow-blue-100"
+              className="group overflow-hidden rounded-2xl border-2 border-line bg-surface text-start shadow-sm transition hover:border-blue-400 hover:shadow-lg hover:shadow-blue-100"
             >
               <div className="flex items-center gap-4 p-5">
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 text-primary transition group-hover:from-blue-500 group-hover:to-blue-600 group-hover:text-white">
@@ -268,7 +268,7 @@ export default function RegisterPage() {
             {/* Worker Card */}
             <button
               onClick={() => handleRoleSelect("WORKER")}
-              className="group overflow-hidden rounded-2xl border-2 border-gray-200 bg-white text-start shadow-sm transition hover:border-green-400 hover:shadow-lg hover:shadow-green-100"
+              className="group overflow-hidden rounded-2xl border-2 border-line bg-surface text-start shadow-sm transition hover:border-green-400 hover:shadow-lg hover:shadow-green-100"
             >
               <div className="flex items-center gap-4 p-5">
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-green-100 to-green-200 text-green-600 transition group-hover:from-green-500 group-hover:to-green-600 group-hover:text-white">
@@ -295,7 +295,7 @@ export default function RegisterPage() {
       )}
 
       {step === "details" && (
-        <div className="overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-xl shadow-gray-200/40 backdrop-blur-sm">
+        <div className="overflow-hidden rounded-3xl border border-white/60 bg-surface/90 shadow-xl shadow-gray-200/40 backdrop-blur-sm">
           <div className="bg-gradient-to-r from-primary to-primarystrong px-8 py-6 text-center">
             <h1 className="text-xl font-bold text-white">{t("registerTitle")}</h1>
             <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-sm font-medium text-white backdrop-blur-sm">
@@ -310,7 +310,7 @@ export default function RegisterPage() {
 
           <h2 className="mb-6 text-center text-2xl font-bold text-ink">{t("registerTitle")}</h2>
 
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-ink">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-surface2 px-3 py-1 text-sm font-medium text-ink">
             {role === "EMPLOYER" ? t("employer") : t("worker")}
           </div>
 
@@ -374,7 +374,7 @@ export default function RegisterPage() {
                       {pwStrength === "strong" ? pwT("strong") : pwStrength === "medium" ? pwT("medium") : pwT("weak")}
                     </span>
                   </div>
-                  <div className="h-1.5 overflow-hidden rounded-full bg-gray-200">
+                  <div className="h-1.5 overflow-hidden rounded-full bg-line">
                     <div className={`h-full rounded-full transition-all ${pwColor}`} style={{ width: pwWidth }} />
                   </div>
                   {pwErrors.length > 0 && (
@@ -394,24 +394,24 @@ export default function RegisterPage() {
             </button>
 
             <div className="flex items-center gap-3">
-              <div className="h-px flex-1 bg-gray-200" />
-              <span className="text-xs text-gray-400">{common("or")}</span>
-              <div className="h-px flex-1 bg-gray-200" />
+              <div className="h-px flex-1 bg-line" />
+              <span className="text-xs text-muted">{common("or")}</span>
+              <div className="h-px flex-1 bg-line" />
             </div>
 
             <button type="button" onClick={handleRegisterWithoutOTP}
               disabled={loading || otpLoading || pwErrors.length > 0 || !name || !email || !phone || !password}
-              className="w-full rounded-xl border-2 border-gray-200 bg-white px-6 py-3.5 text-base font-semibold text-ink transition hover:border-gray-300 hover:bg-gray-50 disabled:opacity-50">
+              className="w-full rounded-xl border-2 border-line bg-surface px-6 py-3.5 text-base font-semibold text-ink transition hover:border-line hover:bg-surface2 disabled:opacity-50">
               {loading ? common("loading") : otpT("continueWithoutOTP")}
             </button>
-            <p className="text-center text-xs text-gray-400">{otpT("skipOTPDescription")}</p>
+            <p className="text-center text-xs text-muted">{otpT("skipOTPDescription")}</p>
           </form>
           </div>
         </div>
       )}
 
       {step === "otp" && (
-        <div className="overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-xl shadow-gray-200/40 backdrop-blur-sm">
+        <div className="overflow-hidden rounded-3xl border border-white/60 bg-surface/90 shadow-xl shadow-gray-200/40 backdrop-blur-sm">
           <div className="bg-gradient-to-r from-primary to-primarystrong px-8 py-6 text-center">
             <h1 className="text-xl font-bold text-white">{otpT("title")}</h1>
             <p className="mt-1 text-sm text-blue-100">{otpT("description")}</p>

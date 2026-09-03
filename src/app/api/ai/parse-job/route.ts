@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { parseJobFromText } from "@/lib/ai/parse-job";
 
@@ -12,9 +12,6 @@ export async function POST(request: Request) {
     const user = await resolveSessionUser();
     if (!user || user.isBlocked) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    if (user.role !== "EMPLOYER") {
-      return NextResponse.json({ error: "Employers only" }, { status: 403 });
     }
 
     const body = (await request.json()) as { text?: string };

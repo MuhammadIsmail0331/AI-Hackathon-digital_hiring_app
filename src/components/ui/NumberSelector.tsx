@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { cn } from "@/lib/utils";
 
@@ -61,7 +61,7 @@ export function NumberSelector({
           </svg>
         </button>
 
-        <div className="flex h-12 w-16 items-center justify-center border-x border-gray-300 text-xl font-semibold text-gray-900">
+        <div className="flex h-12 w-16 items-center justify-center border-x border-line text-xl font-semibold text-ink">
           {value}
         </div>
 
