@@ -208,3 +208,35 @@ export const CITY_COORDINATES: Record<CityId, { lat: number; lng: number }> = {
   hyderabad:    { lat: 25.3960, lng: 68.3578 },
   other_city:   { lat: 33.6844, lng: 73.0479 },
 };
+
+// ─── Phase 1 / Heritage Craft extensions ─────────────────────
+
+/** Extra job lifecycle statuses (schema stores status as a String). */
+export const EXTRA_JOB_STATUSES = ["EXPIRED"] as const;
+
+/** Extra payment statuses (schema stores status as a String). */
+export const EXTRA_PAYMENT_STATUSES = ["REFUNDED"] as const;
+
+/** Per-category brand colors for the Heritage Craft UI. */
+export const CATEGORY_COLORS: Record<
+  WorkerCategoryId,
+  { from: string; to: string; tint: string; ring: string }
+> = {
+  painter: { from: "from-amber-400", to: "to-amber-600", tint: "bg-amber-50 dark:bg-amber-950/40", ring: "ring-amber-400" },
+  plumber: { from: "from-sky-400", to: "to-sky-600", tint: "bg-sky-50 dark:bg-sky-950/40", ring: "ring-sky-400" },
+  electrician: { from: "from-yellow-400", to: "to-yellow-600", tint: "bg-yellow-50 dark:bg-yellow-950/40", ring: "ring-yellow-400" },
+  carpenter: { from: "from-orange-400", to: "to-orange-600", tint: "bg-orange-50 dark:bg-orange-950/40", ring: "ring-orange-400" },
+  mason: { from: "from-stone-400", to: "to-stone-600", tint: "bg-stone-100 dark:bg-stone-900/40", ring: "ring-stone-400" },
+  labourer: { from: "from-lime-400", to: "to-lime-600", tint: "bg-lime-50 dark:bg-lime-950/40", ring: "ring-lime-400" },
+  cleaner: { from: "from-cyan-400", to: "to-cyan-600", tint: "bg-cyan-50 dark:bg-cyan-950/40", ring: "ring-cyan-400" },
+  welder: { from: "from-slate-400", to: "to-slate-600", tint: "bg-slate-100 dark:bg-slate-900/40", ring: "ring-slate-400" },
+  gardener: { from: "from-green-400", to: "to-green-600", tint: "bg-green-50 dark:bg-green-950/40", ring: "ring-green-400" },
+  driver: { from: "from-violet-400", to: "to-violet-600", tint: "bg-violet-50 dark:bg-violet-950/40", ring: "ring-violet-400" },
+  helper: { from: "from-rose-400", to: "to-rose-600", tint: "bg-rose-50 dark:bg-rose-950/40", ring: "ring-rose-400" },
+  other: { from: "from-teal-400", to: "to-teal-600", tint: "bg-teal-50 dark:bg-teal-950/40", ring: "ring-teal-400" },
+};
+
+/** Safe accessor — unknown ids fall back to the neutral "other" family. */
+export function categoryGradient(id: string) {
+  return CATEGORY_COLORS[id as WorkerCategoryId] ?? CATEGORY_COLORS.other;
+}
