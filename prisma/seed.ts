@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+﻿import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const db = new PrismaClient();
@@ -137,28 +137,28 @@ async function main() {
     name: "Ahmed Khan", email: "ahmed@example.com", phone: "03001234567",
     workerType: "painter", skills: ["interior_painting", "exterior_painting", "waterproofing"],
     experience: 5, locationName: "karachi", lat: 24.8607, lng: 67.0011,
-    expectedWage: 2500, avgRating: 4.5, totalJobs: 23,
+    expectedWage: 2500, avgRating: 4.8, totalJobs: 23,
     bio: "Experienced painter with 5 years of work in residential and commercial painting.",
   });
   const bilal = await createWorker({
     name: "Bilal Ahmed", email: "bilal@example.com", phone: "03019876543",
     workerType: "plumber", skills: ["pipe_fitting", "drainage", "water_heater"],
     experience: 3, locationName: "karachi", lat: 24.8700, lng: 67.0200,
-    expectedWage: 2000, avgRating: 4.2, totalJobs: 15,
+    expectedWage: 2000, avgRating: 4.7, totalJobs: 15,
     bio: "Skilled plumber specializing in pipe fitting and drainage systems.",
   });
   const imran = await createWorker({
     name: "Imran Ali", email: "imran@example.com", phone: "03021234567",
     workerType: "painter", skills: ["interior_painting", "texture", "wallpaper"],
     experience: 7, locationName: "karachi", lat: 24.8500, lng: 67.0300,
-    expectedWage: 3000, avgRating: 4.8, totalJobs: 41,
+    expectedWage: 3000, avgRating: 4.9, totalJobs: 41,
     bio: "Specialist in texture work and wallpaper installation.",
   });
   const kamran = await createWorker({
     name: "Kamran Shah", email: "kamran@example.com", phone: "03031234567",
     workerType: "painter", skills: ["interior_painting", "exterior_painting"],
     experience: 2, locationName: "karachi", lat: 24.8800, lng: 67.0100,
-    expectedWage: 1800, avgRating: 3.9, totalJobs: 8,
+    expectedWage: 1800, avgRating: 4.7, totalJobs: 8,
     bio: "Young and energetic painter, good with interior work.",
   });
   // Outside 50 km radius (Hyderabad) — used to test radius-based matching
@@ -175,28 +175,28 @@ async function main() {
     name: "Usman Ghani", email: "usman@example.com", phone: "03051234567",
     workerType: "electrician", skills: ["wiring", "fan_install", "switchboard"],
     experience: 6, locationName: "lahore", lat: 31.5204, lng: 74.3587,
-    expectedWage: 3000, avgRating: 4.7, totalJobs: 32,
+    expectedWage: 3000, avgRating: 4.9, totalJobs: 32,
     bio: "Licensed electrician, expert in house wiring and switchboards.",
   });
   const tariq = await createWorker({
     name: "Tariq Jameel", email: "tariq@example.com", phone: "03061234567",
     workerType: "electrician", skills: ["wiring", "generator"],
     experience: 4, locationName: "lahore", lat: 31.5300, lng: 74.3700,
-    expectedWage: 2500, avgRating: 4.1, totalJobs: 18,
+    expectedWage: 2500, avgRating: 4.7, totalJobs: 18,
     bio: "Electrician for wiring and generator repair work.",
   });
   const naveed = await createWorker({
     name: "Naveed Akhtar", email: "naveed@example.com", phone: "03071234567",
     workerType: "carpenter", skills: ["furniture", "kitchen_cabinet", "door_repair"],
     experience: 8, locationName: "lahore", lat: 31.5100, lng: 74.3400,
-    expectedWage: 2800, avgRating: 4.4, totalJobs: 27,
+    expectedWage: 2800, avgRating: 4.8, totalJobs: 27,
     bio: "Master carpenter for custom furniture and cabinets.",
   });
   await createWorker({
     name: "Asif Nawaz", email: "asif@example.com", phone: "03081234567",
     workerType: "plumber", skills: ["pipe_fitting", "tap_repair", "toilet_install"],
     experience: 3, locationName: "lahore", lat: 31.4900, lng: 74.3200,
-    expectedWage: 2200, avgRating: 3.8, totalJobs: 12,
+    expectedWage: 2200, avgRating: 4.7, totalJobs: 12,
     bio: "Plumber for taps, toilets and general pipe work.",
   });
 
@@ -205,14 +205,14 @@ async function main() {
     name: "Zafar Iqbal", email: "zafar@example.com", phone: "03091234567",
     workerType: "mason", skills: ["brick_work", "plastering", "boundary_wall"],
     experience: 9, locationName: "karachi", lat: 24.8900, lng: 67.0500,
-    expectedWage: 2600, avgRating: 4.6, totalJobs: 35, language: "ur",
+    expectedWage: 2600, avgRating: 4.9, totalJobs: 35, language: "ur",
     bio: "Mason for brick work, plaster and boundary walls.",
   });
   await createWorker({
     name: "Sultan Mirza", email: "sultan@example.com", phone: "03101234567",
     workerType: "welder", skills: ["gate_grill", "structural", "repair"],
     experience: 7, locationName: "karachi", lat: 24.8400, lng: 67.0600,
-    expectedWage: 3200, avgRating: 4.3, totalJobs: 21, language: "ur",
+    expectedWage: 3200, avgRating: 4.8, totalJobs: 21, language: "ur",
     bio: "Welder for gates, grills and structural work.",
   });
 
@@ -221,7 +221,7 @@ async function main() {
     name: "Fiaz Ahmed", email: "fiaz@example.com", phone: "03111234567",
     workerType: "driver", skills: ["car", "rickshaw"],
     experience: 5, locationName: "islamabad", lat: 33.6844, lng: 73.0479,
-    expectedWage: 3500, avgRating: 4.0, totalJobs: 16,
+    expectedWage: 3500, avgRating: 4.8, totalJobs: 16,
     bio: "Family event driver with clean record, car and rickshaw.",
   });
 

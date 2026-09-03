@@ -166,9 +166,7 @@ export default function RouteLoader() {
             color: "var(--ink)",
             fontSize: 18,
           }}
-        >
-          Rozgaar
-        </div>
+        >Digital Hiring</div>
       </div>
     </div>
   );

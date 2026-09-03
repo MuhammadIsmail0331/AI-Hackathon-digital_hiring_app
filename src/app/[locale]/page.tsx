@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import Navbar from "@/components/layout/Navbar";
 import { BrandAccent } from "@/components/ui";
 import { SkylineScene } from "@/components/illustrations/SkylineScene";
-import { WorkerCharacter } from "@/components/illustrations/characters";
+import { WorkCrew } from "@/components/illustrations/characters";
 import { CountUp, Marquee, Reveal, TiltCard } from "@/components/motion";
 import { WORKER_CATEGORIES } from "@/lib/constants";
 import { db } from "@/lib/db";
@@ -20,11 +20,13 @@ async function getStats() {
       db.job.count({ where: { status: "COMPLETED" } }),
       db.user.count({ where: { role: "WORKER" } }),
       db.workerProfile.aggregate({ _avg: { avgRating: true } }),
+      db.feedback.count(),
     ]);
     return {
       jobs: completedJobs,
       workers,
       rating: profileAgg._avg.avgRating ?? 0,
+      reviews: reviews,
     };
   } catch {
     return { jobs: 0, workers: 0, rating: 0 };
@@ -58,6 +60,11 @@ export default function LandingPage({ params }: Props) {
             }}
           />
 
+          {/* Sparkles */}
+          <span aria-hidden="true" className="animate-pulse absolute start-[30%] top-16 hidden text-lg text-amber-200/90 md:block">✦</span>
+          <span aria-hidden="true" className="animate-pulse absolute end-[26%] top-24 hidden text-sm text-emerald-200/80 md:block" style={{ animationDelay: "0.7s" }}>✦</span>
+          <span aria-hidden="true" className="animate-pulse absolute start-[22%] top-44 hidden text-xs text-white/70 md:block" style={{ animationDelay: "1.4s" }}>✦</span>
+          <span aria-hidden="true" className="animate-pulse absolute end-[30%] top-52 hidden text-base text-amber-200/70 md:block" style={{ animationDelay: "2s" }}>✦</span>
           {/* floating tool chips */}
           <div
             aria-hidden="true"
@@ -84,7 +91,7 @@ export default function LandingPage({ params }: Props) {
             <Reveal>
               <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold text-emerald-50 backdrop-blur">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-300" />
-                Made for Pakistan · <span dir="rtl">روزگار</span>
+                Digital Hiring · <span dir="rtl">روزگار</span> · Made for Pakistan
               </span>
             </Reveal>
             <Reveal delay={0.08}>
@@ -191,6 +198,7 @@ export default function LandingPage({ params }: Props) {
                   <CountUp to={stats.rating} decimals={1} suffix=" ★" />
                 </div>
                 <div className="mt-1 text-sm font-medium text-muted">{t("statsRating")}</div>
+                <div className="text-[11px] text-muted/70">{t("statsReviews", { count: stats.reviews })}</div>
               </div>
             </Reveal>
           </div>
@@ -226,8 +234,7 @@ export default function LandingPage({ params }: Props) {
             </div>
             <Reveal delay={0.2} className="hidden lg:block">
               <div className="relative rounded-3xl border border-line bg-gradient-to-b from-primarysoft to-surface p-8 text-center shadow-lg">
-                <WorkerCharacter type="painter" className="mx-auto w-44 animate-float" />
-                <WorkerCharacter type="electrician" className="-mt-6 -ml-16 w-36 animate-float" />
+                <WorkCrew className="mx-auto w-full max-w-[280px]" />
                 <p className="mt-2 text-sm font-semibold text-muted" dir="rtl" style={{ fontFamily: "var(--font-nastaliq), serif" }}>
                   روزگار — ہنر کی قدر
                 </p>

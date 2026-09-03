@@ -8,6 +8,7 @@ import { routing } from "@/i18n/routing";
 import "../globals.css";
 import RouteLoader from "@/components/ui/RouteLoader";
 import { Toaster } from "sonner";
+import { SideRails } from "@/components/layout/SideRails";
 import { BrandAccent } from "@/components/ui/BrandAccent";
 
 const sora = Sora({ subsets: ["latin"], weight: ["600", "700", "800"], variable: "--font-sora", display: "swap" });
@@ -16,7 +17,7 @@ const nastaliq = Noto_Nastaliq_Urdu({ subsets: ["arabic"], weight: ["400", "700"
 const naskh = Noto_Naskh_Arabic({ subsets: ["arabic"], variable: "--font-naskh", display: "swap" });
 
 export const metadata: Metadata = {
-  title: { default: "Rozgaar — Find Workers. Find Work.", template: "%s · Rozgaar" },
+  title: { default: "Digital Hiring (Rozgaar) · Find Workers. Find Work.", template: "%s · Digital Hiring" },
   description:
     "Rozgaar connects employers with skilled daily-wage workers across Pakistan — AI matching, escrow-protected payments, and ratings you can trust.",
 };
@@ -64,6 +65,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="flex min-h-screen flex-col bg-canvas text-ink antialiased">
+        <SideRails />
         <NextIntlClientProvider messages={messages}>
           {/* Keyboard users can jump straight past the navbar */}
           <a
