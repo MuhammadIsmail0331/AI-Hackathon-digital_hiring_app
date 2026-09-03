@@ -133,6 +133,9 @@ export default function EmployerDashboardPage() {
           </div>
         </div>
 
+          <Link href="/employer/find" className="me-2 inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-5 py-3 text-base font-semibold text-ink shadow-sm transition hover:bg-surface2">
+            🔎 {locale === "ur" ? "پیشہ ور تلاش کریں" : "🔎 Find Professionals"}
+          </Link>
         <Link
           href="/employer/jobs/new"
           className="mb-6 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-4 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300"
