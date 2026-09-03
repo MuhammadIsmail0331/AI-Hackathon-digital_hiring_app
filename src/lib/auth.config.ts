@@ -1,10 +1,11 @@
-import type { NextAuthConfig } from "next-auth";
+﻿import type { NextAuthConfig } from "next-auth";
 
 /**
  * Edge-compatible auth config used by middleware.
  * Does not include providers that need Node.js runtime.
  */
 export const authConfig: NextAuthConfig = {
+  trustHost: true,
   pages: {
     signIn: "/login",
   },

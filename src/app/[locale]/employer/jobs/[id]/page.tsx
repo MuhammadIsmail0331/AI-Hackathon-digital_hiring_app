@@ -613,7 +613,6 @@ export default function JobDetailPage() {
                 <div className="flex gap-3">
                   <button
                     onClick={async () => {
-                    data-testid="complete-confirm"
                       setCompleting(true);
                       try {
                         const res = await fetch(`/api/employer/jobs/${jobId}/complete`, { method: "POST" });
@@ -624,7 +623,7 @@ export default function JobDetailPage() {
                         }
                       } catch {} finally { setCompleting(false); }
                     }}
-                    disabled={completing}
+                    disabled={completing} data-testid="complete-confirm"
                     className="flex-1 rounded-xl bg-success py-2.5 text-sm font-semibold text-white transition hover:bg-success/90 disabled:opacity-50"
                   >
                     {completing ? commonT("loading") : commonT("confirm")}

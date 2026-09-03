@@ -38,8 +38,8 @@ test("golden path: post job -> match -> offer -> accept -> escrow -> complete ->
   // ── Worker: accept offer ──
   await login(page, "usman@example.com");
   await page.goto("/en/worker/offers");
-  await page.click('[data-testid="accept-offer"]');
-  await expect(page.locator('[data-testid="accept-offer"]')).toHaveCount(0, { timeout: 20_000 });
+  await page.locator('[data-testid="offer-card"]', { hasText: "E2E House Wiring" }).locator('[data-testid="accept-offer"]').click();
+  await expect(page.locator('[data-testid="offer-card"]', { hasText: "E2E House Wiring" }).locator('[data-testid="accept-offer"]')).toHaveCount(0, { timeout: 20_000 });
   await page.context().clearCookies();
 
   // ── Employer: mark completed ──
@@ -64,7 +64,7 @@ test("golden path: post job -> match -> offer -> accept -> escrow -> complete ->
   await page.waitForURL(/\/worker\/my-jobs\//);
 
   // ── Worker: rate the employer ──
-  await page.locator("button", { hasText: /Rate Employer/i }).click();
+  await page.locator("button", { hasText: /Rate This Employer/i }).click();
   await page.locator('[data-testid="overall-stars"] button').nth(4).click();
   await page.click('[data-testid="feedback-submit"]');
   await expect(page.locator('[data-testid="feedback-submit"]')).toHaveCount(0);

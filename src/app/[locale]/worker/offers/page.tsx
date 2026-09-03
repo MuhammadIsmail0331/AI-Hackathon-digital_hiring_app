@@ -193,6 +193,7 @@ export default function WorkerOffersPage() {
               return (
                 <div
                   key={offer.id}
+                  data-testid="offer-card"
                   className="rounded-2xl border border-line bg-surface p-5 shadow-sm"
                 >
                   {/* Header */}
