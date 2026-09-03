@@ -120,6 +120,8 @@ export default function WorkerMyJobDetailPage() {
         return { tone: "warning" as const, label: paymentT("held") };
       case "RELEASED":
         return { tone: "success" as const, label: paymentT("released") };
+      case "REFUNDED":
+        return { tone: "info" as const, label: paymentT("refunded") };
       case "CANCELLED":
         return { tone: "default" as const, label: paymentT("refunded") };
       default:

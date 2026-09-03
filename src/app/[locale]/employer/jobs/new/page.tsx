@@ -47,7 +47,7 @@ export default function CreateJobPage() {
   const [endHour, setEndHour] = useState(5);
   const [endMinute, setEndMinute] = useState(0);
   const [endPeriod, setEndPeriod] = useState<"AM" | "PM">("PM");
-  const [wage, setWage] = useState(2000);
+  const [wage, setWage] = useState("");
   const [tools, setTools] = useState<ToolId[]>([]);
   const [locationName, setLocationName] = useState<CityId | "">("");
   const [description, setDescription] = useState("");
@@ -117,6 +117,11 @@ export default function CreateJobPage() {
       setError(t("fillRequired"));
       return;
     }
+    const wageNum = Number(wage);
+    if (!wageNum || wageNum < 100 || wageNum > 100000) {
+      setError(t("wageInvalid"));
+      return;
+    }
 
     setSubmitting(true);
 
@@ -136,7 +141,7 @@ export default function CreateJobPage() {
           endTimeHour: endHour,
           endTimeMinute: endMinute,
           endTimePeriod: endPeriod,
-          wage,
+          wage: Number(wage || 0),
           toolsRequired: tools,
           locationName,
           locationLat: gpsLat,
@@ -408,9 +413,9 @@ export default function CreateJobPage() {
             </label>
             <div className="flex items-center gap-2">
               <input
-                type="number"
+                type="text" inputMode="numeric" placeholder="2000"
                 value={wage}
-                onChange={(e) => setWage(Math.max(100, Number(e.target.value)))}
+                onChange={(e) => setWage(e.target.value.replace(/[^0-9]/g, ""))}
                 min={100}
                 max={100000}
                 className="w-full rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
@@ -419,7 +424,7 @@ export default function CreateJobPage() {
             </div>
             {numberOfWorkers > 1 && (
               <div className="mt-2 rounded-lg bg-primarysoft px-3 py-2 text-sm font-medium text-primary">
-                {t("totalCost")}: {(wage * numberOfWorkers).toLocaleString()} PKR ({numberOfWorkers} × {wage.toLocaleString()})
+                {t("totalCost")}: {(Number(wage || 0) * numberOfWorkers).toLocaleString()} PKR ({numberOfWorkers} × {Number(wage || 0).toLocaleString()})
               </div>
             )}
           </div>

@@ -37,9 +37,17 @@ export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
     loadNotifications();
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/auth/session")
+      .then((r) => r.json())
+      .then((d) => setRole(d?.user?.role ?? null))
+      .catch(() => setRole(null));
   }, []);
 
   async function loadNotifications() {
@@ -112,8 +120,10 @@ export default function NotificationsPage() {
     } else if (n.data.jobId) {
       if (n.type === "JOB_OFFER") {
         router.push("/worker/offers");
+      } else if (role === "WORKER") {
+        router.push(`/worker/my-jobs/${n.data.jobId}`);
       } else {
-        router.push("/employer/jobs");
+        router.push(`/employer/jobs/${n.data.jobId}`);
       }
     }
   }

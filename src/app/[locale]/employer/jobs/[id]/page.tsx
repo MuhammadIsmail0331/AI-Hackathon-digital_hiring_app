@@ -161,6 +161,7 @@ export default function JobDetailPage() {
     const map: Record<string, { tone: "success" | "warning" | "info" | "default"; label: string }> = {
       SECURED: { tone: "info", label: paymentT("secured") },
       HELD: { tone: "warning", label: paymentT("held") },
+      REFUNDED: { tone: "info", label: paymentT("refunded") },
       RELEASED: { tone: "success", label: paymentT("released") },
       CANCELLED: { tone: "default", label: paymentT("refunded") },
     };
@@ -170,7 +171,7 @@ export default function JobDetailPage() {
   async function handleCancel() {
     setCancelling(true);
     try {
-      const res = await fetch(`/api/employer/jobs/${jobId}`, { method: "DELETE" });
+      const res = await fetch(`/api/employer/jobs/${jobId}/cancel`, { method: "POST" });
       if (res.ok) {
         setJob((prev) =>
           prev
@@ -178,13 +179,16 @@ export default function JobDetailPage() {
                 ...prev,
                 status: "CANCELLED",
                 payment:
-                  prev.payment && prev.payment.status !== "RELEASED"
-                    ? { ...prev.payment, status: "CANCELLED" }
+                  prev.payment &&
+                  ["SECURED", "HELD", "PENDING"].includes(prev.payment.status)
+                    ? { ...prev.payment, status: "REFUNDED" }
                     : prev.payment,
               }
             : null
         );
         setShowCancelConfirm(false);
+        setActionIsError(false);
+        setActionMessage(jcT("jobCancelledRefund"));
       }
     } catch {
       // silently fail
@@ -585,7 +589,7 @@ export default function JobDetailPage() {
             role={actionIsError ? "alert" : "status"}
             className={`mb-4 rounded-lg border p-3 text-sm ${
               actionIsError
-                ? "border-red-200 bg-red-50 text-red-700"
+                ? "border-danger/30 bg-dangersoft text-danger"
                 : "border-success/30 bg-successsoft text-success"
             }`}
           >
@@ -654,13 +658,13 @@ export default function JobDetailPage() {
             {!showDeleteConfirm ? (
               <button
                 onClick={() => setShowDeleteConfirm(true)}
-                className="w-full rounded-xl border border-red-300 bg-white py-3 text-base font-semibold text-red-600 transition hover:bg-red-50"
+                className="w-full rounded-xl border border-danger/30 bg-white py-3 text-base font-semibold text-red-600 transition hover:bg-red-50"
               >
                 {jcT("deleteJob")}
               </button>
             ) : (
-              <div className="rounded-2xl border border-red-200 bg-red-50 p-4">
-                <p className="mb-3 text-sm font-medium text-red-700">{jcT("confirmDelete")}</p>
+              <div className="rounded-2xl border border-danger/30 bg-dangersoft p-4">
+                <p className="mb-3 text-sm font-medium text-danger">{jcT("confirmDelete")}</p>
                 <div className="flex gap-3">
                   <button
                     onClick={async () => {
@@ -678,7 +682,7 @@ export default function JobDetailPage() {
                       } catch {} finally { setDeleting(false); }
                     }}
                     disabled={deleting}
-                    className="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-50"
+                    className="flex-1 rounded-xl bg-danger py-2.5 text-sm font-semibold text-white transition hover:bg-danger/90 disabled:opacity-50"
                   >
                     {deleting ? commonT("loading") : commonT("confirm")}
                   </button>
@@ -704,18 +708,18 @@ export default function JobDetailPage() {
             {!showCancelConfirm ? (
               <button
                 onClick={() => setShowCancelConfirm(true)}
-                className="w-full rounded-xl border border-red-300 bg-white py-3 text-base font-semibold text-red-600 transition hover:bg-red-50"
+                className="w-full rounded-xl border border-danger/30 bg-white py-3 text-base font-semibold text-red-600 transition hover:bg-red-50"
               >
                 {t("cancelJob")}
               </button>
             ) : (
-              <div className="rounded-2xl border border-red-200 bg-red-50 p-4">
-                <p className="mb-3 text-sm font-medium text-red-700">{t("cancelConfirm")}</p>
+              <div className="rounded-2xl border border-danger/30 bg-dangersoft p-4">
+                <p className="mb-3 text-sm font-medium text-danger">{t("cancelConfirm")}</p>
                 <div className="flex gap-3">
                   <button
                     onClick={handleCancel}
                     disabled={cancelling}
-                    className="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-50"
+                    className="flex-1 rounded-xl bg-danger py-2.5 text-sm font-semibold text-white transition hover:bg-danger/90 disabled:opacity-50"
                   >
                     {cancelling ? commonT("loading") : commonT("confirm")}
                   </button>

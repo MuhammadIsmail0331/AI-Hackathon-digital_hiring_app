@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
 import { jobSchema } from "@/lib/validation/job.schemas";
@@ -139,9 +139,12 @@ export async function POST(request: Request) {
       excludeIds
     );
 
+    // Relevance cap: enough candidates to fill positions quickly without spamming
+    const cappedMatches = matches.slice(0, Math.max(10, job.numberOfWorkers * 3));
+
     // Create JobOffer records for matched professionals
-    if (matches.length > 0) {
-      const offerData = matches.map((m) => ({
+    if (cappedMatches.length > 0) {
+      const offerData = cappedMatches.map((m) => ({
         jobId: job.id,
         workerId: m.userId,
         status: "PENDING" as const,
@@ -157,12 +160,31 @@ export async function POST(request: Request) {
 
       // Notify matched workers about new job offers
       await createBulkNotifications(
-        matches.map((m) => m.userId),
+        cappedMatches.map((m) => m.userId),
         "JOB_OFFER",
         "New Job Offer",
         `${user.name} has posted a job: "${job.title}". Check your offers!`,
         { jobId: job.id, fromUserId: user.id, fromUserName: user.name }
       );
+    }
+
+    // No immediate matches: start the background search right away (best-effort).
+    // The Vercel cron stays as a backstop for extending/processing the search.
+    if (cappedMatches.length === 0) {
+      try {
+        await db.job.update({
+          where: { id: job.id },
+          data: { backgroundSearchUntil: new Date(Date.now() + 60 * 60 * 1000) },
+        });
+        await fetch(new URL("/api/cron/background-search", request.url), {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.CRON_SECRET ?? ""}`,
+          },
+        }).catch(() => {});
+      } catch {
+        // best-effort only
+      }
     }
 
     return NextResponse.json(
@@ -172,8 +194,9 @@ export async function POST(request: Request) {
           requiredSkills: JSON.parse(job.requiredSkills || "[]"),
           toolsRequired: JSON.parse(job.toolsRequired || "[]"),
         },
-        matches,
-        noMatches: matches.length === 0,
+        matches: cappedMatches,
+        totalMatches: matches.length,
+        noMatches: cappedMatches.length === 0,
       },
       { status: 201 }
     );

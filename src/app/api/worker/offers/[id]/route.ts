@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
-import { createNotification } from "@/lib/notifications";
+import { createNotification, createBulkNotifications } from "@/lib/notifications";
 import { WORKER_CATEGORIES, PAKISTAN_CITIES } from "@/lib/constants";
 
 function categoryLabel(id: string | null | undefined) {
@@ -264,15 +264,13 @@ export async function PUT(request: Request, { params }: RouteContext) {
 
     // 3. Auto-declined workers are informed the positions were filled
     if (result.autoDeclinedWorkerIds?.length) {
-      for (const workerId of result.autoDeclinedWorkerIds) {
-        await createNotification(
-          workerId,
-          "JOB_DECLINED",
-          "Offer No Longer Available",
-          `All positions for "${offer.job.title}" have been filled. Keep browsing — new jobs are posted every day!`,
-          { jobId: offer.job.id, offerId: id, link: "/worker/jobs" }
-        );
-      }
+      await createBulkNotifications(
+        result.autoDeclinedWorkerIds,
+        "JOB_DECLINED",
+        "Offer No Longer Available",
+        `All positions for "${offer.job.title}" have been filled. Keep browsing — new jobs are posted every day!`,
+        { jobId: offer.job.id, offerId: id, link: "/worker/jobs" }
+      );
     }
 
     // 4. If the payment moved into escrow on acceptance, tell the worker
