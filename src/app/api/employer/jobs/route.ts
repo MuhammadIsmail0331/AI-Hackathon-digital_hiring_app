@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
 import { jobSchema } from "@/lib/validation/job.schemas";
@@ -16,9 +16,6 @@ export async function GET() {
     const user = await resolveSessionUser();
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    if (user.role !== "EMPLOYER") {
-      return NextResponse.json({ error: "Employers only" }, { status: 403 });
     }
 
     const jobs = await db.job.findMany({
@@ -62,9 +59,6 @@ export async function POST(request: Request) {
     const user = await resolveSessionUser();
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    if (user.role !== "EMPLOYER") {
-      return NextResponse.json({ error: "Employers only" }, { status: 403 });
     }
 
     const body = await request.json();

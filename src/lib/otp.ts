@@ -1,4 +1,4 @@
-import crypto from "crypto";
+﻿import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 
@@ -8,8 +8,8 @@ const OTP_MAX_ATTEMPTS = 5; // max wrong attempts before lockout
 const OTP_LOCKOUT_MS = 15 * 60 * 1000; // 15-minute lockout after max attempts
 const OTP_VERIFIED_WINDOW_MS = 10 * 60 * 1000; // verified OTP valid for 10 min
 
-function isDev(): boolean {
-  return process.env.NODE_ENV !== "production";
+function smsDeliveryConfigured(): boolean {
+  return Boolean(process.env.SMS_PROVIDER);
 }
 
 /**
@@ -40,7 +40,7 @@ export async function generateOTP(
   });
 
   // Only return plaintext code in development
-  return { otpId: otp.id, code: isDev() ? code : null };
+  return { otpId: otp.id, code: smsDeliveryConfigured() ? null : code };
 }
 
 /**

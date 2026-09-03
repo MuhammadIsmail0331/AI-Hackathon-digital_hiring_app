@@ -8,7 +8,7 @@ import { routing } from "@/i18n/routing";
 import "../globals.css";
 import RouteLoader from "@/components/ui/RouteLoader";
 import { Toaster } from "sonner";
-import { SideRails } from "@/components/layout/SideRails";
+import { SideGarland } from "@/components/layout/SideGarland";
 import { BrandAccent } from "@/components/ui/BrandAccent";
 
 const sora = Sora({ subsets: ["latin"], weight: ["600", "700", "800"], variable: "--font-sora", display: "swap" });
@@ -65,7 +65,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="flex min-h-screen flex-col bg-canvas text-ink antialiased">
-        <SideRails />
+        <SideGarland />
         <NextIntlClientProvider messages={messages}>
           {/* Keyboard users can jump straight past the navbar */}
           <a

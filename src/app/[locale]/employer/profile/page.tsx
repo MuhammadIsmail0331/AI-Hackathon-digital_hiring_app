@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -184,7 +184,7 @@ export default function EmployerProfilePage() {
           </h2>
 
           {error && (
-            <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>
+            <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-danger">{error}</div>
           )}
           {success && (
             <div role="status" className="mb-4 rounded-xl border border-success/30 bg-successsoft p-4 text-sm text-success">{t("profileSaved")}</div>
@@ -202,7 +202,7 @@ export default function EmployerProfilePage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 maxLength={100}
-                className="w-full rounded-xl border border-line px-4 py-3 text-base outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full rounded-xl border border-line px-4 py-3 text-base outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-primarysoft"
               />
               <p className="mt-1.5 text-xs text-muted">{t("nameHint")}</p>
             </div>
@@ -218,7 +218,7 @@ export default function EmployerProfilePage() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="03001234567"
-                className="w-full rounded-xl border border-line px-4 py-3 text-base outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full rounded-xl border border-line px-4 py-3 text-base outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-primarysoft"
               />
               <p className="mt-1.5 text-xs text-muted">{t("phoneHint")}</p>
             </div>
@@ -234,7 +234,7 @@ export default function EmployerProfilePage() {
                 value={profile.email}
                 readOnly
                 disabled
-                className="w-full cursor-not-allowed rounded-xl border border-line bg-gray-50 px-4 py-3 text-base text-muted"
+                className="w-full cursor-not-allowed rounded-xl border border-line bg-surface2 px-4 py-3 text-base text-muted"
               />
               <p className="mt-1.5 text-xs text-muted">{t("emailHint")}</p>
             </div>

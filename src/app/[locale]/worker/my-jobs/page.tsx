@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -174,7 +174,7 @@ export default function WorkerMyJobsPage() {
 
         {/* Payment status */}
         {payment && (
-          <div className="mb-3 flex items-center justify-between rounded-lg bg-gray-50 p-3">
+          <div className="mb-3 flex items-center justify-between rounded-lg bg-surface2 p-3">
             <span className="text-xs font-medium text-muted">{t("payment")}</span>
             <Badge tone={payment.tone}>{payment.label}</Badge>
           </div>

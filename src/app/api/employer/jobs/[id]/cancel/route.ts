@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
 import { createBulkNotifications } from "@/lib/notifications";
@@ -23,9 +23,6 @@ export async function POST(_req: Request, { params }: RouteContext) {
     const user = await resolveSessionUser();
     if (!user || user.isBlocked) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    if (user.role !== "EMPLOYER") {
-      return NextResponse.json({ error: "Employers only" }, { status: 403 });
     }
 
     const { id } = await params;

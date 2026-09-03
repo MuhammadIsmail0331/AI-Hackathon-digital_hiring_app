@@ -80,9 +80,6 @@ export async function GET() {
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    if (user.role !== "WORKER") {
-      return NextResponse.json({ error: "Workers only" }, { status: 403 });
-    }
 
     const offers = await db.jobOffer.findMany({
       where: { workerId: user.id, status: "ACCEPTED" },
@@ -101,7 +98,7 @@ export async function GET() {
       .filter((o) => o.job.status === "COMPLETED")
       .map(toJobCard);
 
-    const profile = await db.workerProfile.findUnique({
+    const profile = await db.workerProfile.findFirst({
       where: { userId: user.id },
       select: { avgRating: true },
     });

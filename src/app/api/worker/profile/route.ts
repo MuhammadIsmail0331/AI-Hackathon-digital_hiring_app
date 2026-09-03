@@ -1,11 +1,33 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
 import { profileSchema } from "@/lib/validation/profile.schemas";
+import { MAX_PROFILES_PER_WORKER } from "@/lib/constants";
+
+function parseProfile(p: {
+  id: string;
+  workerType: string;
+  skills: string;
+  experience: number;
+  locationName: string | null;
+  expectedWage: number;
+  isAvailable: boolean;
+  availableDays: string;
+  bio: string | null;
+  avgRating: number;
+  totalJobs: number;
+}) {
+  return {
+    ...p,
+    skills: JSON.parse(p.skills || "[]"),
+    availableDays: JSON.parse(p.availableDays || "[]"),
+  };
+}
 
 /**
  * GET /api/worker/profile
- * Fetches the authenticated worker's profile.
+ * Returns all professions for the authenticated worker.
+ * Backward compatible: `profile` = primary (first) profile.
  */
 export async function GET() {
   try {
@@ -14,27 +36,16 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const profile = await db.workerProfile.findUnique({
+    const profiles = await db.workerProfile.findMany({
       where: { userId: user.id },
-      include: {
-        user: {
-          select: { name: true, email: true, phone: true },
-        },
-      },
+      orderBy: { createdAt: "asc" },
     });
 
-    if (!profile) {
-      return NextResponse.json({ profile: null }, { status: 200 });
-    }
-
-    // Parse JSON fields
-    const parsed = {
-      ...profile,
-      skills: JSON.parse(profile.skills || "[]"),
-      availableDays: JSON.parse(profile.availableDays || "[]"),
-    };
-
-    return NextResponse.json({ profile: parsed }, { status: 200 });
+    const parsed = profiles.map(parseProfile);
+    return NextResponse.json(
+      { profile: parsed[0] ?? null, profiles: parsed },
+      { status: 200 }
+    );
   } catch {
     return NextResponse.json(
       { error: "Failed to fetch profile" },
@@ -45,7 +56,8 @@ export async function GET() {
 
 /**
  * PUT /api/worker/profile
- * Creates or updates the authenticated worker's profile.
+ * Creates or updates ONE profession profile (identified by userId + workerType).
+ * Dual-mode: any authenticated user may hold worker profiles.
  */
 export async function PUT(request: Request) {
   try {
@@ -54,14 +66,8 @@ export async function PUT(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Verify user is a worker
-    if (user.role !== "WORKER") {
-      return NextResponse.json({ error: "Only workers can create profiles" }, { status: 403 });
-    }
-
     const body = await request.json();
     const parsed = profileSchema.safeParse(body);
-
     if (!parsed.success) {
       return NextResponse.json(
         { error: parsed.error.issues[0].message },
@@ -71,31 +77,37 @@ export async function PUT(request: Request) {
 
     const data = parsed.data;
 
-    // Upsert worker profile
-    const profile = await db.workerProfile.upsert({
-      where: { userId: user.id },
-      create: {
-        userId: user.id,
-        workerType: data.workerType,
-        skills: JSON.stringify(data.skills),
-        experience: data.experience,
-        locationName: data.locationName,
-        expectedWage: data.expectedWage,
-        isAvailable: data.isAvailable,
-        availableDays: JSON.stringify(data.availableDays),
-        bio: data.bio || null,
-      },
-      update: {
-        workerType: data.workerType,
-        skills: JSON.stringify(data.skills),
-        experience: data.experience,
-        locationName: data.locationName,
-        expectedWage: data.expectedWage,
-        isAvailable: data.isAvailable,
-        availableDays: JSON.stringify(data.availableDays),
-        bio: data.bio || null,
-      },
+    const existing = await db.workerProfile.findFirst({
+      where: { userId: user.id, workerType: data.workerType },
     });
+
+    const count = await db.workerProfile.count({ where: { userId: user.id } });
+    if (!existing && count >= MAX_PROFILES_PER_WORKER) {
+      return NextResponse.json(
+        { error: `You can add up to ${MAX_PROFILES_PER_WORKER} professions` },
+        { status: 400 }
+      );
+    }
+
+    const profileData = {
+      workerType: data.workerType,
+      skills: JSON.stringify(data.skills),
+      experience: data.experience,
+      locationName: data.locationName,
+      expectedWage: data.expectedWage,
+      isAvailable: data.isAvailable,
+      availableDays: JSON.stringify(data.availableDays),
+      bio: data.bio || null,
+    };
+
+    const profile = existing
+      ? await db.workerProfile.update({
+          where: { id: existing.id },
+          data: profileData,
+        })
+      : await db.workerProfile.create({
+          data: { userId: user.id, ...profileData },
+        });
 
     return NextResponse.json(
       { profile, message: "Profile saved successfully" },

@@ -26,7 +26,7 @@ model User {
   updatedAt      DateTime @updatedAt
 
   // Relations
-  workerProfile  WorkerProfile?
+  workerProfiles WorkerProfile[]
   jobsCreated    Job[]              @relation("EmployerJobs")
   offers         JobOffer[]
   notifications  Notification[]
@@ -40,7 +40,7 @@ model User {
 // ─── Worker Profile ──────────────────────────────────────
 model WorkerProfile {
   id           String  @id @default(uuid())
-  userId       String  @unique
+  userId       String  
   // Category: "painter", "plumber", etc.
   workerType   String
   // JSON array of skill IDs, e.g. '["painting","wallpaper"]'
@@ -60,6 +60,7 @@ model WorkerProfile {
   totalJobs    Int     @default(0)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  @@unique([userId, workerType], map: "worker_user_type")
 
   // Relation
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

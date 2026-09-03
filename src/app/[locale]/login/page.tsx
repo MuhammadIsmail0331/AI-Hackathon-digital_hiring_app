@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -34,7 +34,9 @@ export default function LoginPage() {
       if (result?.error) {
         setError(t("invalidCredentials"));
       } else {
-        router.push("/");
+          const session = await fetch("/api/auth/session").then((r) => r.json());
+          const role = session?.user?.role === "EMPLOYER" ? "employer" : "worker";
+          router.push(`/${role}/dashboard`);
         router.refresh();
       }
     } catch {

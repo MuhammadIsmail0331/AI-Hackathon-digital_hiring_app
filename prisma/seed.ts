@@ -106,7 +106,7 @@ async function main() {
         role: "WORKER",
         language: spec.language ?? "en",
         phoneVerified: true,
-        workerProfile: {
+        workerProfiles: {
           create: {
             workerType: spec.workerType,
             skills: JSON.stringify(spec.skills),

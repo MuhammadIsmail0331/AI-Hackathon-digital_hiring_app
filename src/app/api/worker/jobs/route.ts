@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
 
@@ -70,7 +70,7 @@ export async function GET(request: Request) {
     ]);
 
     // Check if worker has a profile for skill matching
-    const profile = await db.workerProfile.findUnique({
+    const profile = await db.workerProfile.findFirst({
       where: { userId: user.id },
       select: { workerType: true, skills: true },
     });

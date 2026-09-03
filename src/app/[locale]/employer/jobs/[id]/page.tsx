@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -330,7 +330,7 @@ export default function JobDetailPage() {
 
           {/* Date + Time */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl bg-gray-50 p-3">
+            <div className="rounded-xl bg-surface2 p-3">
               <div className="text-xs text-muted">{t("jobDate")}</div>
               <div className="mt-0.5 text-sm font-semibold text-ink">
                 {new Date(job.date).toLocaleDateString(locale === "ur" ? "ur-PK" : "en-PK", {
@@ -338,20 +338,20 @@ export default function JobDetailPage() {
                 })}
               </div>
             </div>
-            <div className="rounded-xl bg-gray-50 p-3">
+            <div className="rounded-xl bg-surface2 p-3">
               <div className="text-xs text-muted">{t("peopleNeeded")}</div>
               <div className="mt-0.5 text-sm font-semibold text-ink">{job.numberOfWorkers}</div>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl bg-gray-50 p-3">
+            <div className="rounded-xl bg-surface2 p-3">
               <div className="text-xs text-muted">{t("startTime")}</div>
               <div className="mt-0.5 text-sm font-semibold text-ink">
                 {formatTime(job.startTimeHour, job.startTimeMinute, job.startTimePeriod)}
               </div>
             </div>
-            <div className="rounded-xl bg-gray-50 p-3">
+            <div className="rounded-xl bg-surface2 p-3">
               <div className="text-xs text-muted">{t("endTime")}</div>
               <div className="mt-0.5 text-sm font-semibold text-ink">
                 {formatTime(job.endTimeHour, job.endTimeMinute, job.endTimePeriod)}
@@ -403,7 +403,7 @@ export default function JobDetailPage() {
 
         {/* Payment / Escrow Card */}
         {(canSecure || payment) && (
-          <div className={`mb-6 rounded-2xl border bg-white p-5 shadow-sm ${canSecure ? "border-primary/30" : "border-line"}`}>
+          <div className={`mb-6 rounded-2xl border bg-surface p-5 shadow-sm ${canSecure ? "border-primary/30" : "border-line"}`}>
             <div className="mb-3 flex items-center justify-between">
               <h2 className="flex items-center gap-2 text-lg font-semibold text-ink">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
@@ -420,7 +420,7 @@ export default function JobDetailPage() {
             </div>
 
             {/* Amount */}
-            <div className="mb-3 rounded-xl bg-gray-50 p-3">
+            <div className="mb-3 rounded-xl bg-surface2 p-3">
               <div className="text-xs text-muted">{paymentT("total")}</div>
               <div className="mt-0.5 text-lg font-bold text-ink">
                 {(payment?.totalAmount ?? paymentTotal).toLocaleString()} PKR

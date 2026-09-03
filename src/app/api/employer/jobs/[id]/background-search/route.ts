@@ -23,9 +23,6 @@ export async function POST(_req: Request, { params }: RouteContext) {
     if (!user || user.isBlocked) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    if (user.role !== "EMPLOYER") {
-      return NextResponse.json({ error: "Employers only" }, { status: 403 });
-    }
 
     const { id } = await params;
     const body = await _req.json();

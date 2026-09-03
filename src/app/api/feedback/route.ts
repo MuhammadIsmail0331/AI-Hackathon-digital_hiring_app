@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
 import { feedbackSchema } from "@/lib/validation/feedback.schemas";
@@ -152,7 +152,7 @@ async function recalculateWorkerRating(workerId: string): Promise<void> {
   const avgRating =
     feedbacks.reduce((sum, f) => sum + f.overallRating, 0) / feedbacks.length;
 
-  await db.workerProfile.update({
+  await db.workerProfile.updateMany({
     where: { userId: workerId },
     data: {
       avgRating: Math.round(avgRating * 10) / 10,

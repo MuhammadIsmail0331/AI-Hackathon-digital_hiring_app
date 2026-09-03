@@ -243,3 +243,6 @@ export function categoryGradient(id: string) {
 
 /** Configurable national daily minimum for the Fair Wage badge (PKR). */
 export const MIN_DAILY_WAGE = 1500;
+
+/** Max professions one worker account can hold. */
+export const MAX_PROFILES_PER_WORKER = 3;

@@ -132,7 +132,9 @@
     "notifications": "اطلاعات",
     "terms": "شرائط",
     "report": "مسئلہ رپورٹ",
-    "browseJobs": "نوکریاں تلاش کریں"
+    "browseJobs": "نوکریاں تلاش کریں",
+    "modeWork": "کام تلاش کریں",
+    "modeHire": "مزدور تلاش کریں"
   },
   "Profile": {
     "title": "میری پروفائل",
@@ -165,7 +167,13 @@
     "yearsExp": "سال تجربہ",
     "pkr": "روپے",
     "noProfile": "ابھی تک پروفائل نہیں ہے۔ نوکری کی پیشکشیں حاصل کرنے کے لیے اپنی پروفائل مکمل کریں۔",
-    "setupProfile": "پروفائل بنائیں"
+    "setupProfile": "پروفائل بنائیں",
+    "savedToast": "پروفائل محفوظ ہو گئی",
+    "myProfessions": "میرے پیشے",
+    "addProfession": "پیشہ شامل کریں",
+    "editProfession": "ترمیم",
+    "professionLocked": "ترمیم کے دوران پیشہ مقفل ہے - نئی پیشہ شامل کریں",
+    "limitReached": "آپ 3 پیشے تک شامل کر سکتے ہیں"
   },
   "Dashboard": {
     "welcome": "خوش آمدید",

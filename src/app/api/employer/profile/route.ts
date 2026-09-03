@@ -14,12 +14,6 @@ export async function GET() {
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    if (user.role !== "EMPLOYER") {
-      return NextResponse.json(
-        { error: "Employers only" },
-        { status: 403 }
-      );
-    }
 
     const account = await db.user.findUnique({
       where: { id: user.id },
@@ -74,12 +68,6 @@ export async function PUT(request: Request) {
     const user = await resolveSessionUser();
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    if (user.role !== "EMPLOYER") {
-      return NextResponse.json(
-        { error: "Employers only" },
-        { status: 403 }
-      );
     }
 
     const body = await request.json();

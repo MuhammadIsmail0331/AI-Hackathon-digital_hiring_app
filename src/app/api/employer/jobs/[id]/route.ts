@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
 
@@ -30,7 +30,7 @@ export async function GET(_req: Request, { params }: RouteContext) {
                 id: true,
                 name: true,
                 phone: true,
-                workerProfile: {
+                workerProfiles: {
                   select: {
                     workerType: true,
                     skills: true,
@@ -70,10 +70,10 @@ export async function GET(_req: Request, { params }: RouteContext) {
         workerName: o.worker.name,
         // Reveal phone only after acceptance
         workerPhone: o.status === "ACCEPTED" ? o.worker.phone : null,
-        workerProfile: o.worker.workerProfile
+        workerProfile: o.worker.workerProfiles[0] ?? null
           ? {
-              ...o.worker.workerProfile,
-              skills: JSON.parse(o.worker.workerProfile.skills || "[]"),
+              ...o.worker.workerProfiles[0] ?? {},
+              skills: JSON.parse(o.worker.workerProfiles[0]?.skills || "[]"),
             }
           : null,
         status: o.status,

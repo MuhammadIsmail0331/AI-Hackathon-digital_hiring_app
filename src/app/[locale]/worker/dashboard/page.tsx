@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -329,7 +329,7 @@ export default function WorkerDashboardPage() {
 
               {/* Location + Wage Row */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-xl bg-gray-50 p-3">
+                <div className="rounded-xl bg-surface2 p-3">
                   <div className="text-xs text-muted">
                     {profileT("location")}
                   </div>
@@ -339,7 +339,7 @@ export default function WorkerDashboardPage() {
                       : "—"}
                   </div>
                 </div>
-                <div className="rounded-xl bg-gray-50 p-3">
+                <div className="rounded-xl bg-surface2 p-3">
                   <div className="text-xs text-muted">
                     {profileT("expectedWage")}
                   </div>
@@ -404,7 +404,7 @@ export default function WorkerDashboardPage() {
                     <Link
                       key={job.jobId}
                       href={`/worker/my-jobs/${job.jobId}`}
-                      className="block rounded-xl border border-line bg-gray-50 p-4 transition hover:border-primary/30 hover:bg-primarysoft"
+                      className="block rounded-xl border border-line bg-surface2 p-4 transition hover:border-primary/30 hover:bg-primarysoft"
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div>

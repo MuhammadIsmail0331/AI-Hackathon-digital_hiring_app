@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { celebrate } from "@/lib/celebrate";
 
 import { useState, useEffect } from "react";
