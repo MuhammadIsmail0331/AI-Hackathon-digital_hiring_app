@@ -1,4 +1,4 @@
-# 🗺️ Roadmap — "Regionals Ready"
+﻿# 🗺️ Roadmap — "Regionals Ready"
 
 > **GitHub tracking:** #1 master tracker · #2 Phase 0 · #3 Phase 1 · #4 Phase 2 · #5 Phase 3 · #6 Phase 4 · #7 Phase 5 (sub-issue hierarchy API needs broader token scope — checklist references used instead)
 
@@ -71,3 +71,6 @@
 | 2026-09-03 | Local dev server verified: `npm run dev` → HTTP 200 on `/en` with seeded data — owner starts manual demo-user testing against `localhost:3000` (Vercel URL still serves old `main` + ephemeral SQLite until Phase 1 deploy) |
 | 2026-09-03 | **Neon Postgres migration complete**: schema provider → postgresql; libsql adapter + deps removed; schema pushed + seeded on Neon (verified 16/12/6/5/3/3/8/1); build green; local server stopped per owner preference (live-URL testing only) |
 | 2026-09-03 | **Secrets incident handled**: `tmp/vercel-env.cjs` with hardcoded AUTH_SECRET/CRON_SECRET/Turso token was committed → removed from repo; values rotated; Turso abandoned (token moot); security headers added; vercel.json cron added. Deploy pending Vercel CLI auth |
+| 2026-09-03 | **PHASE 1 COMPLETE** — All boxes green: Neon Postgres live in prod, cancel-job w/ escrow refund, auto-expiry, role-aware notification links (reported bug FIXED), wage input fix, batched notifications, security headers, cron (daily on Hobby; 10-min cadence via external cron documented), E2E suite 4/4 green (`npm run test:e2e`), deployed + login verified live
+| 2026-09-03 | Key finds during E2E: (1) NextAuth v5 needs `trustHost: true` in production (dev masks it); (2) `.env.local` overrides `.env` — had stale SQLite URL breaking prod-server login; (3) stale `authjs.callback-url` cookie from the misconfigured era caused wrong redirects (fresh sessions clean); (4) Playwright webServer must use `npm run start` (dev cold-compile too slow)
+| 2026-09-03 | Live: https://digital-hiring-app-five.vercel.app — login verified for worker (usman) and employer (sara); cron ran; deployment protection explains raw-URL redirects
