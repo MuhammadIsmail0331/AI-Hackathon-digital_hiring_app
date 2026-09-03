@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
 
@@ -48,6 +48,7 @@ export async function GET() {
       id: o.id,
       status: o.status,
       matchScore: o.matchScore,
+      matchReason: o.matchReason,
       createdAt: o.createdAt,
       job: {
         ...o.job,

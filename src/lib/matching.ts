@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+﻿import { db } from "@/lib/db";
 import { CITY_COORDINATES } from "@/lib/constants";
 import { getSearchRadiusKm } from "@/lib/system-config";
 import type { CityId } from "@/lib/constants";
@@ -24,6 +24,8 @@ export interface MatchResult {
   totalJobs: number;
   locationName: string | null;
   matchScore: number;
+  /** Human-readable match explanation. */
+  reason: string;
 }
 
 /**
@@ -145,6 +147,23 @@ export async function findMatchingProfessionals(
       skillScore + wageScore + expScore + ratingScore + availScore
     );
 
+    const reasonParts: string[] = [];
+    const skillPct =
+      requiredSkills.length > 0
+        ? Math.round((matchingSkills.length / requiredSkills.length) * 100)
+        : 100;
+    reasonParts.push(`${skillPct}% skill match`);
+    const distKm =
+      jobCoords && workerCoords
+        ? haversineKm(jobCoords.lat, jobCoords.lng, workerCoords.lat, workerCoords.lng)
+        : null;
+    if (distKm != null) reasonParts.push(`${distKm.toFixed(1)} km away`);
+    reasonParts.push(
+      job.wage >= w.expectedWage
+        ? "wage meets expectation"
+        : "wage below expectation"
+    );
+
     results.push({
       userId: w.user.id,
       name: w.user.name,
@@ -156,6 +175,7 @@ export async function findMatchingProfessionals(
       totalJobs: w.totalJobs,
       locationName: w.locationName,
       matchScore: totalScore,
+      reason: reasonParts.join(' | '),
     });
   }
 

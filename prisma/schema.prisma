@@ -117,6 +117,7 @@ model JobOffer {
   // "PENDING" | "ACCEPTED" | "DECLINED"
   status     String   @default("PENDING")
   matchScore Float?
+  matchReason String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 

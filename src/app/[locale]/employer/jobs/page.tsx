@@ -6,7 +6,7 @@ import { Link } from "@/i18n/navigation";
 import Navbar from "@/components/layout/Navbar";
 import { EmployerBottomNav } from "@/components/layout/EmployerBottomNav";
 import { Badge } from "@/components/ui";
-import { WORKER_CATEGORIES } from "@/lib/constants";
+import { WORKER_CATEGORIES, MIN_DAILY_WAGE } from "@/lib/constants";
 
 interface JobItem {
   id: string;
@@ -140,6 +140,7 @@ export default function EmployerJobsPage() {
                       <span className="text-sm font-semibold text-ink">
                         {job.wage.toLocaleString()} PKR
                       </span>
+                      {job.wage >= MIN_DAILY_WAGE && (<span className="ms-2 rounded-full bg-successsoft px-2 py-0.5 text-[10px] font-bold text-success">✓ Fair</span>)}
                       {job.offerCounts && (
                         <span className="text-xs text-muted">
                           {accepted}/{job.numberOfWorkers} {t("professionals")}

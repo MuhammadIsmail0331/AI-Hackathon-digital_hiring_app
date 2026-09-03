@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
+import { toast } from "sonner";
 import Navbar from "@/components/layout/Navbar";
 import { EmployerBottomNav } from "@/components/layout/EmployerBottomNav";
 import {
@@ -14,7 +15,7 @@ import {
   TimeSelector,
   Badge,
 } from "@/components/ui";
-import { WORKER_CATEGORIES, SKILLS_MAP, EXPERIENCE_LEVELS } from "@/lib/constants";
+import { WORKER_CATEGORIES, SKILLS_MAP, EXPERIENCE_LEVELS, MIN_DAILY_WAGE } from "@/lib/constants";
 import type { WorkerCategoryId, ToolId, CityId } from "@/lib/constants";
 
 interface MatchCandidate {
@@ -62,7 +63,47 @@ export default function CreateJobPage() {
   const [showMatches, setShowMatches] = useState(false);
   const [noMatches, setNoMatches] = useState(false);
   const [createdJobId, setCreatedJobId] = useState<string | null>(null);
+  const [aiText, setAiText] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiNote, setAiNote] = useState("");
+  const [wageStats, setWageStats] = useState<{ min: number; max: number; count: number } | null>(null);
+  const fairWage = Number(wage || 0) >= MIN_DAILY_WAGE;
 
+  async function handleAiFill() {
+    setAiLoading(true);
+    setAiNote("");
+    try {
+      const res = await fetch("/api/ai/parse-job", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: aiText }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || t("aiError"));
+        return;
+      }
+      const p = data.parsed;
+      if (p.title) setTitle(p.title);
+      if (p.workerType) setWorkerType(p.workerType);
+      if (p.requiredSkills?.length) setSkills(p.requiredSkills);
+      if (p.numberOfWorkers) setNumberOfWorkers(p.numberOfWorkers);
+      if (p.date) setDate(p.date);
+      if (p.wage) setWage(String(p.wage));
+      if (p.city) setLocationName(p.city);
+      if (p.startTimeHour) {
+        setStartHour(p.startTimeHour);
+        setStartMinute(p.startTimeMinute ?? 0);
+        setStartPeriod(p.startTimePeriod ?? "AM");
+      }
+      setAiNote(t("aiApplied"));
+      toast.success(t("aiApplied"));
+    } catch {
+      setError(t("aiError"));
+    } finally {
+      setAiLoading(false);
+    }
+  }
   function getCategoryName(id: string) {
     return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || id;
   }
@@ -318,6 +359,31 @@ export default function CreateJobPage() {
         )}
 
         <div className="space-y-6">
+          {/* AI Job Assistant */}
+          <div className="rounded-2xl border border-primary/30 bg-gradient-to-br from-primarysoft to-accentsoft p-5 shadow-sm">
+            <div className="mb-2 flex items-center gap-2">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-xs font-bold text-white">AI</span>
+              <h2 className="text-base font-bold text-ink">{t("aiTitle")}</h2>
+            </div>
+            <p className="mb-3 text-xs text-muted">{t("aiHint")}</p>
+            <textarea
+              value={aiText}
+              onChange={(e) => setAiText(e.target.value)}
+              rows={2}
+              maxLength={400}
+              placeholder={t("aiPlaceholder")}
+              className="w-full resize-none rounded-xl border border-line bg-surface px-4 py-3 text-sm text-ink outline-none transition focus:border-primary focus:ring-2 focus:ring-primarysoft"
+            />
+            <button
+              type="button"
+              onClick={handleAiFill}
+              disabled={aiLoading || aiText.trim().length < 8}
+              className="mt-2 w-full rounded-xl bg-primary py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primarystrong disabled:opacity-50"
+            >
+              {aiLoading ? t("aiWorking") : t("aiButton")}
+            </button>
+            {aiNote && <p className="mt-2 text-xs font-semibold text-primary">{aiNote}</p>}
+          </div>
           {/* Job Title */}
           <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
             <label className="mb-2 block text-sm font-semibold text-ink">
@@ -422,6 +488,16 @@ export default function CreateJobPage() {
               />
               <span className="whitespace-nowrap text-sm font-semibold text-muted">PKR</span>
             </div>
+          {fairWage && (
+            <div className="inline-flex items-center gap-1 rounded-full bg-successsoft px-3 py-1 text-xs font-bold text-success">
+              ✓ {t("fairWage")}
+            </div>
+          )}
+          {wageStats && (
+            <p className="text-xs text-muted">
+              💡 {t("wageTypical", { min: wageStats.min.toLocaleString(), max: wageStats.max.toLocaleString(), count: wageStats.count })}
+            </p>
+          )}
             {numberOfWorkers > 1 && (
               <div className="mt-2 rounded-lg bg-primarysoft px-3 py-2 text-sm font-medium text-primary">
                 {t("totalCost")}: {(Number(wage || 0) * numberOfWorkers).toLocaleString()} PKR ({numberOfWorkers} × {Number(wage || 0).toLocaleString()})
