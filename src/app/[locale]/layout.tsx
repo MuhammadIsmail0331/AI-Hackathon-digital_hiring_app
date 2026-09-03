@@ -1,4 +1,4 @@
-﻿import type { Metadata, Viewport } from "next";
+import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { hasLocale } from "next-intl";
@@ -81,10 +81,10 @@ export default async function LocaleLayout({ children, params }: Props) {
           <RouteLoader />
           <SessionSplash />
           <Toaster richColors position="top-center" toastOptions={{ classNames: { toast: "font-sans" } }} />
-          <div id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
+          <div id="main-content" tabIndex={-1} className="relative z-10 flex flex-1 flex-col focus:outline-none">
             {children}
           </div>
-          <footer className="mt-auto">
+          <footer className="relative z-10 mt-auto">
             <BrandAccent height="sm" />
             <div className="bg-surface py-3 pb-20 text-center sm:pb-3">
               <p className="text-xs text-muted">
