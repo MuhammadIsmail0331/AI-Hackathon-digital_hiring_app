@@ -7,6 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 import { EmployerBottomNav } from "@/components/layout/EmployerBottomNav";
 import { Badge } from "@/components/ui";
 import { WORKER_CATEGORIES, MIN_DAILY_WAGE } from "@/lib/constants";
+import { prettyLabel } from "@/lib/labels";
 
 interface JobItem {
   id: string;
@@ -49,7 +50,7 @@ export default function EmployerJobsPage() {
   }, []);
 
   function getCategoryName(id: string) {
-    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || id;
+    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getStatusBadge(status: string) {

@@ -12,6 +12,7 @@ import {
   SKILLS_MAP,
   EXPERIENCE_LEVELS,
 } from "@/lib/constants";
+import { prettyLabel } from "@/lib/labels";
 
 interface SessionUser {
   name?: string | null;
@@ -106,11 +107,11 @@ export default function WorkerDashboardPage() {
 
   // Safe lookups using constants
   function getCategoryName(id: string) {
-    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || id;
+    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getCityName(id: string) {
-    return PAKISTAN_CITIES.find((c) => c.id === id)?.[locale] || id;
+    return PAKISTAN_CITIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getSkillName(id: string) {

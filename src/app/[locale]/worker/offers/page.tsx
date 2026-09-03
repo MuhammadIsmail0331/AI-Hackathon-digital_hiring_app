@@ -1,5 +1,6 @@
 "use client";
 import { celebrate } from "@/lib/celebrate";
+import { prettyLabel } from "@/lib/labels";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -70,12 +71,12 @@ export default function WorkerOffersPage() {
   }, []);
 
   function getCategoryName(id: string) {
-    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || id;
+    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getCityName(id: string | null) {
     if (!id) return "—";
-    return PAKISTAN_CITIES.find((c) => c.id === id)?.[locale] || id;
+    return PAKISTAN_CITIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function formatTime(h: number, m: number, p: string) {

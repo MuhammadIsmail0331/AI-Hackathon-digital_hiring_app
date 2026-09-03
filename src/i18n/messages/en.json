@@ -93,7 +93,8 @@
     "gardener": "Gardener",
     "driver": "Driver",
     "helper": "Helper",
-    "other": "Other"
+    "other": "Other",
+    "otherPlaceholder": "Please specify the profession (e.g., Blacksmith, AC Technician)"
   },
   "Tools": {
     "title": "Tools Required",
@@ -174,7 +175,14 @@
     "addProfession": "Add profession",
     "editProfession": "Edit",
     "professionLocked": "Profession is locked when editing - add a new profession instead",
-    "limitReached": "You can add up to 3 professions"
+    "limitReached": "You can add up to 3 professions",
+    "useMyLocation": "Use My Current Location",
+    "requestingLocation": "Requesting location...",
+    "locationSet": "GPS location saved — you will be matched within 50 km",
+    "locationDenied": "Location access denied — city center will be used",
+    "gpsHint": "GPS improves matching: you get notified about jobs within a 50 km radius of your real position.",
+    "specifyType": "Please type your profession",
+    "specifyCity": "Please type your city name"
   },
   "Dashboard": {
     "welcome": "Welcome",
@@ -204,7 +212,8 @@
     "sialkot": "Sialkot",
     "gujranwala": "Gujranwala",
     "hyderabad": "Hyderabad",
-    "other_city": "Other City"
+    "other_city": "Other City",
+    "otherPlaceholder": "Type your city name (e.g., Sahiwal, Jhang)"
   },
   "Skills": {
     "interior_painting": "Interior Painting",
@@ -262,7 +271,11 @@
     "event_help": "Event Help",
     "construction_help": "Construction Help",
     "shop_help": "Shop Help",
-    "misc": "Other Skills"
+    "misc": "Other Skills",
+    "other": "Other",
+    "otherPlaceholder": "Describe your skill (e.g., Solar Installation)",
+    "add": "Add",
+    "remove": "Remove"
   },
   "Jobs": {
     "createJob": "Create Job",
@@ -345,7 +358,9 @@
     "aiApplied": "Fields filled - please review before posting",
     "aiError": "AI could not read that - please fill the form manually",
     "wageTypical": "Typical: PKR {min}-{max}/day (from {count} jobs)",
-    "fairWage": "Fair Wage"
+    "fairWage": "Fair Wage",
+    "specifyType": "Please specify the type of professional needed",
+    "specifyCity": "Please type the city name"
   },
   "Employer": {
     "employerDashboard": "Employer Dashboard",

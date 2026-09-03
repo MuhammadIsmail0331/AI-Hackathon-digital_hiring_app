@@ -16,10 +16,13 @@ import {
 import { cn } from "@/lib/utils";
 import {
   EXPERIENCE_LEVELS,
+  WORKER_CATEGORIES,
+  PAKISTAN_CITIES,
   type WorkerCategoryId,
   type CityId,
   type DayId,
 } from "@/lib/constants";
+import { prettyLabel } from "@/lib/labels";
 
 export default function WorkerProfileEditPage() {
   const t = useTranslations("Profile");
@@ -28,9 +31,14 @@ export default function WorkerProfileEditPage() {
 
   // Form state
   const [workerType, setWorkerType] = useState<WorkerCategoryId | "">("");
+  const [customWorkerType, setCustomWorkerType] = useState("");
   const [skills, setSkills] = useState<string[]>([]);
   const [experience, setExperience] = useState(1);
   const [locationName, setLocationName] = useState<CityId | "">("");
+  const [customCity, setCustomCity] = useState("");
+  const [gpsLat, setGpsLat] = useState<number | null>(null);
+  const [gpsLng, setGpsLng] = useState<number | null>(null);
+  const [gpsStatus, setGpsStatus] = useState<"idle" | "requesting" | "set" | "denied">("idle");
   const [isAvailable, setIsAvailable] = useState(true);
   const [availableDays, setAvailableDays] = useState<DayId[]>([]);
   const [expectedWage, setExpectedWage] = useState("");
@@ -51,14 +59,33 @@ export default function WorkerProfileEditPage() {
         if (!res.ok) return;
         const data = await res.json();
         const typeParam = new URLSearchParams(window.location.search).get("type");
-        const list: Array<{ workerType: string; skills: string[]; experience: number; locationName: string | null; expectedWage: number; isAvailable: boolean; availableDays: string[]; bio: string | null }> = data.profiles ?? [];
+        const list: Array<{ workerType: string; skills: string[]; experience: number; locationName: string | null; locationLat: number | null; locationLng: number | null; expectedWage: number; isAvailable: boolean; availableDays: string[]; bio: string | null }> = data.profiles ?? [];
         const p = list.find((x) => x.workerType === typeParam) ?? list[0];
         if (p) {
           setIsEdit(true);
-          setWorkerType((p.workerType as WorkerCategoryId) || "");
+          const knownCategories = WORKER_CATEGORIES.map((c) => c.id) as string[];
+          if (p.workerType && knownCategories.includes(p.workerType)) {
+            setWorkerType(p.workerType as WorkerCategoryId);
+          } else if (p.workerType) {
+            // Custom ("Other") profession — show the Other tile with the stored name
+            setWorkerType("other");
+            setCustomWorkerType(prettyLabel(p.workerType));
+          }
           setSkills(Array.isArray(p.skills) ? p.skills : []);
           setExperience(typeof p.experience === "number" ? p.experience : 1);
-          setLocationName((p.locationName as CityId) || "");
+          const knownCities = PAKISTAN_CITIES.map((c) => c.id) as string[];
+          if (p.locationName && knownCities.includes(p.locationName)) {
+            setLocationName(p.locationName as CityId);
+          } else if (p.locationName) {
+            // Custom ("Other City") name — show the Other tile with the stored name
+            setLocationName("other_city");
+            setCustomCity(prettyLabel(p.locationName));
+          }
+          if (typeof p.locationLat === "number" && typeof p.locationLng === "number") {
+            setGpsLat(p.locationLat);
+            setGpsLng(p.locationLng);
+            setGpsStatus("set");
+          }
           setIsAvailable(p.isAvailable ?? true);
           setAvailableDays(
             Array.isArray(p.availableDays) ? (p.availableDays as DayId[]) : []
@@ -78,6 +105,24 @@ export default function WorkerProfileEditPage() {
   function handleCategoryChange(catId: WorkerCategoryId) {
     setWorkerType(catId);
     setSkills([]);
+    if (catId !== "other") setCustomWorkerType("");
+  }
+
+  function requestLocation() {
+    if (!navigator.geolocation) {
+      setGpsStatus("denied");
+      return;
+    }
+    setGpsStatus("requesting");
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setGpsLat(pos.coords.latitude);
+        setGpsLng(pos.coords.longitude);
+        setGpsStatus("set");
+      },
+      () => setGpsStatus("denied"),
+      { timeout: 10000 }
+    );
   }
 
   function experienceLevelId(years: number): string {
@@ -98,8 +143,10 @@ export default function WorkerProfileEditPage() {
     setSuccess(false);
 
     if (!workerType) { setError(t("workerType")); return; }
+    if (workerType === "other" && customWorkerType.trim().length < 2) { setError(t("specifyType")); return; }
     if (skills.length === 0) { setError(t("selectSkills")); return; }
     if (!locationName) { setError(t("selectCity")); return; }
+    if (locationName === "other_city" && customCity.trim().length < 2) { setError(t("specifyCity")); return; }
     if (availableDays.length === 0) { setError(t("availability")); return; }
     const wage = parseInt(expectedWage, 10);
     if (!wage || wage < 100) { setError(t("wageHint")); return; }
@@ -110,7 +157,13 @@ export default function WorkerProfileEditPage() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          workerType, skills, experience, locationName,
+          workerType,
+          customWorkerType: workerType === "other" ? customWorkerType.trim() : undefined,
+          skills, experience,
+          locationName,
+          customCity: locationName === "other_city" ? customCity.trim() : undefined,
+          locationLat: gpsLat,
+          locationLng: gpsLng,
           expectedWage: wage, isAvailable, availableDays,
           bio: bio || undefined,
         }),
@@ -169,7 +222,12 @@ export default function WorkerProfileEditPage() {
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-primary">1</span>
               {t("workerType")}<span className="text-xs text-red-500">*</span>
             </h2>
-            <CategorySelector value={workerType} onChange={handleCategoryChange} />
+            <CategorySelector
+              value={workerType}
+              onChange={handleCategoryChange}
+              customValue={customWorkerType}
+              onCustomChange={setCustomWorkerType}
+            />
           </section>
 
           {/* â”€â”€ 2: Skills â”€â”€ */}
@@ -213,7 +271,50 @@ export default function WorkerProfileEditPage() {
               {t("location")}<span className="text-xs text-red-500">*</span>
             </h2>
             <p className="mb-3 text-sm text-muted">{t("selectCity")}</p>
-            <CitySelector value={locationName} onChange={(cityId) => setLocationName(cityId)} label={t("location")} />
+            <CitySelector
+              value={locationName}
+              onChange={(cityId) => setLocationName(cityId)}
+              label={t("location")}
+              customValue={customCity}
+              onCustomChange={setCustomCity}
+            />
+
+            {/* GPS capture — used for the 50 km matching radius */}
+            <button
+              type="button"
+              onClick={requestLocation}
+              disabled={gpsStatus === "requesting"}
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-surface2 px-4 py-3 text-sm font-medium text-ink transition hover:bg-line disabled:opacity-50"
+            >
+              {gpsStatus === "requesting" ? (
+                <>
+                  <svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  {t("requestingLocation")}
+                </>
+              ) : gpsStatus === "set" ? (
+                <>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-success">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  <span className="text-success">{t("locationSet")}</span>
+                </>
+              ) : gpsStatus === "denied" ? (
+                <span>{t("locationDenied")}</span>
+              ) : (
+                <>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  {t("useMyLocation")}
+                </>
+              )}
+            </button>
+            <p className="mt-2 text-xs text-muted">{t("gpsHint")}</p>
           </section>
 
           {/* â”€â”€ 5: Availability â”€â”€ */}

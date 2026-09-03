@@ -14,6 +14,7 @@ import {
   PAKISTAN_CITIES,
   EXPERIENCE_LEVELS,
 } from "@/lib/constants";
+import { prettyLabel } from "@/lib/labels";
 
 interface OfferData {
   id: string;
@@ -110,7 +111,7 @@ export default function JobDetailPage() {
   }, [jobId]);
 
   function getCategoryName(id: string) {
-    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || id;
+    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getSkillName(id: string) {
@@ -122,11 +123,11 @@ export default function JobDetailPage() {
   }
 
   function getToolName(id: string) {
-    return TOOLS.find((t) => t.id === id)?.[locale] || id;
+    return TOOLS.find((t) => t.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getCityName(id: string) {
-    return PAKISTAN_CITIES.find((c) => c.id === id)?.[locale] || id;
+    return PAKISTAN_CITIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function experienceLabel(years: number) {

@@ -7,6 +7,7 @@ import { WorkerBottomNav } from "@/components/layout/WorkerBottomNav";
 import { Badge } from "@/components/ui";
 import { useRouter } from "@/i18n/navigation";
 import { WORKER_CATEGORIES, PAKISTAN_CITIES } from "@/lib/constants";
+import { prettyLabel } from "@/lib/labels";
 import { cn } from "@/lib/utils";
 
 interface JobCardData {
@@ -65,12 +66,12 @@ export default function WorkerMyJobsPage() {
   }, []);
 
   function getCategoryName(id: string) {
-    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || id;
+    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getCityName(id: string | null) {
     if (!id) return "—";
-    return PAKISTAN_CITIES.find((c) => c.id === id)?.[locale] || id;
+    return PAKISTAN_CITIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function formatTime(h: number, m: number, p: string) {

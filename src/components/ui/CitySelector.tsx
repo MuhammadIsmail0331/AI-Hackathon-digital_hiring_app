@@ -9,9 +9,19 @@ interface CitySelectorProps {
   onChange: (cityId: CityId) => void;
   /** Accessible name for the button group (shown as a heading by the parent page) */
   label?: string;
+  /** Current text for a custom ("Other City") name. */
+  customValue?: string;
+  /** Called when the custom city name changes. Required to show the input. */
+  onCustomChange?: (value: string) => void;
 }
 
-export function CitySelector({ value, onChange, label }: CitySelectorProps) {
+export function CitySelector({
+  value,
+  onChange,
+  label,
+  customValue,
+  onCustomChange,
+}: CitySelectorProps) {
   const t = useTranslations("Cities");
 
   return (
@@ -42,6 +52,18 @@ export function CitySelector({ value, onChange, label }: CitySelectorProps) {
           );
         })}
       </div>
+
+      {value === "other_city" && onCustomChange && (
+        <input
+          type="text"
+          value={customValue ?? ""}
+          onChange={(e) => onCustomChange(e.target.value)}
+          placeholder={t("otherPlaceholder")}
+          maxLength={40}
+          autoComplete="off"
+          className="w-full rounded-xl border-2 border-primary/40 bg-surface px-4 py-3 text-base text-ink outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/20"
+        />
+      )}
     </div>
   );
 }

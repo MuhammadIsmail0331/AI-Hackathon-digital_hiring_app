@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { prettyLabel } from "@/lib/labels";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import Navbar from "@/components/layout/Navbar";
@@ -75,7 +76,7 @@ export default function WorkerProfileOverviewPage() {
                 <div className="p-5">
                   <div className="flex items-start justify-between">
                     <div>
-                      <h2 className="text-lg font-bold capitalize text-ink">{p.workerType}</h2>
+                      <h2 className="text-lg font-bold text-ink">{prettyLabel(p.workerType)}</h2>
                       <p className="mt-0.5 text-sm text-muted">
                         {p.experience}+ {locale === "ur" ? "سال کا تجربہ" : "yrs experience"}
                       </p>
