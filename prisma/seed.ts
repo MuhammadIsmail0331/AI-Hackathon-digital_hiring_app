@@ -1,4 +1,4 @@
-﻿import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const db = new PrismaClient();
@@ -39,6 +39,7 @@ async function main() {
       phone: "03211112222",
       passwordHash,
       role: "EMPLOYER",
+      walletBalance: 2000,
       phoneVerified: true,
     },
   });
@@ -49,6 +50,7 @@ async function main() {
       phone: "03213334444",
       passwordHash,
       role: "EMPLOYER",
+      walletBalance: 2000,
       phoneVerified: true,
     },
   });
@@ -59,6 +61,7 @@ async function main() {
       phone: "03215556666",
       passwordHash,
       role: "EMPLOYER",
+      walletBalance: 2000,
       phoneVerified: true,
     },
   });
@@ -69,6 +72,7 @@ async function main() {
       phone: "03000000000",
       passwordHash,
       role: "EMPLOYER",
+      walletBalance: 2000,
       isAdmin: true,
       phoneVerified: true,
     },

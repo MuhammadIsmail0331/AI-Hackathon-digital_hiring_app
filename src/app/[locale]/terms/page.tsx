@@ -22,7 +22,7 @@ export default function TermsPage() {
       <Navbar />
       <main className="mx-auto max-w-2xl px-4 py-8 pb-24 sm:pb-8">
         <h1 className="mb-2 text-3xl font-bold text-ink">{t("title")}</h1>
-        <p className="mb-8 text-sm text-muted">{t("lastUpdated")}: August 2025</p>
+        <p className="mb-8 text-sm text-muted">{t("lastUpdated")}: September 2026</p>
 
         <div className="mb-8 rounded-2xl border border-primary/30 bg-primarysoft p-5">
           <p className="text-sm text-blue-800">{t("intro")}</p>
