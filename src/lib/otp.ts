@@ -1,4 +1,4 @@
-﻿import crypto from "crypto";
+import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 
@@ -6,7 +6,7 @@ const OTP_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
 const OTP_COOLDOWN_MS = 60 * 1000; // 60 seconds between sends
 const OTP_MAX_ATTEMPTS = 5; // max wrong attempts before lockout
 const OTP_LOCKOUT_MS = 15 * 60 * 1000; // 15-minute lockout after max attempts
-const OTP_VERIFIED_WINDOW_MS = 10 * 60 * 1000; // verified OTP valid for 10 min
+const OTP_VERIFIED_WINDOW_MS = 60 * 60 * 1000; // verified OTP valid for 60 min
 
 function smsDeliveryConfigured(): boolean {
   return Boolean(process.env.SMS_PROVIDER);
