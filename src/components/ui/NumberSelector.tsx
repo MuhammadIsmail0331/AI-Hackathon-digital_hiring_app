@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { cn } from "@/lib/utils";
 
@@ -30,19 +30,19 @@ export function NumberSelector({
   return (
     <div className={cn("space-y-1.5", className)}>
       {label && (
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-ink">
           {label}
         </label>
       )}
-      <div className="inline-flex items-center gap-0 rounded-xl border border-gray-300 bg-white shadow-sm">
+      <div className="inline-flex items-center gap-0 rounded-xl border border-line bg-surface shadow-sm">
         <button
           type="button"
           onClick={decrement}
           disabled={value <= min}
           className={cn(
             "flex h-12 w-12 items-center justify-center rounded-s-xl transition",
-            "text-lg font-bold text-gray-600 hover:bg-gray-100 active:bg-gray-200",
-            "disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-transparent"
+            "text-lg font-bold text-muted hover:bg-surface2 active:bg-line",
+            "disabled:cursor-not-allowed disabled:text-line disabled:hover:bg-transparent"
           )}
           aria-label="Decrease"
         >
@@ -71,8 +71,8 @@ export function NumberSelector({
           disabled={value >= max}
           className={cn(
             "flex h-12 w-12 items-center justify-center rounded-e-xl transition",
-            "text-lg font-bold text-gray-600 hover:bg-gray-100 active:bg-gray-200",
-            "disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-transparent"
+            "text-lg font-bold text-muted hover:bg-surface2 active:bg-line",
+            "disabled:cursor-not-allowed disabled:text-line disabled:hover:bg-transparent"
           )}
           aria-label="Increase"
         >

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -106,7 +106,7 @@ export function ToolSelector({ value, onChange }: ToolSelectorProps) {
 
   return (
     <div className="space-y-3">
-      <label className="block text-sm font-medium text-gray-700">
+      <label className="block text-sm font-medium text-ink">
         {t("title")}
       </label>
       <div
@@ -126,14 +126,14 @@ export function ToolSelector({ value, onChange }: ToolSelectorProps) {
                 "inline-flex items-center gap-2 rounded-xl border-2 px-3 py-2.5 text-sm font-medium transition",
                 "hover:shadow-sm active:scale-[0.97]",
                 isSelected
-                  ? "border-blue-500 bg-blue-50 text-blue-700"
-                  : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                  ? "border-primary bg-primarysoft text-primary"
+                  : "border-line bg-surface text-muted hover:border-muted/50"
               )}
             >
               <span
                 className={cn(
                   "flex h-6 w-6 items-center justify-center rounded",
-                  isSelected ? "text-blue-600" : "text-gray-400"
+                  isSelected ? "text-primary" : "text-muted"
                 )}
               >
                 {TOOL_ICONS[tool.id]}
@@ -150,7 +150,7 @@ export function ToolSelector({ value, onChange }: ToolSelectorProps) {
                   strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="text-blue-600"
+                  className="text-primary"
                 >
                   <path d="M20 6 9 17l-5-5" />
                 </svg>

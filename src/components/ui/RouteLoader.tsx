@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
@@ -9,13 +9,14 @@ const MIN_DISPLAY_MS = 800;
 /**
  * Shows a loading-video overlay during page transitions.
  *
- * Uses **direct DOM manipulation** instead of React state to avoid
- * React 18/19 automatic batching swallowing the show→hide cycle.
+ * Uses direct DOM manipulation instead of React state to avoid
+ * React automatic batching swallowing the show-to-hide cycle.
  *
- * 1. Capture-phase click listener intercepts <a> clicks instantly
- * 2. Overlay is shown via `el.style.display = "flex"` (synchronous, no batching)
- * 3. Polls `window.location.pathname` to detect when navigation completes
+ * 1. Capture-phase click listener intercepts anchor clicks instantly
+ * 2. Overlay is shown via el.style.display (synchronous, no batching)
+ * 3. Polls window.location.pathname to detect when navigation completes
  * 4. Hides overlay after at least MIN_DISPLAY_MS
+ * 5. Honors prefers-reduced-motion (video stays on its first frame)
  */
 export default function RouteLoader() {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -38,7 +39,8 @@ export default function RouteLoader() {
       overlay!.style.opacity = "1";
       if (video) {
         video.currentTime = 0;
-        video.play().catch(() => {});
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce) video.play().catch(() => {});
       }
     }
 
@@ -76,7 +78,7 @@ export default function RouteLoader() {
 
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
 
-      // Same URL → no navigation
+      // Same URL - no navigation
       const currentPath = window.location.pathname;
       if (href === currentPath) return;
 
@@ -120,25 +122,54 @@ export default function RouteLoader() {
         zIndex: 9999,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#fff",
+        backgroundColor: "var(--canvas)",
         transition: "opacity 300ms",
       }}
     >
-      <video
-        ref={videoRef}
-        src="/loading-animation.mp4"
-        aria-hidden="true"
-        autoPlay
-        loop
-        muted
-        playsInline
+      <div
         style={{
-          maxHeight: "60vh",
-          maxWidth: "80vw",
-          height: "auto",
-          width: "auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 16,
         }}
-      />
+      >
+        <div
+          style={{
+            padding: 14,
+            borderRadius: 24,
+            border: "1px solid var(--line)",
+            background: "var(--surface)",
+            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+          }}
+        >
+          <video
+            ref={videoRef}
+            src="/loading-animation.mp4"
+            aria-hidden="true"
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{
+              maxHeight: "60vh",
+              maxWidth: "80vw",
+              height: "auto",
+              width: "auto",
+            }}
+          />
+        </div>
+        <div
+          style={{
+            fontFamily: "var(--font-sora), sans-serif",
+            fontWeight: 700,
+            color: "var(--ink)",
+            fontSize: 18,
+          }}
+        >
+          Rozgaar
+        </div>
+      </div>
     </div>
   );
 }

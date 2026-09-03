@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -12,7 +12,7 @@ export default function LanguageSwitch() {
     <Link
       href="/"
       locale={otherLocale}
-      className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-50 active:bg-gray-100"
+      className="inline-flex items-center gap-1.5 rounded-xl border border-line bg-surface px-3 py-2 text-sm font-medium text-ink transition hover:border-primary/40 hover:text-primary"
       aria-label="Switch language"
     >
       <svg

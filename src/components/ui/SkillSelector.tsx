@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -17,7 +17,7 @@ export function SkillSelector({ category, value, onChange, label }: SkillSelecto
 
   if (!category) {
     return (
-      <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 p-6 text-center text-sm text-gray-500">
+      <div className="rounded-xl border border-dashed border-line bg-surface2 p-6 text-center text-sm text-muted">
         Select a worker type first to see available skills
       </div>
     );
@@ -52,8 +52,8 @@ export function SkillSelector({ category, value, onChange, label }: SkillSelecto
                 "inline-flex items-center gap-2 rounded-xl border-2 px-3 py-2.5 text-sm font-medium transition",
                 "hover:shadow-sm active:scale-[0.97]",
                 isSelected
-                  ? "border-blue-500 bg-blue-50 text-blue-700"
-                  : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                  ? "border-primary bg-primarysoft text-primary"
+                  : "border-line bg-surface text-muted hover:border-muted/50"
               )}
             >
               {t(skill.id)}
@@ -68,7 +68,7 @@ export function SkillSelector({ category, value, onChange, label }: SkillSelecto
                   strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="text-blue-600"
+                  className="text-primary"
                 >
                   <path d="M20 6 9 17l-5-5" />
                 </svg>
