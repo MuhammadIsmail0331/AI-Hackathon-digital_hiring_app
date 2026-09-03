@@ -124,6 +124,9 @@ export default function Navbar() {
                 <Link href="/employer/dashboard" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink">
                   {nav("modeHire")}
                 </Link>
+                <Link href="/employer/find" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink">
+                  {nav("findPro")}
+                </Link>
                 <Link href="/terms" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink">
                       {nav("terms")}
                     </Link>
@@ -149,6 +152,10 @@ export default function Navbar() {
                       </Link>
                       <Link href="/employer/dashboard" onClick={() => setMenuOpen(false)} className="block rounded-xl px-3 py-2.5 text-sm text-ink transition hover:bg-surface2">
                         {nav("modeHire")}
+                      </Link>
+                      <Link href="/employer/find" onClick={() => setMenuOpen(false)}
+                        className="block rounded-xl px-3 py-2.5 text-sm text-ink transition hover:bg-surface2">
+                        {nav("findPro")}
                       </Link>
                       <Link href="/terms" onClick={() => setMenuOpen(false)} className="block rounded-xl px-3 py-2.5 text-sm text-ink transition hover:bg-surface2">
                         {nav("terms")}

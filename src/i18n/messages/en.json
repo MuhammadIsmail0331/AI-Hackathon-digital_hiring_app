@@ -134,7 +134,8 @@
     "report": "Report Issue",
     "browseJobs": "Browse Jobs",
     "modeWork": "Find Work",
-    "modeHire": "Hire"
+    "modeHire": "Hire",
+    "findPro": "Find Professionals"
   },
   "Profile": {
     "title": "My Profile",
