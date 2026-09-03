@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import LoadingVideo from "@/components/ui/LoadingVideo";
 

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -101,7 +101,7 @@ export default function FeedbackPage() {
   function StarSelector({ value, onChange, label }: { value: number; onChange: (v: number) => void; label: string }) {
     return (
       <div className="flex items-center gap-2">
-        <span className="text-sm text-gray-600">{label}:</span>
+        <span className="text-sm text-muted">{label}:</span>
         <div className="flex gap-1" role="group" aria-label={label}>
           {[1, 2, 3, 4, 5].map((star) => (
             <button
@@ -129,8 +129,8 @@ export default function FeedbackPage() {
           onClick={() => onChange(1)}
           className={`flex-1 rounded-xl py-3 text-sm font-semibold transition ${
             value === 1
-              ? "bg-green-600 text-white shadow-sm"
-              : "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+              ? "bg-success text-white shadow-sm"
+              : "border border-line bg-white text-ink hover:bg-surface2"
           }`}
         >
           {t("yes")} / ہاں
@@ -141,7 +141,7 @@ export default function FeedbackPage() {
           className={`flex-1 rounded-xl py-3 text-sm font-semibold transition ${
             value === 0
               ? "bg-red-600 text-white shadow-sm"
-              : "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+              : "border border-line bg-white text-ink hover:bg-surface2"
           }`}
         >
           {t("no")} / نہیں
@@ -155,7 +155,7 @@ export default function FeedbackPage() {
       <>
         <Navbar />
         <div className="flex min-h-[60vh] items-center justify-center">
-          <p className="text-gray-500">{commonT("loading")}</p>
+          <p className="text-muted">{commonT("loading")}</p>
         </div>
       </>
     );
@@ -166,15 +166,15 @@ export default function FeedbackPage() {
       <>
         <Navbar />
         <main className="mx-auto max-w-md px-4 py-16 text-center">
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600">
+          <div className="rounded-2xl border border-line bg-surface p-8 shadow-sm">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-successsoft">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-success">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-            <h2 className="mb-2 text-lg font-semibold text-gray-900">{t("thankYou")}</h2>
-            <p className="text-sm text-gray-500">{t("alreadySubmitted")}</p>
-            <button onClick={() => router.back()} className="mt-6 rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
+            <h2 className="mb-2 text-lg font-semibold text-ink">{t("thankYou")}</h2>
+            <p className="text-sm text-muted">{t("alreadySubmitted")}</p>
+            <button onClick={() => router.back()} className="mt-6 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
               {commonT("back")}
             </button>
           </div>
@@ -188,14 +188,14 @@ export default function FeedbackPage() {
       <>
         <Navbar />
         <main className="mx-auto max-w-md px-4 py-16 text-center">
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600">
+          <div className="rounded-2xl border border-line bg-surface p-8 shadow-sm">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-successsoft">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-success">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-            <h2 className="mb-2 text-lg font-semibold text-gray-900">{t("thankYou")}</h2>
-            <button onClick={() => router.back()} className="mt-6 rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
+            <h2 className="mb-2 text-lg font-semibold text-ink">{t("thankYou")}</h2>
+            <button onClick={() => router.back()} className="mt-6 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
               {commonT("back")}
             </button>
           </div>
@@ -208,14 +208,14 @@ export default function FeedbackPage() {
     <>
       <Navbar />
       <main className="mx-auto max-w-lg px-4 py-6 pb-24 sm:pb-8">
-        <button onClick={() => router.back()} className="mb-4 flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700">
+        <button onClick={() => router.back()} className="mb-4 flex items-center gap-1 text-sm text-muted hover:text-ink">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
           {commonT("back")}
         </button>
 
-        <h1 className="mb-2 text-2xl font-bold text-gray-900">{t("title")}</h1>
+        <h1 className="mb-2 text-2xl font-bold text-ink">{t("title")}</h1>
         {subjectName && (
-          <p className="mb-6 text-sm text-gray-500">
+          <p className="mb-6 text-sm text-muted">
             {isEmployerToWorker ? t("rateWorker") : t("rateEmployer")}: <span className="font-semibold">{subjectName}</span>
           </p>
         )}
@@ -226,9 +226,9 @@ export default function FeedbackPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Overall Rating */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <h3 className="mb-1 text-sm font-semibold text-gray-900">{t("overallRating")}</h3>
-            <p className="mb-1 text-xs text-gray-500" dir="rtl">مجموعی درجہ بندی</p>
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <h3 className="mb-1 text-sm font-semibold text-ink">{t("overallRating")}</h3>
+            <p className="mb-1 text-xs text-muted" dir="rtl">مجموعی درجہ بندی</p>
             <div className="mt-3 flex justify-center gap-2">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button key={star} type="button" onClick={() => setOverallRating(star)}
@@ -240,7 +240,7 @@ export default function FeedbackPage() {
               ))}
             </div>
             {overallRating > 0 && (
-              <p className="mt-2 text-center text-sm text-gray-500">
+              <p className="mt-2 text-center text-sm text-muted">
                 {overallRating === 5 ? t("excellent") : overallRating === 4 ? t("good") : overallRating === 3 ? t("average") : overallRating === 2 ? t("poor") : t("veryBad")}
                 {" "}—{" "}
                 {overallRating === 5 ? "عمدہ" : overallRating === 4 ? "اچھا" : overallRating === 3 ? "اوسط" : overallRating === 2 ? "کمزور" : "بہت برا"}
@@ -251,21 +251,21 @@ export default function FeedbackPage() {
           {/* Employer-to-Worker questions */}
           {isEmployerToWorker && (
             <>
-              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-                <h3 className="mb-1 text-sm font-semibold text-gray-900">{t("punctuality")}</h3>
-                <p className="mb-3 text-xs text-gray-500" dir="rtl">{t("punctualityUrdu")}</p>
+              <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+                <h3 className="mb-1 text-sm font-semibold text-ink">{t("punctuality")}</h3>
+                <p className="mb-3 text-xs text-muted" dir="rtl">{t("punctualityUrdu")}</p>
                 <YesNoSelector value={punctuality} onChange={setPunctuality} />
               </div>
 
-              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-                <h3 className="mb-1 text-sm font-semibold text-gray-900">{t("attitude")}</h3>
-                <p className="mb-3 text-xs text-gray-500" dir="rtl">{t("attitudeUrdu")}</p>
+              <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+                <h3 className="mb-1 text-sm font-semibold text-ink">{t("attitude")}</h3>
+                <p className="mb-3 text-xs text-muted" dir="rtl">{t("attitudeUrdu")}</p>
                 <StarSelector value={attitude} onChange={setAttitude} label={t("stars")} />
               </div>
 
-              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-                <h3 className="mb-1 text-sm font-semibold text-gray-900">{t("workQuality")}</h3>
-                <p className="mb-3 text-xs text-gray-500" dir="rtl">{t("workQualityUrdu")}</p>
+              <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+                <h3 className="mb-1 text-sm font-semibold text-ink">{t("workQuality")}</h3>
+                <p className="mb-3 text-xs text-muted" dir="rtl">{t("workQualityUrdu")}</p>
                 <StarSelector value={workQuality} onChange={setWorkQuality} label={t("stars")} />
               </div>
             </>
@@ -274,31 +274,31 @@ export default function FeedbackPage() {
           {/* Worker-to-Employer questions */}
           {!isEmployerToWorker && (
             <>
-              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-                <h3 className="mb-1 text-sm font-semibold text-gray-900">{t("paymentOnTime")}</h3>
-                <p className="mb-3 text-xs text-gray-500" dir="rtl">{t("paymentOnTimeUrdu")}</p>
+              <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+                <h3 className="mb-1 text-sm font-semibold text-ink">{t("paymentOnTime")}</h3>
+                <p className="mb-3 text-xs text-muted" dir="rtl">{t("paymentOnTimeUrdu")}</p>
                 <YesNoSelector value={paymentOnTime} onChange={setPaymentOnTime} />
               </div>
 
-              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-                <h3 className="mb-1 text-sm font-semibold text-gray-900">{t("fairTreatment")}</h3>
-                <p className="mb-3 text-xs text-gray-500" dir="rtl">{t("fairTreatmentUrdu")}</p>
+              <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+                <h3 className="mb-1 text-sm font-semibold text-ink">{t("fairTreatment")}</h3>
+                <p className="mb-3 text-xs text-muted" dir="rtl">{t("fairTreatmentUrdu")}</p>
                 <YesNoSelector value={fairTreatment} onChange={setFairTreatment} />
               </div>
             </>
           )}
 
           {/* Comment */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <h3 className="mb-1 text-sm font-semibold text-gray-900">{t("comment")}</h3>
-            <p className="mb-3 text-xs text-gray-500" dir="rtl">{t("commentUrdu")}</p>
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <h3 className="mb-1 text-sm font-semibold text-ink">{t("comment")}</h3>
+            <p className="mb-3 text-xs text-muted" dir="rtl">{t("commentUrdu")}</p>
             <textarea value={comment} onChange={(e) => setComment(e.target.value)} maxLength={500}
               rows={3} placeholder={t("commentPlaceholder")}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200" />
+              className="w-full rounded-xl border border-line px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200" />
           </div>
 
           <button type="submit" disabled={loading || overallRating === 0}
-            className="w-full rounded-xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50">
+            className="w-full rounded-xl bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50">
             {loading ? commonT("loading") : t("submitFeedback")}
           </button>
         </form>

@@ -1,15 +1,28 @@
 {
   "App": {
-    "name": "Digital Hiring App",
-    "tagline": "Connect with daily-wage workers near you"
+    "name": "Rozgaar",
+    "tagline": "Verified workers. Protected wages. Zero hassle."
   },
   "Landing": {
     "title": "Find Workers. Find Work.",
-    "description": "A simple marketplace connecting employers with skilled daily-wage workers across Pakistan.",
+    "description": "Rozgaar connects employers with rated, verified daily-wage professionals across Pakistan — post a job in under a minute and let AI do the matching.",
     "needWorker": "I Need a Worker",
     "amWorker": "I Am a Worker",
-    "needWorkerDesc": "Post a job and find skilled workers near you",
-    "amWorkerDesc": "Find jobs and earn daily wages"
+    "needWorkerDesc": "Post a job in under a minute. Our AI finds rated professionals near you and sends your offer straight to them.",
+    "amWorkerDesc": "Offers come to you based on your skills and city. Your wage is secured in escrow before you even start.",
+    "statsJobs": "jobs filled",
+    "statsWorkers": "skilled workers",
+    "statsRating": "average rating",
+    "trustTitle": "Why Pakistan trusts Rozgaar",
+    "featureVerifiedTitle": "Verified & Secure",
+    "featureVerifiedDesc": "Every account verifies its phone with OTP. Ratings and escrow keep both sides honest.",
+    "featureMatchingTitle": "AI That Matches",
+    "featureMatchingDesc": "Tell us the job once — our matching engine finds the best-rated workers within 50 km and sends them your offer.",
+    "featurePaymentTitle": "Protected Payments",
+    "featurePaymentDesc": "Wages sit in escrow from the moment a worker accepts until the job is done. Released only when everyone agrees.",
+    "chipVerified": "OTP verified",
+    "chipEscrow": "Escrow protected",
+    "chipRated": "Rated workers"
   },
   "Language": {
     "en": "English",
@@ -62,7 +75,8 @@
     "selectAll": "Select All",
     "clear": "Clear",
     "skipToContent": "Skip to content",
-    "or": "or"
+    "or": "or",
+    "retry": "Retry"
   },
   "Categories": {
     "title": "Worker Type",
@@ -298,7 +312,7 @@
     "statusCancelled": "Cancelled",
     "editJob": "Edit",
     "cancelJob": "Cancel Job",
-    "cancelConfirm": "Are you sure you want to cancel this job? All pending offers will be declined.",
+    "cancelConfirm": "Cancel this job? Accepted workers will be notified and any secured payment will be refunded to you.",
     "viewJob": "View Details",
     "noJobs": "No Jobs Yet",
     "noJobsDesc": "Create your first job to find skilled professionals",
@@ -308,7 +322,9 @@
     "yearsExp": "years exp",
     "rating": "Rating",
     "jobsCompleted": "Jobs Done",
-    "expectedWage": "Expected"
+    "expectedWage": "Expected",
+    "statusExpired": "Expired",
+    "jobCancelledRefund": "Job cancelled. Any secured payment has been refunded."
   },
   "Employer": {
     "employerDashboard": "Employer Dashboard",
@@ -402,7 +418,8 @@
     "system": "System",
     "unread": "unread",
     "contactInfo": "Contact",
-    "callNow": "Call Now"
+    "callNow": "Call Now",
+    "jobExpired": "Job expired"
   },
   "Feedback": {
     "title": "Feedback",

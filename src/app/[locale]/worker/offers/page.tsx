@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -132,24 +132,24 @@ export default function WorkerOffersPage() {
 
         {/* Success banner with employer contact after acceptance */}
         {successMsg && (
-          <div role="status" className="mb-6 flex items-start gap-3 rounded-2xl border border-green-200 bg-gradient-to-br from-green-50 to-emerald-50 p-4 shadow-sm">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-600">
+          <div role="status" className="mb-6 flex items-start gap-3 rounded-2xl border border-success/30 bg-gradient-to-br from-green-50 to-emerald-50 p-4 shadow-sm">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-successsoft text-success">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
               </svg>
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-green-800">{successMsg}</p>
+              <p className="text-sm font-medium text-success">{successMsg}</p>
               <Link
                 href="/notifications"
-                className="mt-1 inline-block text-xs font-semibold text-green-700 underline underline-offset-2 hover:text-green-800"
+                className="mt-1 inline-block text-xs font-semibold text-success underline underline-offset-2 hover:text-success"
               >
                 {t("viewNotifications")}
               </Link>
             </div>
             <button
               onClick={() => setSuccessMsg(null)}
-              className="shrink-0 rounded-lg p-1 text-green-400 transition hover:bg-green-100 hover:text-green-600"
+              className="shrink-0 rounded-lg p-1 text-green-400 transition hover:bg-successsoft hover:text-success"
               aria-label={commonT("close")}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -162,7 +162,7 @@ export default function WorkerOffersPage() {
 
         {loading ? (
           <div className="flex min-h-[40vh] items-center justify-center">
-            <div className="flex items-center gap-3 text-gray-500">
+            <div className="flex items-center gap-3 text-muted">
               <svg className="h-6 w-6 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
@@ -178,8 +178,8 @@ export default function WorkerOffersPage() {
                 <polyline points="22,6 12,13 2,6" />
               </svg>
             </div>
-            <h2 className="mb-2 text-lg font-semibold text-gray-900">{t("noOffers")}</h2>
-            <p className="text-sm text-gray-500">{t("noOffersDesc")}</p>
+            <h2 className="mb-2 text-lg font-semibold text-ink">{t("noOffers")}</h2>
+            <p className="text-sm text-muted">{t("noOffersDesc")}</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -193,13 +193,13 @@ export default function WorkerOffersPage() {
               return (
                 <div
                   key={offer.id}
-                  className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm"
+                  className="rounded-2xl border border-line bg-surface p-5 shadow-sm"
                 >
                   {/* Header */}
                   <div className="mb-3 flex items-start justify-between">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
-                      <p className="text-sm text-gray-500">{job.employer.name}</p>
+                      <h3 className="text-lg font-semibold text-ink">{job.title}</h3>
+                      <p className="text-sm text-muted">{job.employer.name}</p>
                     </div>
                     {isPending && (
                       <Badge tone="warning">{t("pending")}</Badge>
@@ -213,7 +213,7 @@ export default function WorkerOffersPage() {
                   </div>
 
                   {/* Details */}
-                  <div className="mb-3 space-y-2 text-sm text-gray-600">
+                  <div className="mb-3 space-y-2 text-sm text-muted">
                     <div className="flex items-center gap-2">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
@@ -248,7 +248,7 @@ export default function WorkerOffersPage() {
                         <line x1="12" x2="12" y1="2" y2="22" />
                         <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                       </svg>
-                      <span className="font-semibold text-gray-900">{job.wage.toLocaleString()} PKR</span>
+                      <span className="font-semibold text-ink">{job.wage.toLocaleString()} PKR</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -261,11 +261,11 @@ export default function WorkerOffersPage() {
 
                   {/* Employer Phone (after acceptance) */}
                   {isAccepted && job.employerPhone && (
-                    <div className="mb-3 flex items-center gap-2 rounded-lg bg-green-50 p-3">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <div className="mb-3 flex items-center gap-2 rounded-lg bg-successsoft p-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-success"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                       <div>
-                        <div className="text-xs text-green-600">{t("employerPhone")}</div>
-                        <div className="text-sm font-semibold text-green-800">{job.employerPhone}</div>
+                        <div className="text-xs text-success">{t("employerPhone")}</div>
+                        <div className="text-sm font-semibold text-success">{job.employerPhone}</div>
                       </div>
                     </div>
                   )}
@@ -274,7 +274,7 @@ export default function WorkerOffersPage() {
                   {isAccepted && job.status === "COMPLETED" && (
                     <button
                       onClick={() => router.push(`/feedback/${job.id}?subjectId=&type=WORKER_TO_EMPLOYER&name=${encodeURIComponent(job.employer.name)}`)}
-                      className="mb-3 w-full rounded-xl border border-blue-200 bg-blue-50 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
+                      className="mb-3 w-full rounded-xl border border-primary/30 bg-primarysoft py-2.5 text-sm font-semibold text-primary transition hover:bg-primarysoft"
                     >
                       {feedbackT("rateEmployer")}: {job.employer.name}
                     </button>
@@ -286,14 +286,14 @@ export default function WorkerOffersPage() {
                       <button
                         onClick={() => handleAction(offer.id, "ACCEPT")}
                         disabled={isProcessing}
-                        className="flex-1 rounded-xl bg-green-600 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-green-700 disabled:opacity-50"
+                        className="flex-1 rounded-xl bg-success py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-success/90 disabled:opacity-50"
                       >
                         {isProcessing ? t("processingOffer") : t("acceptOffer")}
                       </button>
                       <button
                         onClick={() => handleAction(offer.id, "DECLINE")}
                         disabled={isProcessing}
-                        className="flex-1 rounded-xl border border-gray-300 bg-white py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:opacity-50"
+                        className="flex-1 rounded-xl border border-line bg-white py-3 text-sm font-semibold text-ink transition hover:bg-surface2 disabled:opacity-50"
                       >
                         {isProcessing ? t("processingOffer") : t("declineOffer")}
                       </button>

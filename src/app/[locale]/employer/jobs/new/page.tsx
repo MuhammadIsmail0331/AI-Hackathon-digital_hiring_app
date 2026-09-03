@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -187,14 +187,14 @@ export default function CreateJobPage() {
         <Navbar />
         <main className="mx-auto max-w-2xl px-4 py-6 pb-24 sm:pb-8">
           <div className="mb-6 text-center">
-            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600">
+            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-successsoft">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-success">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                 <polyline points="22 4 12 14.01 9 11.01" />
               </svg>
             </div>
-            <h1 className="text-xl font-bold text-gray-900">{t("jobPosted")}</h1>
-            <p className="mt-1 text-sm text-gray-500">
+            <h1 className="text-xl font-bold text-ink">{t("jobPosted")}</h1>
+            <p className="mt-1 text-sm text-muted">
               {t("professionalsFound", { count: matches.length })}
             </p>
           </div>
@@ -203,19 +203,19 @@ export default function CreateJobPage() {
             {matches.map((m) => (
               <div
                 key={m.userId}
-                className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
+                className="rounded-2xl border border-line bg-surface p-4 shadow-sm"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-100 text-primary">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
                       </svg>
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900">{m.name}</div>
-                      <div className="text-sm text-gray-500">
+                      <div className="font-semibold text-ink">{m.name}</div>
+                      <div className="text-sm text-muted">
                         {experienceLabel(m.experience)}
                       </div>
                     </div>
@@ -226,14 +226,14 @@ export default function CreateJobPage() {
                 {m.skills.length > 0 && (
                   <div className="mt-3 flex flex-wrap gap-1.5">
                     {m.skills.slice(0, 4).map((sId) => (
-                      <span key={sId} className="rounded-lg bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">
+                      <span key={sId} className="rounded-lg bg-primarysoft px-2 py-0.5 text-xs font-medium text-primary">
                         {getSkillName(sId)}
                       </span>
                     ))}
                   </div>
                 )}
 
-                <div className="mt-3 flex items-center gap-4 text-xs text-gray-500">
+                <div className="mt-3 flex items-center gap-4 text-xs text-muted">
                   <span>★ {m.avgRating.toFixed(1)}</span>
                   <span>{m.totalJobs} {t("jobsCompleted")}</span>
                   <span>{t("expectedWage")}: {m.expectedWage.toLocaleString()} PKR</span>
@@ -245,7 +245,7 @@ export default function CreateJobPage() {
           <button
             type="button"
             onClick={handleSendOffers}
-            className="mt-6 w-full rounded-xl bg-blue-600 py-4 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700"
+            className="mt-6 w-full rounded-xl bg-primary py-4 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700"
           >
             {t("sendOffers")}
           </button>
@@ -268,26 +268,26 @@ export default function CreateJobPage() {
                 <path d="m21 21-4.3-4.3" />
               </svg>
             </div>
-            <h1 className="text-xl font-bold text-gray-900">{t("noProfessionalsFound")}</h1>
-            <p className="mt-1 text-sm text-gray-500">{t("noProfessionalsDesc")}</p>
+            <h1 className="text-xl font-bold text-ink">{t("noProfessionalsFound")}</h1>
+            <p className="mt-1 text-sm text-muted">{t("noProfessionalsDesc")}</p>
           </div>
 
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h2 className="mb-2 font-semibold text-gray-900">{t("continueSearching")}</h2>
-            <p className="mb-6 text-sm text-gray-500">{t("continueSearchingDesc")}</p>
+          <div className="rounded-2xl border border-line bg-surface p-6 shadow-sm">
+            <h2 className="mb-2 font-semibold text-ink">{t("continueSearching")}</h2>
+            <p className="mb-6 text-sm text-muted">{t("continueSearchingDesc")}</p>
 
             <div className="flex flex-col gap-3">
               <button
                 type="button"
                 onClick={handleContinueSearching}
-                className="w-full rounded-xl bg-blue-600 py-3.5 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                className="w-full rounded-xl bg-primary py-3.5 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700"
               >
                 {t("yesContinue")}
               </button>
               <button
                 type="button"
                 onClick={handleNoContinue}
-                className="w-full rounded-xl border border-gray-300 bg-white py-3.5 text-base font-semibold text-gray-700 transition hover:bg-gray-50"
+                className="w-full rounded-xl border border-line bg-white py-3.5 text-base font-semibold text-ink transition hover:bg-surface2"
               >
                 {t("noGoBack")}
               </button>
@@ -304,7 +304,7 @@ export default function CreateJobPage() {
     <>
       <Navbar />
       <main className="mx-auto max-w-2xl px-4 py-6 pb-24 sm:pb-8">
-        <h1 className="mb-6 text-2xl font-bold text-gray-900">{t("createJob")}</h1>
+        <h1 className="mb-6 text-2xl font-bold text-ink">{t("createJob")}</h1>
 
         {error && (
           <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-700">
@@ -314,8 +314,8 @@ export default function CreateJobPage() {
 
         <div className="space-y-6">
           {/* Job Title */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <label className="mb-2 block text-sm font-semibold text-ink">
               {t("jobTitle")} <span className="text-red-500">*</span>
             </label>
             <input
@@ -324,13 +324,13 @@ export default function CreateJobPage() {
               onChange={(e) => setTitle(e.target.value)}
               placeholder={t("jobTitlePlaceholder")}
               maxLength={100}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              className="w-full rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
             />
           </div>
 
           {/* Professional Type */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <label className="mb-3 block text-sm font-semibold text-gray-700">
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <label className="mb-3 block text-sm font-semibold text-ink">
               {t("professionalType")} <span className="text-red-500">*</span>
             </label>
             <CategorySelector
@@ -341,8 +341,8 @@ export default function CreateJobPage() {
 
           {/* Skills */}
           {workerType && (
-            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-              <label className="mb-3 block text-sm font-semibold text-gray-700">
+            <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+              <label className="mb-3 block text-sm font-semibold text-ink">
                 {t("requiredSkills")} <span className="text-red-500">*</span>
               </label>
               <SkillSelector
@@ -355,7 +355,7 @@ export default function CreateJobPage() {
           )}
 
           {/* People Needed */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
             <NumberSelector
               value={numberOfWorkers}
               onChange={setNumberOfWorkers}
@@ -366,8 +366,8 @@ export default function CreateJobPage() {
           </div>
 
           {/* Job Date */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <label className="mb-2 block text-sm font-semibold text-ink">
               {t("jobDate")} <span className="text-red-500">*</span>
             </label>
             <input
@@ -375,12 +375,12 @@ export default function CreateJobPage() {
               value={date}
               onChange={(e) => setDate(e.target.value)}
               min={new Date().toISOString().split("T")[0]}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              className="w-full rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
             />
           </div>
 
           {/* Start Time */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
             <TimeSelector
               hour={startHour}
               minute={startMinute}
@@ -391,7 +391,7 @@ export default function CreateJobPage() {
           </div>
 
           {/* End Time */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
             <TimeSelector
               hour={endHour}
               minute={endMinute}
@@ -402,8 +402,8 @@ export default function CreateJobPage() {
           </div>
 
           {/* Wage */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <label className="mb-2 block text-sm font-semibold text-ink">
               {t("wagePerPerson")} <span className="text-red-500">*</span>
             </label>
             <div className="flex items-center gap-2">
@@ -413,29 +413,29 @@ export default function CreateJobPage() {
                 onChange={(e) => setWage(Math.max(100, Number(e.target.value)))}
                 min={100}
                 max={100000}
-                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                className="w-full rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
               />
-              <span className="whitespace-nowrap text-sm font-semibold text-gray-600">PKR</span>
+              <span className="whitespace-nowrap text-sm font-semibold text-muted">PKR</span>
             </div>
             {numberOfWorkers > 1 && (
-              <div className="mt-2 rounded-lg bg-blue-50 px-3 py-2 text-sm font-medium text-blue-700">
+              <div className="mt-2 rounded-lg bg-primarysoft px-3 py-2 text-sm font-medium text-primary">
                 {t("totalCost")}: {(wage * numberOfWorkers).toLocaleString()} PKR ({numberOfWorkers} × {wage.toLocaleString()})
               </div>
             )}
           </div>
 
           {/* Tools Provided */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <label className="mb-1 block text-sm font-semibold text-gray-700">
-              {t("toolsProvided")} <span className="text-xs font-normal text-gray-500">({commonT("optional")})</span>
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <label className="mb-1 block text-sm font-semibold text-ink">
+              {t("toolsProvided")} <span className="text-xs font-normal text-muted">({commonT("optional")})</span>
             </label>
-            <p className="mb-3 text-xs text-gray-500">{t("toolsHint")}</p>
+            <p className="mb-3 text-xs text-muted">{t("toolsHint")}</p>
             <ToolSelector value={tools} onChange={setTools} />
           </div>
 
           {/* Location */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <label className="mb-3 block text-sm font-semibold text-gray-700">
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <label className="mb-3 block text-sm font-semibold text-ink">
               {t("jobLocation")} <span className="text-red-500">*</span>
             </label>
             <CitySelector value={locationName} onChange={setLocationName} label={t("jobLocation")} />
@@ -445,7 +445,7 @@ export default function CreateJobPage() {
               type="button"
               onClick={requestLocation}
               disabled={gpsStatus === "requesting"}
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-100 disabled:opacity-50"
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-gray-50 px-4 py-3 text-sm font-medium text-ink transition hover:bg-surface2 disabled:opacity-50"
             >
               {gpsStatus === "requesting" ? (
                 <>
@@ -457,10 +457,10 @@ export default function CreateJobPage() {
                 </>
               ) : gpsStatus === "set" ? (
                 <>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-success">
                     <path d="M20 6 9 17l-5-5" />
                   </svg>
-                  <span className="text-green-700">{t("locationSet")}</span>
+                  <span className="text-success">{t("locationSet")}</span>
                 </>
               ) : gpsStatus === "denied" ? (
                 <span className="text-yellow-700">{t("locationDenied")}</span>
@@ -477,9 +477,9 @@ export default function CreateJobPage() {
           </div>
 
           {/* Description */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
-              {t("additionalDetails")} <span className="text-xs font-normal text-gray-500">({commonT("optional")})</span>
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <label className="mb-2 block text-sm font-semibold text-ink">
+              {t("additionalDetails")} <span className="text-xs font-normal text-muted">({commonT("optional")})</span>
             </label>
             <textarea
               value={description}
@@ -487,7 +487,7 @@ export default function CreateJobPage() {
               placeholder={t("descriptionPlaceholder")}
               maxLength={1000}
               rows={3}
-              className="w-full resize-none rounded-xl border border-gray-300 px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              className="w-full resize-none rounded-xl border border-line px-4 py-3 text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
             />
           </div>
         </div>
@@ -497,7 +497,7 @@ export default function CreateJobPage() {
           type="button"
           onClick={handleSubmit}
           disabled={submitting}
-          className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-4 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50"
+          className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50"
         >
           {submitting ? (
             <>
