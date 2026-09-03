@@ -1,6 +1,6 @@
 {
   "App": {
-    "name": "Rozgaar",
+    "name": "Digital Hiring",
     "tagline": "Verified workers. Protected wages. Zero hassle."
   },
   "Landing": {
@@ -22,7 +22,9 @@
     "featurePaymentDesc": "Wages sit in escrow from the moment a worker accepts until the job is done. Released only when everyone agrees.",
     "chipVerified": "OTP verified",
     "chipEscrow": "Escrow protected",
-    "chipRated": "Rated workers"
+    "chipRated": "Rated workers",
+    "statsReviews": "across {count} verified reviews",
+    "brandLine": "Digital Hiring · Rozgaar"
   },
   "Language": {
     "en": "English",

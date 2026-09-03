@@ -70,11 +70,9 @@ export default function Navbar() {
               </svg>
             </div>
             <span className="hidden leading-tight sm:block">
-              <span className="block text-lg font-bold tracking-tight text-ink" style={{ fontFamily: "var(--font-sora), sans-serif" }}>
-                Rozgaar
-              </span>
+              <span className="block text-lg font-bold tracking-tight text-ink" style={{ fontFamily: "var(--font-sora), sans-serif" }}>Digital Hiring</span>
               <span className="block text-[10px] leading-3 text-muted">
-                <span dir="rtl">روزگار</span>
+                <span dir="rtl">روزگار</span> · Rozgaar
               </span>
             </span>
           </Link>
