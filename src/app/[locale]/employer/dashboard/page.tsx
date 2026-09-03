@@ -133,12 +133,13 @@ export default function EmployerDashboardPage() {
           </div>
         </div>
 
-          <Link href="/employer/find" className="me-2 inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-5 py-3 text-base font-semibold text-ink shadow-sm transition hover:bg-surface2">
-            🔎 {locale === "ur" ? "پیشہ ور تلاش کریں" : "🔎 Find Professionals"}
-          </Link>
-        <Link
-          href="/employer/jobs/new"
-          className="mb-6 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-4 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300"
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <Link href="/employer/find" className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-5 py-3.5 text-base font-semibold text-ink shadow-sm transition hover:bg-surface2">
+              🔎 {locale === "ur" ? "پیشہ ور تلاش کریں" : "Find Professionals"}
+            </Link>
+            <Link
+              href="/employer/jobs/new"
+          className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 5v14" />
@@ -146,6 +147,7 @@ export default function EmployerDashboardPage() {
           </svg>
           {t("createNewJob")}
         </Link>
+          </div>
 
         {recentJobs.length > 0 ? (
           <div>

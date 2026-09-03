@@ -9,6 +9,8 @@ import "../globals.css";
 import RouteLoader from "@/components/ui/RouteLoader";
 import { Toaster } from "sonner";
 import { SideGarland } from "@/components/layout/SideGarland";
+import { SessionSplash } from "@/components/brand/SessionSplash";
+import { DoodleBackground } from "@/components/ui/DoodleBackground";
 import { BrandAccent } from "@/components/ui/BrandAccent";
 
 const sora = Sora({ subsets: ["latin"], weight: ["600", "700", "800"], variable: "--font-sora", display: "swap" });
@@ -66,6 +68,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       </head>
       <body className="flex min-h-screen flex-col bg-canvas text-ink antialiased">
         <SideGarland />
+        <DoodleBackground />
         <NextIntlClientProvider messages={messages}>
           {/* Keyboard users can jump straight past the navbar */}
           <a
@@ -75,6 +78,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             {t("skipToContent")}
           </a>
           <RouteLoader />
+          <SessionSplash />
           <Toaster richColors position="top-center" toastOptions={{ classNames: { toast: "font-sans" } }} />
           <div id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
             {children}
