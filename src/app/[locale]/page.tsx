@@ -16,7 +16,7 @@ export const dynamic = "force-dynamic";
 
 async function getStats() {
   try {
-    const [completedJobs, workers, profileAgg] = await Promise.all([
+    const [completedJobs, workers, profileAgg, reviews] = await Promise.all([
       db.job.count({ where: { status: "COMPLETED" } }),
       db.user.count({ where: { role: "WORKER" } }),
       db.workerProfile.aggregate({ _avg: { avgRating: true } }),
