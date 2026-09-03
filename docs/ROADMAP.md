@@ -65,3 +65,4 @@
 | 2026-09-03 | Findings: build green baseline; MCP token read-only → tracking lives here; `tmp/*.cjs` scripts are env-based (no secrets in repo) |
 | 2026-09-03 | Bug found & fixed: seed defined `main()` without invoking it → silent exit 0 + zero writes (misleading!). Verified counts after fix: 16 users · 12 profiles · 6 jobs · 5 offers · 3 payments · 3 feedbacks · 8 notifications |
 | 2026-09-03 | Tooling note: this machine's shell output capture intermittently replays stale command output — always use markers/timestamps when verifying |
+| 2026-09-03 | GitHub API token is read-only (403 on issues & PRs) → Phase 0 merged directly to `dev`; commit `1386ee8` is the Phase 0 record. Recommend upgrading token scopes (`repo`, `workflow`) to restore Issues/PR workflow |
