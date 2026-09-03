@@ -602,7 +602,7 @@ export default function JobDetailPage() {
           <div className="mb-4">
             {!showCompleteConfirm ? (
               <button
-                onClick={() => setShowCompleteConfirm(true)}
+                onClick={() => setShowCompleteConfirm(true)} data-testid="complete-trigger"
                 className="w-full rounded-xl bg-success py-3 text-base font-semibold text-white shadow-sm transition hover:bg-success/90"
               >
                 {jcT("completeJob")}
@@ -613,6 +613,7 @@ export default function JobDetailPage() {
                 <div className="flex gap-3">
                   <button
                     onClick={async () => {
+                    data-testid="complete-confirm"
                       setCompleting(true);
                       try {
                         const res = await fetch(`/api/employer/jobs/${jobId}/complete`, { method: "POST" });

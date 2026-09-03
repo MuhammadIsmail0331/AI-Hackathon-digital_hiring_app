@@ -284,7 +284,7 @@ export default function WorkerOffersPage() {
                   {isPending && (
                     <div className="flex gap-3">
                       <button
-                        onClick={() => handleAction(offer.id, "ACCEPT")}
+                        onClick={() => handleAction(offer.id, "ACCEPT")} data-testid="accept-offer"
                         disabled={isProcessing}
                         className="flex-1 rounded-xl bg-success py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-success/90 disabled:opacity-50"
                       >

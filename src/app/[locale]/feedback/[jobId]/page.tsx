@@ -229,7 +229,7 @@ export default function FeedbackPage() {
           <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
             <h3 className="mb-1 text-sm font-semibold text-ink">{t("overallRating")}</h3>
             <p className="mb-1 text-xs text-muted" dir="rtl">مجموعی درجہ بندی</p>
-            <div className="mt-3 flex justify-center gap-2">
+            <div data-testid="overall-stars" className="mt-3 flex justify-center gap-2">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button key={star} type="button" onClick={() => setOverallRating(star)}
                   aria-label={t("starRating", { stars: star })}
@@ -297,7 +297,7 @@ export default function FeedbackPage() {
               className="w-full rounded-xl border border-line px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200" />
           </div>
 
-          <button type="submit" disabled={loading || overallRating === 0}
+          <button type="submit" disabled={loading || overallRating === 0} data-testid="feedback-submit"
             className="w-full rounded-xl bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50">
             {loading ? commonT("loading") : t("submitFeedback")}
           </button>

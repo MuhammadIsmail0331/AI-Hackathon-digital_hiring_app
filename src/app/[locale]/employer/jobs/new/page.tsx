@@ -249,7 +249,7 @@ export default function CreateJobPage() {
 
           <button
             type="button"
-            onClick={handleSendOffers}
+            onClick={handleSendOffers} data-testid="send-offers"
             className="mt-6 w-full rounded-xl bg-primary py-4 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700"
           >
             {t("sendOffers")}
@@ -325,7 +325,7 @@ export default function CreateJobPage() {
             </label>
             <input
               type="text"
-              value={title}
+              value={title} data-testid="job-title"
               onChange={(e) => setTitle(e.target.value)}
               placeholder={t("jobTitlePlaceholder")}
               maxLength={100}
@@ -500,7 +500,7 @@ export default function CreateJobPage() {
         {/* Submit Button */}
         <button
           type="button"
-          onClick={handleSubmit}
+          onClick={handleSubmit} data-testid="submit-job"
           disabled={submitting}
           className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50"
         >
