@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
 
@@ -101,7 +101,7 @@ export async function GET() {
       .filter((o) => o.job.status === "COMPLETED")
       .map(toJobCard);
 
-    const profile = await db.workerProfile.findUnique({
+    const profile = await db.workerProfile.findFirst({
       where: { userId: user.id },
       select: { avgRating: true },
     });

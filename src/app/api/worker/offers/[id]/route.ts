@@ -64,7 +64,7 @@ export async function PUT(request: Request, { params }: RouteContext) {
         worker: {
           select: {
             phone: true,
-            workerProfile: {
+            workerProfiles: {
               select: { workerType: true, experience: true, locationName: true },
             },
           },
@@ -201,7 +201,7 @@ export async function PUT(request: Request, { params }: RouteContext) {
     }
 
     // ── Contact exchange: both parties receive each other's details ──
-    const workerProfile = offer.worker.workerProfile;
+    const workerProfile = offer.worker.workerProfiles[0] ?? null;
     const workerPhone = offer.worker.phone;
     const employerName = offer.job.employer.name;
     const employerPhone = offer.job.employer.phone;

@@ -110,7 +110,7 @@ export default function LandingPage({ params }: Props) {
               <div className="mx-auto grid max-w-2xl gap-4 text-start sm:grid-cols-2">
                 <TiltCard className="h-full">
                   <Link
-                    href="/register"
+                    href="/register?role=EMPLOYER"
                     className="group flex h-full flex-col rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl backdrop-blur-md transition hover:border-amber-300/50"
                   >
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-lg">
@@ -131,7 +131,7 @@ export default function LandingPage({ params }: Props) {
                 </TiltCard>
                 <TiltCard className="h-full">
                   <Link
-                    href="/register"
+                    href="/register?role=WORKER"
                     className="group flex h-full flex-col rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl backdrop-blur-md transition hover:border-emerald-300/50"
                   >
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg">
@@ -255,7 +255,7 @@ export default function LandingPage({ params }: Props) {
               <h2 className="mb-3 text-2xl font-bold text-white sm:text-3xl">{app("tagline")}</h2>
               <p className="mx-auto mb-6 max-w-xl text-sm text-emerald-50/90 sm:text-base">{t("description")}</p>
               <Link
-                href="/register"
+                href="/register?role=EMPLOYER"
                 className="inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-base font-bold text-primary shadow-lg transition hover:gap-3 hover:shadow-xl"
               >
                 {t("needWorker")}

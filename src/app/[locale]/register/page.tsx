@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { signIn } from "next-auth/react";
 import { useRouter } from "@/i18n/navigation";
@@ -39,6 +39,12 @@ export default function RegisterPage() {
 
   // Duplicate account redirect
   const [duplicateLogin, setDuplicateLogin] = useState(false);
+
+  // Preselect role from the landing CTA (?role=WORKER|EMPLOYER)
+  useEffect(() => {
+    const r = new URLSearchParams(window.location.search).get("role");
+    if (r === "WORKER" || r === "EMPLOYER") setRole(r);
+  }, []);
 
   function handleRoleSelect(selectedRole: Role) {
     setRole(selectedRole);
@@ -158,7 +164,7 @@ export default function RegisterPage() {
         if (signInResult?.error) {
           router.push("/login");
         } else {
-          router.push("/worker/profile");
+          router.push(role === "WORKER" ? "/worker/profile" : "/employer/dashboard");
           router.refresh();
         }
       } else {
@@ -198,7 +204,7 @@ export default function RegisterPage() {
         if (signInResult?.error) {
           router.push("/login");
         } else {
-          router.push("/worker/profile");
+          router.push(role === "WORKER" ? "/worker/profile" : "/employer/dashboard");
           router.refresh();
         }
       } else {
