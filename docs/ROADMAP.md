@@ -1,5 +1,7 @@
 # 🗺️ Roadmap — "Regionals Ready"
 
+> **GitHub tracking:** #1 master tracker · #2 Phase 0 · #3 Phase 1 · #4 Phase 2 · #5 Phase 3 · #6 Phase 4 · #7 Phase 5 (sub-issue hierarchy API needs broader token scope — checklist references used instead)
+
 > **Product thesis:** *AI structures, matches, explains, and prices the job — on a trustworthy, monetizable marketplace that demos flawlessly on the live Vercel URL.*
 >
 > This file is the **master tracker and execution log** for the hackathon push. (The repo token used by our agent is read-only, so GitHub Issues/PRs are mirrored here; commits reference phases directly.)
@@ -65,4 +67,5 @@
 | 2026-09-03 | Findings: build green baseline; MCP token read-only → tracking lives here; `tmp/*.cjs` scripts are env-based (no secrets in repo) |
 | 2026-09-03 | Bug found & fixed: seed defined `main()` without invoking it → silent exit 0 + zero writes (misleading!). Verified counts after fix: 16 users · 12 profiles · 6 jobs · 5 offers · 3 payments · 3 feedbacks · 8 notifications |
 | 2026-09-03 | Tooling note: this machine's shell output capture intermittently replays stale command output — always use markers/timestamps when verifying |
-| 2026-09-03 | GitHub API token is read-only (403 on issues & PRs) → Phase 0 merged directly to `dev`; commit `1386ee8` is the Phase 0 record. Recommend upgrading token scopes (`repo`, `workflow`) to restore Issues/PR workflow |
+| 2026-09-03 | GitHub API token upgraded by owner: issues #1–#7 created via MCP; sub-issue hierarchy endpoint still 403 (needs broader scope) — checklist refs used instead |
+| 2026-09-03 | Local dev server verified: `npm run dev` → HTTP 200 on `/en` with seeded data — owner starts manual demo-user testing against `localhost:3000` (Vercel URL still serves old `main` + ephemeral SQLite until Phase 1 deploy) |
