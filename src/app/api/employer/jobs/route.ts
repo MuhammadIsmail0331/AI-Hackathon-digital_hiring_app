@@ -149,6 +149,7 @@ export async function POST(request: Request) {
         workerId: m.userId,
         status: "PENDING" as const,
         matchScore: m.matchScore,
+        matchReason: m.reason,
       }));
       await db.jobOffer.createMany({ data: offerData });
 

@@ -5,7 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import Navbar from "@/components/layout/Navbar";
 import { WorkerBottomNav } from "@/components/layout/WorkerBottomNav";
 import { Badge } from "@/components/ui";
-import { WORKER_CATEGORIES, PAKISTAN_CITIES, SKILLS_MAP, TOOLS } from "@/lib/constants";
+import { WORKER_CATEGORIES, PAKISTAN_CITIES, SKILLS_MAP, TOOLS, MIN_DAILY_WAGE } from "@/lib/constants";
 
 interface BrowseJob {
   id: string;
@@ -230,6 +230,7 @@ export default function WorkerBrowseJobsPage() {
                   <span className="text-lg font-bold text-success">
                     PKR {job.wage.toLocaleString()}
                   </span>
+                  {job.wage >= MIN_DAILY_WAGE && (<span className="ms-2 rounded-full bg-successsoft px-2 py-0.5 text-[10px] font-bold text-success">✓ Fair</span>)}
                   <span className="text-xs text-muted">{commonT("perDay")}</span>
                 </div>
               </div>

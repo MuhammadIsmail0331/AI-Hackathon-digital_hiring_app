@@ -240,3 +240,6 @@ export const CATEGORY_COLORS: Record<
 export function categoryGradient(id: string) {
   return CATEGORY_COLORS[id as WorkerCategoryId] ?? CATEGORY_COLORS.other;
 }
+
+/** Configurable national daily minimum for the Fair Wage badge (PKR). */
+export const MIN_DAILY_WAGE = 1500;

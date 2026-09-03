@@ -1,4 +1,5 @@
-﻿"use client";
+﻿import { celebrate } from "@/lib/celebrate";
+"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -35,6 +36,7 @@ interface OfferItem {
   matchScore: number | null;
   createdAt: string;
   job: OfferJob;
+  matchReason: string | null;
 }
 
 export default function WorkerOffersPage() {
@@ -98,6 +100,7 @@ export default function WorkerOffersPage() {
 
           // Show employer contact immediately after acceptance
           if (data.status === "ACCEPTED") {
+            celebrate();
             const accepted = (refreshData.offers || []).find(
               (o: OfferItem) => o.id === offerId
             );
@@ -260,6 +263,14 @@ export default function WorkerOffersPage() {
                     </div>
                   </div>
 
+                  {typeof offer.matchScore === "number" && offer.matchScore > 0 && (
+                    <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-primarysoft px-3 py-1 text-xs font-bold text-primary">
+                      ⚡ {offer.matchScore}% match
+                    </div>
+                  )}
+                  {offer.matchReason && (
+                    <p className="mb-3 text-xs text-muted">✨ {offer.matchReason}</p>
+                  )}
                   {/* Employer Phone (after acceptance) */}
                   {isAccepted && job.employerPhone && (
                     <div className="mb-3 flex items-center gap-2 rounded-lg bg-successsoft p-3">
