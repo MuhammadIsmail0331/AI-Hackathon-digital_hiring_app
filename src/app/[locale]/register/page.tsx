@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -96,6 +96,7 @@ export default function RegisterPage() {
       }
       setOtpSent(true);
       setDevCode(data.code || "");
+      if (data.code) setOtpCode(data.code);
       setStep("otp");
       // Start cooldown timer (60 seconds)
       setCooldown(60);
@@ -445,9 +446,20 @@ export default function RegisterPage() {
 
           {/* DEV MODE: Show the OTP code */}
           {devCode && (
-            <div role="status" className="mb-4 rounded-xl border border-accent/30 bg-accentsoft p-3 text-center">
-              <p className="text-xs font-medium text-accent">{otpT("devCode")}</p>
-              <p className="text-2xl font-bold tracking-widest text-ink">{devCode}</p>
+            <div role="status" className="mb-4 rounded-2xl border-2 border-accent/40 bg-accentsoft p-5 text-center shadow-lg">
+              <p className="mb-1 text-xs font-bold uppercase tracking-wide text-accent">Demo Mode — Your verification code</p>
+              <p className="text-4xl font-extrabold tracking-[0.3em] text-ink">{devCode}</p>
+              <button
+                type="button"
+                onClick={() => {
+                  setOtpCode(devCode);
+                  navigator.clipboard?.writeText(devCode).catch(() => {});
+                }}
+                className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-accent px-4 py-1.5 text-xs font-bold text-white transition hover:bg-accent/90"
+              >
+                ✓ Auto-fill & Copy
+              </button>
+              <p className="mt-2 text-[10px] text-muted">In production, this code would be sent via SMS or email.</p>
             </div>
           )}
 
