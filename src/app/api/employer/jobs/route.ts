@@ -72,6 +72,35 @@ export async function POST(request: Request) {
 
     const data = parsed.data;
 
+    // Resolve "Other" free-text values into normalized stored values
+    let workerType = data.workerType;
+    if (workerType === "other") {
+      const custom = data.customWorkerType
+        ? data.customWorkerType.trim().replace(/\s+/g, " ").toLowerCase()
+        : "";
+      if (custom.length < 2) {
+        return NextResponse.json(
+          { error: "Please specify the type of professional needed" },
+          { status: 400 }
+        );
+      }
+      workerType = custom;
+    }
+
+    let locationName = data.locationName;
+    if (locationName === "other_city") {
+      const custom = data.customCity
+        ? data.customCity.trim().replace(/\s+/g, " ").toLowerCase()
+        : "";
+      if (custom.length < 2) {
+        return NextResponse.json(
+          { error: "Please type your city name" },
+          { status: 400 }
+        );
+      }
+      locationName = custom;
+    }
+
     // Validate date is not in the past
     const jobDate = new Date(data.date);
     const today = new Date();
@@ -84,10 +113,11 @@ export async function POST(request: Request) {
     }
 
     // Resolve fallback coordinates from city if GPS not provided
+    // (custom city names are not in CITY_COORDINATES — GPS or city-center is used)
     let lat = data.locationLat ?? null;
     let lng = data.locationLng ?? null;
-    if ((lat == null || lng == null) && data.locationName) {
-      const coords = CITY_COORDINATES[data.locationName as CityId];
+    if ((lat == null || lng == null) && locationName) {
+      const coords = CITY_COORDINATES[locationName as CityId];
       if (coords) {
         lat = coords.lat;
         lng = coords.lng;
@@ -100,7 +130,7 @@ export async function POST(request: Request) {
         employerId: user.id,
         title: data.title,
         description: data.description || null,
-        workerType: data.workerType,
+        workerType,
         requiredSkills: JSON.stringify(data.requiredSkills),
         numberOfWorkers: data.numberOfWorkers,
         date: jobDate,
@@ -114,7 +144,7 @@ export async function POST(request: Request) {
         toolsRequired: JSON.stringify(data.toolsRequired),
         locationLat: lat,
         locationLng: lng,
-        locationName: data.locationName,
+        locationName,
         status: "OPEN",
       },
     });

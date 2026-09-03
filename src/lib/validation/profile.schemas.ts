@@ -8,11 +8,18 @@ export const profileSchema = z.object({
   workerType: z.enum(categoryIds, {
     message: "Please select a worker type",
   }),
+  /** Free-text profession when workerType === "other" (stored normalized). */
+  customWorkerType: z.string().trim().min(2, "Profession must be at least 2 characters").max(40).optional(),
   skills: z.array(z.string()).min(1, "Please select at least one skill").max(10),
   experience: z.number().int().min(0).max(40),
   locationName: z.enum(cityIds, {
     message: "Please select your city",
   }),
+  /** Free-text city when locationName === "other_city" (stored normalized). */
+  customCity: z.string().trim().min(2, "City name must be at least 2 characters").max(40).optional(),
+  /** GPS coordinates captured on the device (used for the 50 km radius check). */
+  locationLat: z.number().min(-90).max(90).optional().nullable(),
+  locationLng: z.number().min(-180).max(180).optional().nullable(),
   expectedWage: z.number().int().min(100, "Minimum wage is 100 PKR").max(100000),
   isAvailable: z.boolean(),
   availableDays: z.array(z.string()).min(1, "Please select at least one day"),

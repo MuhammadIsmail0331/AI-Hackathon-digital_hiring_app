@@ -12,6 +12,8 @@ export const jobSchema = z.object({
   workerType: z.enum(categoryIds, {
     message: "Please select the type of professional needed",
   }),
+  /** Free-text profession when workerType === "other" (stored normalized). */
+  customWorkerType: z.string().trim().min(2, "Profession must be at least 2 characters").max(40).optional(),
   requiredSkills: z
     .array(z.string())
     .min(1, "Please select at least one skill")
@@ -37,6 +39,8 @@ export const jobSchema = z.object({
   locationName: z.enum(cityIds, {
     message: "Please select the job location",
   }),
+  /** Free-text city when locationName === "other_city" (stored normalized). */
+  customCity: z.string().trim().min(2, "City name must be at least 2 characters").max(40).optional(),
   locationLat: z.number().optional().nullable(),
   locationLng: z.number().optional().nullable(),
   description: z.string().max(1000).optional(),

@@ -13,6 +13,7 @@ import {
   TOOLS,
   PAKISTAN_CITIES,
 } from "@/lib/constants";
+import { prettyLabel } from "@/lib/labels";
 
 interface WorkerJobDetail {
   id: string;
@@ -75,7 +76,7 @@ export default function WorkerMyJobDetailPage() {
   }, [jobId]);
 
   function getCategoryName(id: string) {
-    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || id;
+    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getSkillName(id: string) {
@@ -87,12 +88,12 @@ export default function WorkerMyJobDetailPage() {
   }
 
   function getToolName(id: string) {
-    return TOOLS.find((t) => t.id === id)?.[locale] || id;
+    return TOOLS.find((t) => t.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getCityName(id: string | null) {
     if (!id) return "—";
-    return PAKISTAN_CITIES.find((c) => c.id === id)?.[locale] || id;
+    return PAKISTAN_CITIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function formatTime(h: number, m: number, p: string) {

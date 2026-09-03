@@ -7,6 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 import { EmployerBottomNav } from "@/components/layout/EmployerBottomNav";
 import { Badge } from "@/components/ui";
 import { WORKER_CATEGORIES } from "@/lib/constants";
+import { prettyLabel } from "@/lib/labels";
 
 interface SessionUser {
   name?: string | null;
@@ -58,7 +59,7 @@ export default function EmployerDashboardPage() {
   }, []);
 
   function getCategoryName(id: string) {
-    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || id;
+    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getStatusBadge(status: string) {

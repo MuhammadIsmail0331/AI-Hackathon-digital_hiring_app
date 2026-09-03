@@ -56,6 +56,7 @@ export default function FindProfessionalsPage() {
   const [jobs, setJobs] = useState<EmployerJob[]>([]);
   const [loading, setLoading] = useState(true);
   const [workerType, setWorkerType] = useState("");
+  const [customType, setCustomType] = useState("");
   const [city, setCity] = useState("");
   const [minRating, setMinRating] = useState(0);
   const [picked, setPicked] = useState<{ workerId: string; jobId: string } | null>(null);
@@ -79,7 +80,14 @@ export default function FindProfessionalsPage() {
     setLoading(true);
     try {
       const params = new URLSearchParams();
-      if (workerType) params.set("workerType", workerType);
+      if (workerType) {
+        // "Other" + typed profession searches the normalized stored value
+        const resolved =
+          workerType === "other" && customType.trim().length >= 2
+            ? customType.trim().replace(/\s+/g, " ").toLowerCase()
+            : workerType;
+        params.set("workerType", resolved);
+      }
       if (city) params.set("city", city);
       if (minRating > 0) params.set("minRating", String(minRating));
       const res = await fetch(`/api/employer/workers?${params}`);
@@ -90,7 +98,7 @@ export default function FindProfessionalsPage() {
     } finally {
       setLoading(false);
     }
-  }, [workerType, city, minRating]);
+  }, [workerType, customType, city, minRating]);
 
   useEffect(() => {
     const id = setTimeout(load, 250);
@@ -143,7 +151,15 @@ export default function FindProfessionalsPage() {
         />
 
         <div className="mb-6 space-y-4 rounded-2xl border border-line bg-surface p-5 shadow-sm">
-          <CategorySelector value={workerType as never} onChange={(id) => setWorkerType(workerType === id ? "" : id)} />
+          <CategorySelector
+            value={workerType as never}
+            onChange={(id) => {
+              setWorkerType(workerType === id ? "" : id);
+              if (id !== "other") setCustomType("");
+            }}
+            customValue={customType}
+            onCustomChange={setCustomType}
+          />
           <CitySelector value={city as never} onChange={(id) => setCity(city === id ? "" : id)} />
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-semibold text-muted">{L("Minimum rating:", "کم از کم درجہ بندی:")}</span>

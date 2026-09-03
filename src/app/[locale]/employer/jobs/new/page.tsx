@@ -16,6 +16,7 @@ import {
   Badge,
 } from "@/components/ui";
 import { WORKER_CATEGORIES, SKILLS_MAP, EXPERIENCE_LEVELS, MIN_DAILY_WAGE } from "@/lib/constants";
+import { prettyLabel } from "@/lib/labels";
 import type { WorkerCategoryId, ToolId, CityId } from "@/lib/constants";
 
 interface MatchCandidate {
@@ -51,6 +52,8 @@ export default function CreateJobPage() {
   const [wage, setWage] = useState("");
   const [tools, setTools] = useState<ToolId[]>([]);
   const [locationName, setLocationName] = useState<CityId | "">("");
+  const [customCity, setCustomCity] = useState("");
+  const [customWorkerType, setCustomWorkerType] = useState("");
   const [description, setDescription] = useState("");
   const [gpsLat, setGpsLat] = useState<number | null>(null);
   const [gpsLng, setGpsLng] = useState<number | null>(null);
@@ -105,7 +108,7 @@ export default function CreateJobPage() {
     }
   }
   function getCategoryName(id: string) {
-    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || id;
+    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getSkillName(id: string) {
@@ -130,6 +133,7 @@ export default function CreateJobPage() {
   function handleCategoryChange(id: string) {
     setWorkerType(id);
     setSkills([]); // Reset skills when category changes
+    if (id !== "other") setCustomWorkerType("");
   }
 
   function requestLocation() {
@@ -158,6 +162,14 @@ export default function CreateJobPage() {
       setError(t("fillRequired"));
       return;
     }
+    if (workerType === "other" && customWorkerType.trim().length < 2) {
+      setError(t("specifyType"));
+      return;
+    }
+    if (locationName === "other_city" && customCity.trim().length < 2) {
+      setError(t("specifyCity"));
+      return;
+    }
     const wageNum = Number(wage);
     if (!wageNum || wageNum < 100 || wageNum > 100000) {
       setError(t("wageInvalid"));
@@ -173,6 +185,7 @@ export default function CreateJobPage() {
         body: JSON.stringify({
           title: title.trim(),
           workerType,
+          customWorkerType: workerType === "other" ? customWorkerType.trim() : undefined,
           requiredSkills: skills,
           numberOfWorkers,
           date,
@@ -185,6 +198,7 @@ export default function CreateJobPage() {
           wage: Number(wage || 0),
           toolsRequired: tools,
           locationName,
+          customCity: locationName === "other_city" ? customCity.trim() : undefined,
           locationLat: gpsLat,
           locationLng: gpsLng,
           description: description.trim() || undefined,
@@ -407,6 +421,8 @@ export default function CreateJobPage() {
             <CategorySelector
               value={workerType as WorkerCategoryId | ""}
               onChange={handleCategoryChange}
+              customValue={customWorkerType}
+              onCustomChange={setCustomWorkerType}
             />
           </div>
 
@@ -519,7 +535,13 @@ export default function CreateJobPage() {
             <label className="mb-3 block text-sm font-semibold text-ink">
               {t("jobLocation")} <span className="text-red-500">*</span>
             </label>
-            <CitySelector value={locationName} onChange={setLocationName} label={t("jobLocation")} />
+            <CitySelector
+              value={locationName}
+              onChange={setLocationName}
+              label={t("jobLocation")}
+              customValue={customCity}
+              onCustomChange={setCustomCity}
+            />
 
             {/* GPS Location Button */}
             <button

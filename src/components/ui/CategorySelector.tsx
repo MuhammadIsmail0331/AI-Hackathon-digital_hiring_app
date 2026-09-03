@@ -99,9 +99,19 @@ interface CategorySelectorProps {
   disabled?: boolean;
   value?: WorkerCategoryId | "";
   onChange: (categoryId: WorkerCategoryId) => void;
+  /** Current text for a custom ("Other") worker type. */
+  customValue?: string;
+  /** Called when the custom worker-type text changes. Required to show the input. */
+  onCustomChange?: (value: string) => void;
 }
 
-export function CategorySelector({ value, onChange, disabled = false }: CategorySelectorProps) {
+export function CategorySelector({
+  value,
+  onChange,
+  disabled = false,
+  customValue,
+  onCustomChange,
+}: CategorySelectorProps) {
   const t = useTranslations("Categories");
 
   return (
@@ -147,6 +157,18 @@ export function CategorySelector({ value, onChange, disabled = false }: Category
           );
         })}
       </div>
+
+      {value === "other" && onCustomChange && (
+        <input
+          type="text"
+          value={customValue ?? ""}
+          onChange={(e) => onCustomChange(e.target.value)}
+          placeholder={t("otherPlaceholder")}
+          maxLength={40}
+          autoComplete="off"
+          className="w-full rounded-xl border-2 border-primary/40 bg-surface px-4 py-3 text-base text-ink outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/20"
+        />
+      )}
     </div>
   );
 }

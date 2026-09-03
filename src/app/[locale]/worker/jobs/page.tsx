@@ -6,6 +6,7 @@ import Navbar from "@/components/layout/Navbar";
 import { WorkerBottomNav } from "@/components/layout/WorkerBottomNav";
 import { Badge } from "@/components/ui";
 import { WORKER_CATEGORIES, PAKISTAN_CITIES, SKILLS_MAP, TOOLS, MIN_DAILY_WAGE } from "@/lib/constants";
+import { prettyLabel } from "@/lib/labels";
 
 interface BrowseJob {
   id: string;
@@ -58,12 +59,12 @@ export default function WorkerBrowseJobsPage() {
   const [appliedSearch, setAppliedSearch] = useState("");
 
   function getCategoryName(id: string) {
-    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || id;
+    return WORKER_CATEGORIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getCityName(id: string | null) {
     if (!id) return "—";
-    return PAKISTAN_CITIES.find((c) => c.id === id)?.[locale] || id;
+    return PAKISTAN_CITIES.find((c) => c.id === id)?.[locale] || prettyLabel(id);
   }
 
   function getSkillName(id: string) {
@@ -75,7 +76,7 @@ export default function WorkerBrowseJobsPage() {
   }
 
   function getToolName(id: string) {
-    return TOOLS.find((t) => t.id === id)?.[locale] || id;
+    return TOOLS.find((t) => t.id === id)?.[locale] || prettyLabel(id);
   }
 
   function formatTime(h: number, m: number, p: string) {

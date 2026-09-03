@@ -77,8 +77,37 @@ export async function PUT(request: Request) {
 
     const data = parsed.data;
 
+    // Resolve "Other" free-text values into normalized stored values
+    let workerType = data.workerType;
+    if (workerType === "other") {
+      const custom = data.customWorkerType
+        ? data.customWorkerType.trim().replace(/\s+/g, " ").toLowerCase()
+        : "";
+      if (custom.length < 2) {
+        return NextResponse.json(
+          { error: "Please specify your profession" },
+          { status: 400 }
+        );
+      }
+      workerType = custom;
+    }
+
+    let locationName = data.locationName;
+    if (locationName === "other_city") {
+      const custom = data.customCity
+        ? data.customCity.trim().replace(/\s+/g, " ").toLowerCase()
+        : "";
+      if (custom.length < 2) {
+        return NextResponse.json(
+          { error: "Please type your city name" },
+          { status: 400 }
+        );
+      }
+      locationName = custom;
+    }
+
     const existing = await db.workerProfile.findFirst({
-      where: { userId: user.id, workerType: data.workerType },
+      where: { userId: user.id, workerType },
     });
 
     const count = await db.workerProfile.count({ where: { userId: user.id } });
@@ -90,10 +119,18 @@ export async function PUT(request: Request) {
     }
 
     const profileData = {
-      workerType: data.workerType,
+      workerType,
       skills: JSON.stringify(data.skills),
       experience: data.experience,
-      locationName: data.locationName,
+      locationName,
+      locationLat:
+        data.locationLat === undefined
+          ? (existing?.locationLat ?? null)
+          : data.locationLat,
+      locationLng:
+        data.locationLng === undefined
+          ? (existing?.locationLng ?? null)
+          : data.locationLng,
       expectedWage: data.expectedWage,
       isAvailable: data.isAvailable,
       availableDays: JSON.stringify(data.availableDays),
