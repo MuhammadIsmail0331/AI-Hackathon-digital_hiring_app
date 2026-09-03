@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
@@ -20,14 +20,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-ink"
           >
             {label}
           </label>
         )}
         <div className="relative">
           {icon && (
-            <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5 text-gray-400">
+            <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5 text-muted">
               {icon}
             </div>
           )}
@@ -35,21 +35,21 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             className={cn(
-              "w-full rounded-xl border bg-white px-4 py-3 text-base outline-none transition",
-              "focus:border-blue-500 focus:ring-2 focus:ring-blue-200",
-              "disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500",
+              "w-full rounded-xl border bg-surface px-4 py-3 text-base text-ink outline-none transition placeholder:text-muted/70",
+              "focus:border-primary focus:ring-2 focus:ring-primarysoft",
+              "disabled:cursor-not-allowed disabled:bg-surface2 disabled:text-muted",
               icon && "ps-10",
               error
-                ? "border-red-300 focus:border-red-500 focus:ring-red-200"
-                : "border-gray-300",
+                ? "border-danger focus:border-danger focus:ring-dangersoft"
+                : "border-line",
               className
             )}
             {...props}
           />
         </div>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-danger">{error}</p>}
         {hint && !error && (
-          <p className="text-xs text-gray-500">{hint}</p>
+          <p className="text-xs text-muted">{hint}</p>
         )}
       </div>
     );

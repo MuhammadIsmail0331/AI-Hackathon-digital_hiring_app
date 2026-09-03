@@ -1,9 +1,12 @@
-"use client";
+﻿"use client";
 
-import { useLocale } from "next-intl";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
-import { WORKER_CATEGORIES, type WorkerCategoryId } from "@/lib/constants";
+import {
+  WORKER_CATEGORIES,
+  categoryGradient,
+  type WorkerCategoryId,
+} from "@/lib/constants";
 
 /**
  * Category icon map using simple SVG icons.
@@ -98,7 +101,6 @@ interface CategorySelectorProps {
 }
 
 export function CategorySelector({ value, onChange }: CategorySelectorProps) {
-  const locale = useLocale() as "en" | "ur";
   const t = useTranslations("Categories");
 
   return (
@@ -113,6 +115,7 @@ export function CategorySelector({ value, onChange }: CategorySelectorProps) {
       >
         {WORKER_CATEGORIES.map((cat) => {
           const isSelected = value === cat.id;
+          const colors = categoryGradient(cat.id);
           return (
             <button
               key={cat.id}
@@ -123,16 +126,16 @@ export function CategorySelector({ value, onChange }: CategorySelectorProps) {
                 "flex flex-col items-center gap-2 rounded-xl border-2 p-4 text-center transition",
                 "hover:shadow-md active:scale-[0.97]",
                 isSelected
-                  ? "border-blue-500 bg-blue-50 text-blue-700 shadow-sm"
-                  : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                  ? "border-primary bg-primarysoft text-primary shadow-sm ring-2 ring-primary/20"
+                  : "border-line bg-surface text-muted hover:border-muted/50"
               )}
             >
               <div
                 className={cn(
                   "flex h-10 w-10 items-center justify-center rounded-lg transition",
                   isSelected
-                    ? "bg-blue-100 text-blue-600"
-                    : "bg-gray-100 text-gray-500"
+                    ? "bg-gradient-to-br text-white shadow-sm " + colors.from + " " + colors.to
+                    : "bg-surface2 text-muted"
                 )}
               >
                 {CATEGORY_ICONS[cat.id]}

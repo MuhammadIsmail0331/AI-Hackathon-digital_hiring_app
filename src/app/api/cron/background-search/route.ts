@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { findMatchingProfessionals } from "@/lib/matching";
-import { createBulkNotifications } from "@/lib/notifications";
+import { createBulkNotifications, createNotification } from "@/lib/notifications";
 
 /**
  * POST /api/cron/background-search
@@ -99,6 +99,32 @@ export async function POST(request: Request) {
       }
 
       processedCount++;
+    }
+
+    // Auto-expire past-date jobs that never started
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+    const staleJobs = await db.job.findMany({
+      where: {
+        status: { in: ["OPEN", "MATCHING", "OFFERS_SENT"] },
+        date: { lt: startOfToday },
+      },
+      select: { id: true, title: true, employerId: true },
+    });
+    if (staleJobs.length > 0) {
+      await db.job.updateMany({
+        where: { id: { in: staleJobs.map((j) => j.id) } },
+        data: { status: "EXPIRED", backgroundSearchUntil: null },
+      });
+      for (const j of staleJobs) {
+        await createNotification(
+          j.employerId,
+          "SYSTEM",
+          "Job expired",
+          `Your job "${j.title}" expired because its date passed without being completed.`,
+          { jobId: j.id }
+        );
+      }
     }
 
     // Stop expired searches

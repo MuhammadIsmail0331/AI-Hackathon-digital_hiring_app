@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -46,9 +46,9 @@ export default function LoginPage() {
 
   return (
     <AuthPageWrapper>
-      <div className="overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-xl shadow-gray-200/40 backdrop-blur-sm">
+      <div className="overflow-hidden rounded-3xl border border-line bg-surface/90 shadow-xl shadow-gray-200/40 backdrop-blur-sm">
         {/* Header accent */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6 text-center">
+        <div className="bg-gradient-to-r from-primary to-primarystrong px-8 py-6 text-center">
           <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
@@ -63,7 +63,7 @@ export default function LoginPage() {
 
         <div className="p-8">
           {error && (
-            <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+            <div role="alert" className="mb-4 rounded-xl border border-danger/30 bg-dangersoft p-3 text-sm text-danger">
               {error}
             </div>
           )}
@@ -72,7 +72,7 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="mb-1.5 block text-sm font-medium text-gray-700"
+                className="mb-1.5 block text-sm font-medium text-ink"
               >
                 {t("email")}
               </label>
@@ -83,7 +83,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoComplete="email"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 text-base outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft"
                 placeholder="example@email.com"
               />
             </div>
@@ -91,7 +91,7 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="password"
-                className="mb-1.5 block text-sm font-medium text-gray-700"
+                className="mb-1.5 block text-sm font-medium text-ink"
               >
                 {t("password")}
               </label>
@@ -103,12 +103,12 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 pe-12 text-base outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                  className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 pe-12 text-base outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute end-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-gray-500 transition hover:bg-gray-100 hover:text-gray-700"
+                  className="absolute end-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-muted transition hover:bg-surface2 hover:text-ink"
                   aria-label={showPassword ? pwT("hidePassword") : pwT("showPassword")}
                 >
                   {showPassword ? (
@@ -133,7 +133,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => router.push("/forgot-password")}
-                className="text-sm font-medium text-blue-600 transition hover:text-blue-700 hover:underline"
+                className="text-sm font-medium text-primary transition hover:text-primarystrong hover:underline"
               >
                 {resetT("forgotPassword")}
               </button>
@@ -142,18 +142,18 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300 disabled:opacity-50"
+              className="w-full rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primarystrong disabled:opacity-50"
             >
               {loading ? common("loading") : t("loginTitle")}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted">
               {t("noAccount")}{" "}
               <button
                 onClick={() => router.push("/register")}
-                className="font-semibold text-blue-600 transition hover:text-blue-700 hover:underline"
+                className="font-semibold text-primary transition hover:text-primarystrong hover:underline"
               >
                 {t("registerHere")}
               </button>

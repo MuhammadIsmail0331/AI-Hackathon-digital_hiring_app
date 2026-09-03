@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -25,14 +25,14 @@ export function TimeSelector({
   return (
     <div className="space-y-3">
       {label && (
-        <label className="block text-sm font-semibold text-gray-700">
+        <label className="block text-sm font-semibold text-ink">
           {label}
         </label>
       )}
 
       {/* Hour Grid: 4x3 */}
       <div>
-        <div className="mb-1.5 text-xs font-medium text-gray-500">
+        <div className="mb-1.5 text-xs font-medium text-muted">
           {t("hour")}
         </div>
         <div
@@ -49,8 +49,8 @@ export function TimeSelector({
               className={cn(
                 "flex h-10 items-center justify-center rounded-lg text-sm font-medium transition",
                 hour === h
-                  ? "bg-blue-600 text-white shadow-sm"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-primary text-white shadow-sm"
+                  : "bg-surface2 text-ink hover:bg-line"
               )}
             >
               {h}
@@ -61,7 +61,7 @@ export function TimeSelector({
 
       {/* Minute Row */}
       <div>
-        <div className="mb-1.5 text-xs font-medium text-gray-500">
+        <div className="mb-1.5 text-xs font-medium text-muted">
           {t("minute")}
         </div>
         <div
@@ -78,8 +78,8 @@ export function TimeSelector({
               className={cn(
                 "flex h-10 items-center justify-center rounded-lg text-sm font-medium transition",
                 minute === m
-                  ? "bg-blue-600 text-white shadow-sm"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-primary text-white shadow-sm"
+                  : "bg-surface2 text-ink hover:bg-line"
               )}
             >
               {String(m).padStart(2, "0")}
@@ -90,7 +90,7 @@ export function TimeSelector({
 
       {/* AM/PM Toggle */}
       <div>
-        <div className="mb-1.5 text-xs font-medium text-gray-500">
+        <div className="mb-1.5 text-xs font-medium text-muted">
           {t("period")}
         </div>
         <div
@@ -107,8 +107,8 @@ export function TimeSelector({
               className={cn(
                 "flex h-11 items-center justify-center rounded-lg text-sm font-semibold transition",
                 period === p
-                  ? "bg-blue-600 text-white shadow-sm"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-primary text-white shadow-sm"
+                  : "bg-surface2 text-ink hover:bg-line"
               )}
             >
               {p === "AM" ? t("am") : t("pm")}
@@ -118,7 +118,7 @@ export function TimeSelector({
       </div>
 
       {/* Current time display */}
-      <div className="mt-2 text-center text-lg font-bold text-gray-900">
+      <div className="mt-2 text-center text-lg font-bold text-ink">
         {String(hour).padStart(2, "0")}:{String(minute).padStart(2, "0")}{" "}
         {period}
       </div>

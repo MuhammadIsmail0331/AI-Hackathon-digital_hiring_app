@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
 import { createNotification, createBulkNotifications } from "@/lib/notifications";
@@ -83,7 +83,7 @@ export async function POST(_req: Request, { params }: RouteContext) {
       "JOB_COMPLETED",
       "Job Completed",
       `The job "${job.title}" has been marked as completed. Please submit your feedback.`,
-      { jobId: id, employerId: user.id, employerName: user.name }
+      { jobId: id, employerId: user.id, employerName: user.name, link: `/worker/my-jobs/${id}` }
     );
 
     // Create feedback request notification for employer (remind to rate workers)

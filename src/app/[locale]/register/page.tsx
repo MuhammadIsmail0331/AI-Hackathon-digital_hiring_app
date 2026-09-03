@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -61,9 +61,9 @@ export default function RegisterPage() {
     pwErrors.length === 0 ? "strong" : pwErrors.length <= 2 ? "medium" : "weak";
   const pwColor =
     pwStrength === "strong"
-      ? "bg-green-500"
+      ? "bg-success"
       : pwStrength === "medium"
-      ? "bg-yellow-500"
+      ? "bg-accent"
       : "bg-red-500";
   const pwWidth =
     password.length === 0 ? "0%" : pwStrength === "strong" ? "100%" : pwStrength === "medium" ? "60%" : "30%";
@@ -233,7 +233,7 @@ export default function RegisterPage() {
     <div className="mx-auto max-w-md">
       {step === "role" && (
         <div className="space-y-6">
-          <h1 className="text-center text-2xl font-bold text-gray-900">
+          <h1 className="text-center text-2xl font-bold text-ink">
             {t("chooseRole")}
           </h1>
 
@@ -244,7 +244,7 @@ export default function RegisterPage() {
               className="group overflow-hidden rounded-2xl border-2 border-gray-200 bg-white text-start shadow-sm transition hover:border-blue-400 hover:shadow-lg hover:shadow-blue-100"
             >
               <div className="flex items-center gap-4 p-5">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 text-blue-600 transition group-hover:from-blue-500 group-hover:to-blue-600 group-hover:text-white">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 text-primary transition group-hover:from-blue-500 group-hover:to-blue-600 group-hover:text-white">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                     <circle cx="9" cy="7" r="4" />
@@ -253,8 +253,8 @@ export default function RegisterPage() {
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900">{t("employer")}</h2>
-                  <p className="mt-0.5 text-sm text-gray-500">{t("employerDesc")}</p>
+                  <h2 className="text-lg font-semibold text-ink">{t("employer")}</h2>
+                  <p className="mt-0.5 text-sm text-muted">{t("employerDesc")}</p>
                 </div>
               </div>
             </button>
@@ -272,16 +272,16 @@ export default function RegisterPage() {
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900">{t("worker")}</h2>
-                  <p className="mt-0.5 text-sm text-gray-500">{t("workerDesc")}</p>
+                  <h2 className="text-lg font-semibold text-ink">{t("worker")}</h2>
+                  <p className="mt-0.5 text-sm text-muted">{t("workerDesc")}</p>
                 </div>
               </div>
             </button>
           </div>
 
-          <p className="text-center text-sm text-gray-500">
+          <p className="text-center text-sm text-muted">
             {t("hasAccount")}{" "}
-            <button onClick={() => router.push("/login")} className="font-semibold text-blue-600 hover:underline">
+            <button onClick={() => router.push("/login")} className="font-semibold text-primary hover:underline">
               {t("loginHere")}
             </button>
           </p>
@@ -290,29 +290,29 @@ export default function RegisterPage() {
 
       {step === "details" && (
         <div className="overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-xl shadow-gray-200/40 backdrop-blur-sm">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6 text-center">
+          <div className="bg-gradient-to-r from-primary to-primarystrong px-8 py-6 text-center">
             <h1 className="text-xl font-bold text-white">{t("registerTitle")}</h1>
             <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-sm font-medium text-white backdrop-blur-sm">
               {role === "EMPLOYER" ? t("employer") : t("worker")}
             </div>
           </div>
           <div className="p-8">
-          <button onClick={() => setStep("role")} className="mb-4 flex items-center gap-1 rounded-lg px-2 py-1 text-sm text-gray-500 transition hover:bg-gray-100 hover:text-gray-700">
+          <button onClick={() => setStep("role")} className="mb-4 flex items-center gap-1 rounded-lg px-2 py-1 text-sm text-muted transition hover:bg-surface2 hover:text-ink">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
             {common("back")}
           </button>
 
-          <h2 className="mb-6 text-center text-2xl font-bold text-gray-900">{t("registerTitle")}</h2>
+          <h2 className="mb-6 text-center text-2xl font-bold text-ink">{t("registerTitle")}</h2>
 
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-ink">
             {role === "EMPLOYER" ? t("employer") : t("worker")}
           </div>
 
           {error && (
-            <div role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+            <div role="alert" className="mb-4 rounded-lg border border-danger/30 bg-dangersoft p-3 text-sm text-danger">
               {error}
               {duplicateLogin && (
-                <button onClick={() => router.push("/login")} className="ms-2 font-semibold text-blue-600 underline">
+                <button onClick={() => router.push("/login")} className="ms-2 font-semibold text-primary underline">
                   {otpT("goToLogin")}
                 </button>
               )}
@@ -327,33 +327,33 @@ export default function RegisterPage() {
             className="space-y-5"
           >
             <div>
-              <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-gray-700">{t("fullName")}</label>
+              <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-ink">{t("fullName")}</label>
               <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} required autoComplete="name"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100" />
+                className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 text-base outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft" />
             </div>
 
             <div>
-              <label htmlFor="reg-email" className="mb-1.5 block text-sm font-medium text-gray-700">{t("email")}</label>
+              <label htmlFor="reg-email" className="mb-1.5 block text-sm font-medium text-ink">{t("email")}</label>
               <input id="reg-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 text-base outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft"
                 placeholder="example@email.com" />
             </div>
 
             <div>
-              <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-gray-700">{t("phone")}</label>
+              <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-ink">{t("phone")}</label>
               <input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} required autoComplete="tel"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 text-base outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft"
                 placeholder="03XX-XXXXXXX" />
             </div>
 
             <div>
-              <label htmlFor="reg-password" className="mb-1.5 block text-sm font-medium text-gray-700">{t("password")}</label>
+              <label htmlFor="reg-password" className="mb-1.5 block text-sm font-medium text-ink">{t("password")}</label>
               <div className="relative">
                 <input id="reg-password" type={showPassword ? "text" : "password"} value={password}
                   onChange={(e) => handlePasswordChange(e.target.value)} required minLength={8} autoComplete="new-password"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 pe-12 text-base outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100" />
+                  className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 pe-12 text-base outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft" />
                 <button type="button" onClick={() => setShowPassword(!showPassword)}
-                  className="absolute end-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-gray-500 transition hover:bg-gray-100 hover:text-gray-700"
+                  className="absolute end-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-muted transition hover:bg-surface2 hover:text-ink"
                   aria-label={showPassword ? pwT("hidePassword") : pwT("showPassword")}>
                   <EyeIcon open={showPassword} />
                 </button>
@@ -363,7 +363,7 @@ export default function RegisterPage() {
               {password.length > 0 && (
                 <div className="mt-2">
                   <div className="mb-1 flex items-center justify-between text-xs">
-                    <span className="text-gray-500">{pwT("strength")}</span>
+                    <span className="text-muted">{pwT("strength")}</span>
                     <span className={pwStrength === "strong" ? "font-semibold text-green-600" : pwStrength === "medium" ? "font-semibold text-yellow-600" : "font-semibold text-red-600"}>
                       {pwStrength === "strong" ? pwT("strong") : pwStrength === "medium" ? pwT("medium") : pwT("weak")}
                     </span>
@@ -374,7 +374,7 @@ export default function RegisterPage() {
                   {pwErrors.length > 0 && (
                     <ul className="mt-2 space-y-0.5">
                       {pwErrors.map((err, i) => (
-                        <li key={i} className="text-xs text-red-500">• {err}</li>
+                        <li key={i} className="text-xs text-danger">• {err}</li>
                       ))}
                     </ul>
                   )}
@@ -383,7 +383,7 @@ export default function RegisterPage() {
             </div>
 
             <button type="submit" disabled={loading || otpLoading || pwErrors.length > 0}
-              className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300 disabled:opacity-50">
+              className="w-full rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primarystrong disabled:opacity-50">
               {otpLoading ? common("loading") : otpT("sendCode")}
             </button>
 
@@ -395,7 +395,7 @@ export default function RegisterPage() {
 
             <button type="button" onClick={handleRegisterWithoutOTP}
               disabled={loading || otpLoading || pwErrors.length > 0 || !name || !email || !phone || !password}
-              className="w-full rounded-xl border-2 border-gray-200 bg-white px-6 py-3.5 text-base font-semibold text-gray-700 transition hover:border-gray-300 hover:bg-gray-50 disabled:opacity-50">
+              className="w-full rounded-xl border-2 border-gray-200 bg-white px-6 py-3.5 text-base font-semibold text-ink transition hover:border-gray-300 hover:bg-gray-50 disabled:opacity-50">
               {loading ? common("loading") : otpT("continueWithoutOTP")}
             </button>
             <p className="text-center text-xs text-gray-400">{otpT("skipOTPDescription")}</p>
@@ -406,25 +406,25 @@ export default function RegisterPage() {
 
       {step === "otp" && (
         <div className="overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-xl shadow-gray-200/40 backdrop-blur-sm">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6 text-center">
+          <div className="bg-gradient-to-r from-primary to-primarystrong px-8 py-6 text-center">
             <h1 className="text-xl font-bold text-white">{otpT("title")}</h1>
             <p className="mt-1 text-sm text-blue-100">{otpT("description")}</p>
           </div>
           <div className="p-8">
             <button onClick={() => { setStep("details"); setOtpSent(false); setDevCode(""); }}
-              className="mb-4 flex items-center gap-1 rounded-lg px-2 py-1 text-sm text-gray-500 transition hover:bg-gray-100 hover:text-gray-700">
+              className="mb-4 flex items-center gap-1 rounded-lg px-2 py-1 text-sm text-muted transition hover:bg-surface2 hover:text-ink">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
             {common("back")}
           </button>
 
-          <h2 className="mb-2 text-center text-2xl font-bold text-gray-900">{otpT("title")}</h2>
-          <p className="mb-6 text-center text-sm text-gray-500">{otpT("description")}</p>
+          <h2 className="mb-2 text-center text-2xl font-bold text-ink">{otpT("title")}</h2>
+          <p className="mb-6 text-center text-sm text-muted">{otpT("description")}</p>
 
           {error && (
-            <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+            <div role="alert" className="mb-4 rounded-xl border border-danger/30 bg-dangersoft p-3 text-sm text-danger">
               {error}
               {duplicateLogin && (
-                <button onClick={() => router.push("/login")} className="ms-2 font-semibold text-blue-600 underline">
+                <button onClick={() => router.push("/login")} className="ms-2 font-semibold text-primary underline">
                   {otpT("goToLogin")}
                 </button>
               )}
@@ -439,29 +439,29 @@ export default function RegisterPage() {
 
           {/* DEV MODE: Show the OTP code */}
           {devCode && (
-            <div role="status" className="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-center">
-              <p className="text-xs font-medium text-amber-600">{otpT("devCode")}</p>
-              <p className="text-2xl font-bold tracking-widest text-amber-800">{devCode}</p>
+            <div role="status" className="mb-4 rounded-xl border border-accent/30 bg-accentsoft p-3 text-center">
+              <p className="text-xs font-medium text-accent">{otpT("devCode")}</p>
+              <p className="text-2xl font-bold tracking-widest text-ink">{devCode}</p>
             </div>
           )}
 
           <div className="mb-6">
-            <label htmlFor="otp-code" className="mb-1.5 block text-sm font-medium text-gray-700">{otpT("enterCode")}</label>
+            <label htmlFor="otp-code" className="mb-1.5 block text-sm font-medium text-ink">{otpT("enterCode")}</label>
             <input id="otp-code" type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={otpCode}
               onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ""))}
-              className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-center text-2xl tracking-widest outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+              className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 text-center text-2xl tracking-widest outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft"
               placeholder="000000" />
           </div>
 
           <button onClick={handleVerifyOTP} disabled={otpLoading || otpCode.length !== 6}
-            className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300 disabled:opacity-50">
+            className="w-full rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primarystrong disabled:opacity-50">
             {otpLoading ? common("loading") : otpT("verifyCode")}
           </button>
 
           {/* Resend */}
           <div className="mt-4 text-center">
             <button onClick={handleSendOTP} disabled={otpLoading || cooldown > 0}
-              className="text-sm font-medium text-blue-600 transition hover:text-blue-700 hover:underline disabled:opacity-50">
+              className="text-sm font-medium text-primary transition hover:text-primarystrong hover:underline disabled:opacity-50">
               {cooldown > 0 ? `${otpT("resendCode")} (${cooldown}s)` : otpT("resendCode")}
             </button>
           </div>

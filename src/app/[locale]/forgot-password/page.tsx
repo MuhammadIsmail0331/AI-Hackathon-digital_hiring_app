@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -157,7 +157,7 @@ export default function ForgotPasswordPage() {
     <AuthPageWrapper>
     <div className="overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-xl shadow-gray-200/40 backdrop-blur-sm">
       {/* Gradient header changes per step */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6 text-center">
+      <div className="bg-gradient-to-r from-primary to-primarystrong px-8 py-6 text-center">
         {step === "phone" && (
           <>
             <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm">
@@ -199,7 +199,7 @@ export default function ForgotPasswordPage() {
         {step === "phone" && (
           <>
             {error && (
-              <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+              <div role="alert" className="mb-4 rounded-xl border border-danger/30 bg-dangersoft p-3 text-sm text-danger">
                 {error}
               </div>
             )}
@@ -209,7 +209,7 @@ export default function ForgotPasswordPage() {
               className="space-y-5"
             >
               <div>
-                <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-gray-700">
+                <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-ink">
                   {authT("phone")}
                 </label>
                 <input
@@ -219,7 +219,7 @@ export default function ForgotPasswordPage() {
                   onChange={(e) => setPhone(e.target.value)}
                   required
                   autoComplete="tel"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                  className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 text-base outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft"
                   placeholder="03XX-XXXXXXX"
                 />
               </div>
@@ -227,7 +227,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={loading || !phone}
-                className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300 disabled:opacity-50"
+                className="w-full rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primarystrong disabled:opacity-50"
               >
                 {loading ? common("loading") : t("sendResetCode")}
               </button>
@@ -242,18 +242,18 @@ export default function ForgotPasswordPage() {
                 type="button"
                 onClick={() => setStep("newPassword")}
                 disabled={loading || !phone}
-                className="w-full rounded-xl border-2 border-gray-200 bg-white px-6 py-3.5 text-base font-semibold text-gray-700 transition hover:border-gray-300 hover:bg-gray-50 disabled:opacity-50"
+                className="w-full rounded-xl border-2 border-gray-200 bg-white px-6 py-3.5 text-base font-semibold text-ink transition hover:border-gray-300 hover:bg-gray-50 disabled:opacity-50"
               >
                 {t("continueWithoutOTP")}
               </button>
               <p className="text-center text-xs text-gray-400">{t("skipOTPDescription")}</p>
             </form>
 
-            <p className="mt-6 text-center text-sm text-gray-500">
+            <p className="mt-6 text-center text-sm text-muted">
               {t("rememberPassword")}{" "}
               <button
                 onClick={() => router.push("/login")}
-                className="font-semibold text-blue-600 transition hover:text-blue-700 hover:underline"
+                className="font-semibold text-primary transition hover:text-primarystrong hover:underline"
               >
                 {t("backToLogin")}
               </button>
@@ -265,22 +265,22 @@ export default function ForgotPasswordPage() {
         {step === "otp" && (
           <>
             {error && (
-              <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+              <div role="alert" className="mb-4 rounded-xl border border-danger/30 bg-dangersoft p-3 text-sm text-danger">
                 {error}
               </div>
             )}
 
             {/* DEV MODE: Show the OTP code */}
             {devCode && (
-              <div role="status" className="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-center">
-                <p className="text-xs font-medium text-amber-600">{otpT("devCode")}</p>
-                <p className="text-2xl font-bold tracking-widest text-amber-800">{devCode}</p>
+              <div role="status" className="mb-4 rounded-xl border border-accent/30 bg-accentsoft p-3 text-center">
+                <p className="text-xs font-medium text-accent">{otpT("devCode")}</p>
+                <p className="text-2xl font-bold tracking-widest text-ink">{devCode}</p>
               </div>
             )}
 
             <div className="space-y-5">
               <div>
-                <label htmlFor="otp-code" className="mb-1.5 block text-sm font-medium text-gray-700">
+                <label htmlFor="otp-code" className="mb-1.5 block text-sm font-medium text-ink">
                   {otpT("enterCode")}
                 </label>
                 <input
@@ -291,13 +291,13 @@ export default function ForgotPasswordPage() {
                   maxLength={6}
                   value={otpCode}
                   onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ""))}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-center text-2xl tracking-widest outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                  className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 text-center text-2xl tracking-widest outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft"
                   placeholder="000000"
                 />
               </div>
 
               <div>
-                <label htmlFor="new-password" className="mb-1.5 block text-sm font-medium text-gray-700">
+                <label htmlFor="new-password" className="mb-1.5 block text-sm font-medium text-ink">
                   {t("newPassword")}
                 </label>
                 <div className="relative">
@@ -309,13 +309,13 @@ export default function ForgotPasswordPage() {
                     required
                     minLength={8}
                     autoComplete="new-password"
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 pe-12 text-base outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 pe-12 text-base outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     aria-label={showPassword ? pwT("hidePassword") : pwT("showPassword")}
-                    className="absolute end-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-gray-500 transition hover:bg-gray-100 hover:text-gray-700"
+                    className="absolute end-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-muted transition hover:bg-surface2 hover:text-ink"
                   >
                     <EyeIcon open={showPassword} />
                   </button>
@@ -323,14 +323,14 @@ export default function ForgotPasswordPage() {
                 {pwErrors.length > 0 && (
                   <ul className="mt-2 space-y-0.5">
                     {pwErrors.map((err, i) => (
-                      <li key={i} className="text-xs text-red-500">• {err}</li>
+                      <li key={i} className="text-xs text-danger">• {err}</li>
                     ))}
                   </ul>
                 )}
               </div>
 
               <div>
-                <label htmlFor="confirm-password" className="mb-1.5 block text-sm font-medium text-gray-700">
+                <label htmlFor="confirm-password" className="mb-1.5 block text-sm font-medium text-ink">
                   {t("confirmPassword")}
                 </label>
                 <input
@@ -340,17 +340,17 @@ export default function ForgotPasswordPage() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                   autoComplete="new-password"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                  className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 text-base outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft"
                 />
                 {confirmPassword && newPassword !== confirmPassword && (
-                  <p className="mt-1 text-xs text-red-500">{t("passwordMismatch")}</p>
+                  <p className="mt-1 text-xs text-danger">{t("passwordMismatch")}</p>
                 )}
               </div>
 
               <button
                 onClick={handleResetPassword}
                 disabled={loading || otpCode.length !== 6 || pwErrors.length > 0 || !confirmPassword || newPassword !== confirmPassword}
-                className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300 disabled:opacity-50"
+                className="w-full rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primarystrong disabled:opacity-50"
               >
                 {loading ? common("loading") : t("resetButton")}
               </button>
@@ -360,7 +360,7 @@ export default function ForgotPasswordPage() {
                 <button
                   onClick={handleSendOTP}
                   disabled={loading || cooldown > 0}
-                  className="text-sm font-medium text-blue-600 hover:underline disabled:opacity-50"
+                  className="text-sm font-medium text-primary hover:underline disabled:opacity-50"
                 >
                   {cooldown > 0 ? `${otpT("resendCode")} (${cooldown}s)` : otpT("resendCode")}
                 </button>
@@ -373,20 +373,20 @@ export default function ForgotPasswordPage() {
         {step === "newPassword" && (
           <>
             {error && (
-              <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+              <div role="alert" className="mb-4 rounded-xl border border-danger/30 bg-dangersoft p-3 text-sm text-danger">
                 {error}
               </div>
             )}
 
             <button onClick={() => setStep("phone")}
-              className="mb-4 flex items-center gap-1 rounded-lg px-2 py-1 text-sm text-gray-500 transition hover:bg-gray-100 hover:text-gray-700">
+              className="mb-4 flex items-center gap-1 rounded-lg px-2 py-1 text-sm text-muted transition hover:bg-surface2 hover:text-ink">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
               {common("back")}
             </button>
 
             <div className="space-y-5">
               <div>
-                <label htmlFor="new-password-no-otp" className="mb-1.5 block text-sm font-medium text-gray-700">
+                <label htmlFor="new-password-no-otp" className="mb-1.5 block text-sm font-medium text-ink">
                   {t("newPassword")}
                 </label>
                 <div className="relative">
@@ -398,13 +398,13 @@ export default function ForgotPasswordPage() {
                     required
                     minLength={8}
                     autoComplete="new-password"
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 pe-12 text-base outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 pe-12 text-base outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     aria-label={showPassword ? pwT("hidePassword") : pwT("showPassword")}
-                    className="absolute end-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-gray-500 transition hover:bg-gray-100 hover:text-gray-700"
+                    className="absolute end-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-muted transition hover:bg-surface2 hover:text-ink"
                   >
                     <EyeIcon open={showPassword} />
                   </button>
@@ -412,14 +412,14 @@ export default function ForgotPasswordPage() {
                 {pwErrors.length > 0 && (
                   <ul className="mt-2 space-y-0.5">
                     {pwErrors.map((err, i) => (
-                      <li key={i} className="text-xs text-red-500">• {err}</li>
+                      <li key={i} className="text-xs text-danger">• {err}</li>
                     ))}
                   </ul>
                 )}
               </div>
 
               <div>
-                <label htmlFor="confirm-password-no-otp" className="mb-1.5 block text-sm font-medium text-gray-700">
+                <label htmlFor="confirm-password-no-otp" className="mb-1.5 block text-sm font-medium text-ink">
                   {t("confirmPassword")}
                 </label>
                 <input
@@ -429,17 +429,17 @@ export default function ForgotPasswordPage() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                   autoComplete="new-password"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-base outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                  className="w-full rounded-xl border border-line bg-surface2/50 px-4 py-3 text-base outline-none transition focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primarysoft"
                 />
                 {confirmPassword && newPassword !== confirmPassword && (
-                  <p className="mt-1 text-xs text-red-500">{t("passwordMismatch")}</p>
+                  <p className="mt-1 text-xs text-danger">{t("passwordMismatch")}</p>
                 )}
               </div>
 
               <button
                 onClick={handleResetWithoutOTP}
                 disabled={loading || pwErrors.length > 0 || !newPassword || !confirmPassword || newPassword !== confirmPassword}
-                className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300 disabled:opacity-50"
+                className="w-full rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primarystrong disabled:opacity-50"
               >
                 {loading ? common("loading") : t("resetButton")}
               </button>
@@ -452,7 +452,7 @@ export default function ForgotPasswordPage() {
           <>
             <button
               onClick={() => router.push("/login")}
-              className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300"
+              className="w-full rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primarystrong"
             >
               {t("backToLogin")}
             </button>

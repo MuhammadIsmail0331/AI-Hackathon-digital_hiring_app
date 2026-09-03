@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -135,16 +135,16 @@ export default function WorkerBrowseJobsPage() {
     <>
       <Navbar />
       <main className="mx-auto max-w-3xl px-4 py-6 pb-24 sm:pb-8">
-        <h1 className="mb-6 text-2xl font-bold text-gray-900">{browseT("title")}</h1>
+        <h1 className="mb-6 text-2xl font-bold text-ink">{browseT("title")}</h1>
 
         {/* Filters */}
-        <div className="mb-6 space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+        <div className="mb-6 space-y-3 rounded-2xl border border-line bg-surface p-4 shadow-sm">
           <div className="flex flex-wrap gap-3">
             {/* Category filter */}
             <select
               value={workerType}
               onChange={(e) => { setWorkerType(e.target.value); setPage(1); }}
-              className="rounded-xl border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+              className="rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-blue-500"
             >
               <option value="">{browseT("allCategories")}</option>
               {WORKER_CATEGORIES.map((c) => (
@@ -156,7 +156,7 @@ export default function WorkerBrowseJobsPage() {
             <select
               value={city}
               onChange={(e) => { setCity(e.target.value); setPage(1); }}
-              className="rounded-xl border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+              className="rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-blue-500"
             >
               <option value="">{browseT("allCities")}</option>
               {PAKISTAN_CITIES.map((c) => (
@@ -172,11 +172,11 @@ export default function WorkerBrowseJobsPage() {
                 onChange={(e) => setSearch(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 placeholder={browseT("searchPlaceholder")}
-                className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+                className="flex-1 rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-blue-500"
               />
               <button
                 onClick={handleSearch}
-                className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
               >
                 {browseT("search")}
               </button>
@@ -186,7 +186,7 @@ export default function WorkerBrowseJobsPage() {
           {(workerType || city || appliedSearch) && (
             <button
               onClick={clearFilters}
-              className="text-sm font-medium text-blue-600 hover:underline"
+              className="text-sm font-medium text-primary hover:underline"
             >
               {browseT("clearFilters")}
             </button>
@@ -195,21 +195,21 @@ export default function WorkerBrowseJobsPage() {
 
         {/* Results count */}
         {pagination && (
-          <p className="mb-4 text-sm text-gray-500">
+          <p className="mb-4 text-sm text-muted">
             {browseT("showingResults")} {pagination.total} {browseT("jobsFound")}
           </p>
         )}
 
         {/* Loading */}
         {loading && (
-          <div className="py-12 text-center text-gray-500">{commonT("loading")}</div>
+          <div className="py-12 text-center text-muted">{commonT("loading")}</div>
         )}
 
         {/* Empty state */}
         {!loading && jobs.length === 0 && (
-          <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center shadow-sm">
-            <p className="text-lg font-medium text-gray-600">{browseT("noJobs")}</p>
-            <p className="mt-2 text-sm text-gray-500">{browseT("noJobsDesc")}</p>
+          <div className="rounded-2xl border border-line bg-surface p-12 text-center shadow-sm">
+            <p className="text-lg font-medium text-muted">{browseT("noJobs")}</p>
+            <p className="mt-2 text-sm text-muted">{browseT("noJobsDesc")}</p>
           </div>
         )}
 
@@ -218,24 +218,24 @@ export default function WorkerBrowseJobsPage() {
           {jobs.map((job) => (
             <div
               key={job.id}
-              className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md"
+              className="rounded-2xl border border-line bg-surface p-5 shadow-sm transition hover:shadow-md"
             >
               {/* Header */}
               <div className="mb-3 flex items-start justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
-                  <p className="text-sm text-gray-500">{job.employer.name}</p>
+                  <h3 className="text-lg font-semibold text-ink">{job.title}</h3>
+                  <p className="text-sm text-muted">{job.employer.name}</p>
                 </div>
                 <div className="flex flex-col items-end gap-1">
-                  <span className="text-lg font-bold text-green-600">
+                  <span className="text-lg font-bold text-success">
                     PKR {job.wage.toLocaleString()}
                   </span>
-                  <span className="text-xs text-gray-500">{commonT("perDay")}</span>
+                  <span className="text-xs text-muted">{commonT("perDay")}</span>
                 </div>
               </div>
 
               {/* Details */}
-              <div className="mb-3 flex flex-wrap gap-2 text-sm text-gray-600">
+              <div className="mb-3 flex flex-wrap gap-2 text-sm text-muted">
                 <Badge tone="info">{getCategoryName(job.workerType)}</Badge>
                 <Badge tone="default">{getCityName(job.locationName)}</Badge>
                 <Badge tone="default">{formatDate(job.date)}</Badge>
@@ -249,12 +249,12 @@ export default function WorkerBrowseJobsPage() {
               {/* Skills */}
               {job.requiredSkills.length > 0 && (
                 <div className="mb-3">
-                  <p className="mb-1 text-xs font-medium text-gray-500">{t("requiredSkills")}:</p>
+                  <p className="mb-1 text-xs font-medium text-muted">{t("requiredSkills")}:</p>
                   <div className="flex flex-wrap gap-1">
                     {job.requiredSkills.map((s) => (
                       <span
                         key={s}
-                        className="rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700"
+                        className="rounded-full bg-primarysoft px-2 py-0.5 text-xs font-medium text-primary"
                       >
                         {getSkillName(s)}
                       </span>
@@ -266,12 +266,12 @@ export default function WorkerBrowseJobsPage() {
               {/* Tools */}
               {job.toolsRequired.length > 0 && (
                 <div className="mb-3">
-                  <p className="mb-1 text-xs font-medium text-gray-500">{t("toolsRequired")}:</p>
+                  <p className="mb-1 text-xs font-medium text-muted">{t("toolsRequired")}:</p>
                   <div className="flex flex-wrap gap-1">
                     {job.toolsRequired.map((t) => (
                       <span
                         key={t}
-                        className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600"
+                        className="rounded-full bg-surface2 px-2 py-0.5 text-xs font-medium text-muted"
                       >
                         {getToolName(t)}
                       </span>
@@ -282,19 +282,19 @@ export default function WorkerBrowseJobsPage() {
 
               {/* Description */}
               {job.description && (
-                <p className="mb-3 text-sm text-gray-600 line-clamp-2">{job.description}</p>
+                <p className="mb-3 text-sm text-muted line-clamp-2">{job.description}</p>
               )}
 
               {/* Match indicator */}
               {job.matchingSkills > 0 && (
                 <div className="mb-3 flex items-center gap-2">
-                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-gray-200">
+                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-line">
                     <div
-                      className="h-full rounded-full bg-green-500"
+                      className="h-full rounded-full bg-successsoft0"
                       style={{ width: `${(job.matchingSkills / job.totalRequiredSkills) * 100}%` }}
                     />
                   </div>
-                  <span className="text-xs font-medium text-green-600">
+                  <span className="text-xs font-medium text-success">
                     {job.matchingSkills}/{job.totalRequiredSkills} {browseT("skillsMatch")}
                   </span>
                 </div>
@@ -302,7 +302,7 @@ export default function WorkerBrowseJobsPage() {
 
               {/* Offer status */}
               {job.hasOffer && (
-                <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 p-2 text-center text-sm font-medium text-blue-700">
+                <div className="mt-3 rounded-lg border border-primary/30 bg-primarysoft p-2 text-center text-sm font-medium text-primary">
                   {job.offerStatus === "PENDING"
                     ? browseT("offerPending")
                     : job.offerStatus === "ACCEPTED"
@@ -320,17 +320,17 @@ export default function WorkerBrowseJobsPage() {
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium disabled:opacity-50"
+              className="rounded-xl border border-line px-4 py-2 text-sm font-medium disabled:opacity-50"
             >
               {commonT("back")}
             </button>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-muted">
               {page} / {pagination.totalPages}
             </span>
             <button
               onClick={() => setPage((p) => Math.min(pagination.totalPages, p + 1))}
               disabled={page === pagination.totalPages}
-              className="rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium disabled:opacity-50"
+              className="rounded-xl border border-line px-4 py-2 text-sm font-medium disabled:opacity-50"
             >
               {commonT("next")}
             </button>

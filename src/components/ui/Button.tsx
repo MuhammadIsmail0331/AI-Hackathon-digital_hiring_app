@@ -1,24 +1,23 @@
-"use client";
+﻿"use client";
 
 import { forwardRef } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition duration-150 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
   {
     variants: {
       variant: {
         primary:
-          "bg-blue-600 text-white shadow-sm hover:bg-blue-700 focus-visible:ring-blue-500",
+          "bg-primary text-white shadow-sm hover:bg-primarystrong focus-visible:ring-ring",
         secondary:
-          "bg-green-600 text-white shadow-sm hover:bg-green-700 focus-visible:ring-green-500",
+          "bg-accent text-white shadow-sm hover:bg-accent/90 focus-visible:ring-accent",
         outline:
-          "border border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 focus-visible:ring-blue-500",
-        ghost:
-          "text-gray-700 hover:bg-gray-100 focus-visible:ring-blue-500",
+          "border border-line bg-surface text-ink shadow-sm hover:bg-surface2 focus-visible:ring-ring",
+        ghost: "text-ink hover:bg-surface2 focus-visible:ring-ring",
         danger:
-          "bg-red-600 text-white shadow-sm hover:bg-red-700 focus-visible:ring-red-500",
+          "bg-danger text-white shadow-sm hover:bg-danger/90 focus-visible:ring-danger",
       },
       size: {
         sm: "px-3 py-2 text-sm",

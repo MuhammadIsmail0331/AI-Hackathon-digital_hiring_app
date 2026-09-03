@@ -1,7 +1,6 @@
-"use client";
+﻿"use client";
 
-import { usePathname } from "@/i18n/navigation";
-import { Link } from "@/i18n/navigation";
+import { usePathname, Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -31,10 +30,10 @@ export function MobileNav({ items }: MobileNavProps) {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-gray-200 bg-white/95 backdrop-blur sm:hidden"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-line bg-surface/95 backdrop-blur sm:hidden"
       aria-label="Mobile navigation"
     >
-      <div className="mx-auto flex max-w-lg items-center justify-around py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+      <div className="mx-auto flex max-w-lg items-center justify-around px-2 py-1.5 pb-[max(0.375rem,env(safe-area-inset-bottom))]">
         {items.map((item) => {
           const active = isActive(item);
           return (
@@ -43,16 +42,14 @@ export function MobileNav({ items }: MobileNavProps) {
               href={item.href}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "flex flex-1 flex-col items-center gap-0.5 px-2 py-1 transition",
-                active
-                  ? "text-blue-600"
-                  : "text-gray-500 hover:text-gray-700"
+                "flex flex-1 flex-col items-center gap-0.5 rounded-xl px-2 py-1.5 transition",
+                active ? "bg-primarysoft text-primary" : "text-muted hover:text-ink"
               )}
             >
               <div
                 className={cn(
-                  "flex h-7 w-7 items-center justify-center rounded-lg transition",
-                  active && "bg-blue-50"
+                  "flex h-7 w-7 items-center justify-center rounded-lg",
+                  active && "animate-pop"
                 )}
               >
                 {item.icon}

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -120,6 +120,8 @@ export default function WorkerMyJobDetailPage() {
         return { tone: "warning" as const, label: paymentT("held") };
       case "RELEASED":
         return { tone: "success" as const, label: paymentT("released") };
+      case "REFUNDED":
+        return { tone: "info" as const, label: paymentT("refunded") };
       case "CANCELLED":
         return { tone: "default" as const, label: paymentT("refunded") };
       default:
@@ -132,7 +134,7 @@ export default function WorkerMyJobDetailPage() {
       <>
         <Navbar />
         <div className="flex min-h-[60vh] items-center justify-center">
-          <div className="flex items-center gap-3 text-gray-500">
+          <div className="flex items-center gap-3 text-muted">
             <svg className="h-6 w-6 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
@@ -149,11 +151,11 @@ export default function WorkerMyJobDetailPage() {
     return (
       <>
         <Navbar />
-        <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 text-gray-500">
+        <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 text-muted">
           <p>{common("error")}</p>
           <button
             onClick={() => router.push("/worker/my-jobs")}
-            className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+            className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             {t("backToMyJobs")}
           </button>
@@ -173,7 +175,7 @@ export default function WorkerMyJobDetailPage() {
         {/* Back link */}
         <button
           onClick={() => router.push("/worker/my-jobs")}
-          className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700"
+          className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="m15 18-6-6 6-6" />
@@ -183,29 +185,29 @@ export default function WorkerMyJobDetailPage() {
 
         {/* Title + Status */}
         <div className="mb-4 flex items-start justify-between gap-2">
-          <h1 className="text-2xl font-bold text-gray-900">{job.title}</h1>
+          <h1 className="text-2xl font-bold text-ink">{job.title}</h1>
           <Badge tone={status.tone}>{status.label}</Badge>
         </div>
 
         {/* Employer contact card */}
-        <div className="mb-6 rounded-2xl border border-green-200 bg-gradient-to-br from-green-50 to-emerald-50 p-5 shadow-sm">
+        <div className="mb-6 rounded-2xl border border-success/30 bg-gradient-to-br from-green-50 to-emerald-50 p-5 shadow-sm">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-green-100 text-green-600">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-successsoft text-success">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
               </div>
               <div>
-                <div className="text-xs font-medium text-green-600">{t("employer")}</div>
-                <div className="font-semibold text-gray-900">{job.employer.name}</div>
-                <div className="text-sm text-green-700">{job.employer.phone}</div>
+                <div className="text-xs font-medium text-success">{t("employer")}</div>
+                <div className="font-semibold text-ink">{job.employer.name}</div>
+                <div className="text-sm text-success">{job.employer.phone}</div>
               </div>
             </div>
             <a
               href={`tel:${job.employer.phone}`}
-              className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-green-700"
+              className="flex items-center gap-2 rounded-xl bg-success px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-success/90"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
@@ -217,10 +219,10 @@ export default function WorkerMyJobDetailPage() {
 
         {/* Payment status card */}
         {job.payment && (
-          <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+          <div className="mb-6 rounded-2xl border border-line bg-surface p-5 shadow-sm">
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
+              <h2 className="flex items-center gap-2 text-lg font-semibold text-ink">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
                   <rect width="20" height="14" x="2" y="5" rx="2" />
                   <line x1="2" x2="22" y1="10" y2="10" />
                 </svg>
@@ -229,12 +231,12 @@ export default function WorkerMyJobDetailPage() {
               <Badge tone={payment!.tone}>{payment!.label}</Badge>
             </div>
             <div className="rounded-xl bg-gray-50 p-3">
-              <div className="text-xs text-gray-500">{paymentT("total")}</div>
-              <div className="mt-0.5 text-lg font-bold text-gray-900">
+              <div className="text-xs text-muted">{paymentT("total")}</div>
+              <div className="mt-0.5 text-lg font-bold text-ink">
                 {job.payment.totalAmount.toLocaleString()} PKR
               </div>
               {job.payment.securedAt && (
-                <div className="mt-1 text-xs text-gray-500">
+                <div className="mt-1 text-xs text-muted">
                   {paymentT("securedAt")}:{" "}
                   {new Date(job.payment.securedAt).toLocaleDateString(
                     locale === "ur" ? "ur-PK" : "en-PK",
@@ -243,7 +245,7 @@ export default function WorkerMyJobDetailPage() {
                 </div>
               )}
               {job.payment.releasedAt && (
-                <div className="mt-1 text-xs text-gray-500">
+                <div className="mt-1 text-xs text-muted">
                   {paymentT("releasedAt")}:{" "}
                   {new Date(job.payment.releasedAt).toLocaleDateString(
                     locale === "ur" ? "ur-PK" : "en-PK",
@@ -252,29 +254,29 @@ export default function WorkerMyJobDetailPage() {
                 </div>
               )}
             </div>
-            <p className="mt-2 text-xs text-gray-500">{paymentT("simulatedNote")}</p>
+            <p className="mt-2 text-xs text-muted">{paymentT("simulatedNote")}</p>
           </div>
         )}
 
         {/* Job details card */}
-        <div className="mb-6 space-y-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+        <div className="mb-6 space-y-4 rounded-2xl border border-line bg-surface p-5 shadow-sm">
           <div>
-            <div className="text-xs font-medium uppercase tracking-wide text-gray-500">
+            <div className="text-xs font-medium uppercase tracking-wide text-muted">
               {jobsT("professionalType")}
             </div>
-            <div className="mt-1 font-semibold text-gray-900">
+            <div className="mt-1 font-semibold text-ink">
               {getCategoryName(job.workerType)}
             </div>
           </div>
 
           {job.requiredSkills.length > 0 && (
             <div>
-              <div className="text-xs font-medium uppercase tracking-wide text-gray-500">
+              <div className="text-xs font-medium uppercase tracking-wide text-muted">
                 {jobsT("requiredSkills")}
               </div>
               <div className="mt-1.5 flex flex-wrap gap-1.5">
                 {job.requiredSkills.map((sId) => (
-                  <span key={sId} className="rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">
+                  <span key={sId} className="rounded-lg bg-primarysoft px-2.5 py-1 text-xs font-medium text-primary">
                     {getSkillName(sId)}
                   </span>
                 ))}
@@ -284,16 +286,16 @@ export default function WorkerMyJobDetailPage() {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-xl bg-gray-50 p-3">
-              <div className="text-xs text-gray-500">{jobsT("jobDate")}</div>
-              <div className="mt-0.5 text-sm font-semibold text-gray-900">
+              <div className="text-xs text-muted">{jobsT("jobDate")}</div>
+              <div className="mt-0.5 text-sm font-semibold text-ink">
                 {new Date(job.date).toLocaleDateString(locale === "ur" ? "ur-PK" : "en-PK", {
                   year: "numeric", month: "long", day: "numeric",
                 })}
               </div>
             </div>
             <div className="rounded-xl bg-gray-50 p-3">
-              <div className="text-xs text-gray-500">{jobsT("peopleNeeded")}</div>
-              <div className="mt-0.5 text-sm font-semibold text-gray-900">
+              <div className="text-xs text-muted">{jobsT("peopleNeeded")}</div>
+              <div className="mt-0.5 text-sm font-semibold text-ink">
                 {job.acceptedWorkers}/{job.numberOfWorkers}
               </div>
             </div>
@@ -301,21 +303,21 @@ export default function WorkerMyJobDetailPage() {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-xl bg-gray-50 p-3">
-              <div className="text-xs text-gray-500">{jobsT("startTime")}</div>
-              <div className="mt-0.5 text-sm font-semibold text-gray-900">
+              <div className="text-xs text-muted">{jobsT("startTime")}</div>
+              <div className="mt-0.5 text-sm font-semibold text-ink">
                 {formatTime(job.startTimeHour, job.startTimeMinute, job.startTimePeriod)}
               </div>
             </div>
             <div className="rounded-xl bg-gray-50 p-3">
-              <div className="text-xs text-gray-500">{jobsT("endTime")}</div>
-              <div className="mt-0.5 text-sm font-semibold text-gray-900">
+              <div className="text-xs text-muted">{jobsT("endTime")}</div>
+              <div className="mt-0.5 text-sm font-semibold text-ink">
                 {formatTime(job.endTimeHour, job.endTimeMinute, job.endTimePeriod)}
               </div>
             </div>
           </div>
 
-          <div className="rounded-xl bg-blue-50 p-3">
-            <div className="text-xs text-blue-600">{jobsT("wagePerPerson")}</div>
+          <div className="rounded-xl bg-primarysoft p-3">
+            <div className="text-xs text-primary">{jobsT("wagePerPerson")}</div>
             <div className="mt-0.5 text-lg font-bold text-blue-800">
               {job.wage.toLocaleString()} PKR
             </div>
@@ -323,12 +325,12 @@ export default function WorkerMyJobDetailPage() {
 
           {job.toolsRequired.length > 0 && (
             <div>
-              <div className="text-xs font-medium uppercase tracking-wide text-gray-500">
+              <div className="text-xs font-medium uppercase tracking-wide text-muted">
                 {jobsT("toolsProvided")}
               </div>
               <div className="mt-1.5 flex flex-wrap gap-1.5">
                 {job.toolsRequired.map((tId) => (
-                  <span key={tId} className="rounded-lg bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-700">
+                  <span key={tId} className="rounded-lg bg-surface2 px-2.5 py-1 text-xs font-medium text-ink">
                     {getToolName(tId)}
                   </span>
                 ))}
@@ -338,10 +340,10 @@ export default function WorkerMyJobDetailPage() {
 
           {job.locationName && (
             <div>
-              <div className="text-xs font-medium uppercase tracking-wide text-gray-500">
+              <div className="text-xs font-medium uppercase tracking-wide text-muted">
                 {jobsT("jobLocation")}
               </div>
-              <div className="mt-1 font-semibold text-gray-900">
+              <div className="mt-1 font-semibold text-ink">
                 {getCityName(job.locationName)}
               </div>
             </div>
@@ -349,10 +351,10 @@ export default function WorkerMyJobDetailPage() {
 
           {job.description && (
             <div>
-              <div className="text-xs font-medium uppercase tracking-wide text-gray-500">
+              <div className="text-xs font-medium uppercase tracking-wide text-muted">
                 {jobsT("additionalDetails")}
               </div>
-              <p className="mt-1 text-sm text-gray-700">{job.description}</p>
+              <p className="mt-1 text-sm text-ink">{job.description}</p>
             </div>
           )}
         </div>
@@ -365,7 +367,7 @@ export default function WorkerMyJobDetailPage() {
                 `/feedback/${job.id}?subjectId=${job.employer.id}&type=WORKER_TO_EMPLOYER&name=${encodeURIComponent(job.employer.name)}`
               )
             }
-            className="w-full rounded-xl border border-blue-200 bg-blue-50 py-3 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
+            className="w-full rounded-xl border border-primary/30 bg-primarysoft py-3 text-sm font-semibold text-primary transition hover:bg-primarysoft"
           >
             {feedbackT("rateEmployer")}: {job.employer.name}
           </button>

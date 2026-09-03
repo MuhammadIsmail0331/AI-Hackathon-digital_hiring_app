@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from "class-variance-authority";
+﻿import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
@@ -6,12 +6,13 @@ const badgeVariants = cva(
   {
     variants: {
       tone: {
-        default: "bg-gray-100 text-gray-700",
-        success: "bg-green-100 text-green-700",
-        warning: "bg-yellow-100 text-yellow-700",
-        danger: "bg-red-100 text-red-700",
-        info: "bg-blue-100 text-blue-700",
-        purple: "bg-purple-100 text-purple-700",
+        default: "bg-surface2 text-muted",
+        success: "bg-successsoft text-success",
+        warning: "bg-accentsoft text-accent",
+        danger: "bg-dangersoft text-danger",
+        info: "bg-primarysoft text-primary",
+        purple: "bg-violet-100 text-violet-700 dark:bg-violet-950/40 dark:text-violet-300",
+        expired: "bg-surface2 text-muted line-through decoration-1",
       },
     },
     defaultVariants: {

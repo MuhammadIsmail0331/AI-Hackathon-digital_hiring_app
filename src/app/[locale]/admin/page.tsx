@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
@@ -129,7 +129,7 @@ export default function AdminPage() {
       <Navbar />
       <main className="mx-auto max-w-2xl px-4 py-6 pb-24 sm:pb-8">
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
+          <h1 className="text-2xl font-bold text-ink">{t("title")}</h1>
           <button
             onClick={() => setShowBlockForm(!showBlockForm)}
             className="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700"
@@ -146,30 +146,30 @@ export default function AdminPage() {
 
         {/* Block form */}
         {showBlockForm && (
-          <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <h3 className="mb-4 text-lg font-semibold text-gray-900">{t("blockUser")}</h3>
+          <div className="mb-6 rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <h3 className="mb-4 text-lg font-semibold text-ink">{t("blockUser")}</h3>
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-ink">
                   User ID
                 </label>
                 <input
                   type="text"
                   value={blockEmail}
                   onChange={(e) => setBlockEmail(e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 px-4 py-2 text-sm outline-none focus:border-blue-500"
+                  className="w-full rounded-xl border border-line px-4 py-2 text-sm outline-none focus:border-blue-500"
                   placeholder="User ID (UUID)"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-ink">
                   {t("reason")}
                 </label>
                 <input
                   type="text"
                   value={blockReason}
                   onChange={(e) => setBlockReason(e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 px-4 py-2 text-sm outline-none focus:border-blue-500"
+                  className="w-full rounded-xl border border-line px-4 py-2 text-sm outline-none focus:border-blue-500"
                   placeholder="Reason for blocking"
                 />
               </div>
@@ -183,7 +183,7 @@ export default function AdminPage() {
                 </button>
                 <button
                   onClick={() => setShowBlockForm(false)}
-                  className="rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium"
+                  className="rounded-xl border border-line px-4 py-2 text-sm font-medium"
                 >
                   {common("cancel")}
                 </button>
@@ -194,21 +194,21 @@ export default function AdminPage() {
 
         {/* Blocked users list */}
         {loading ? (
-          <div className="py-12 text-center text-gray-500">{common("loading")}</div>
+          <div className="py-12 text-center text-muted">{common("loading")}</div>
         ) : blockedUsers.length === 0 ? (
-          <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center shadow-sm">
-            <p className="text-lg font-medium text-gray-600">{t("noBlockedUsers")}</p>
+          <div className="rounded-2xl border border-line bg-surface p-12 text-center shadow-sm">
+            <p className="text-lg font-medium text-muted">{t("noBlockedUsers")}</p>
           </div>
         ) : (
           <div className="space-y-3">
             {blockedUsers.map((bu) => (
               <div
                 key={bu.id}
-                className="flex items-center justify-between rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
+                className="flex items-center justify-between rounded-2xl border border-line bg-surface p-4 shadow-sm"
               >
                 <div>
-                  <p className="font-semibold text-gray-900">{bu.user.name}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="font-semibold text-ink">{bu.user.name}</p>
+                  <p className="text-sm text-muted">
                     {bu.user.email} • {bu.user.phone}
                   </p>
                   <div className="mt-1 flex gap-2">
@@ -217,14 +217,14 @@ export default function AdminPage() {
                       <Badge tone="warning">{bu.reason}</Badge>
                     )}
                   </div>
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-muted">
                     Blocked: {new Date(bu.blockedAt).toLocaleDateString()}
                   </p>
                 </div>
                 <button
                   onClick={() => handleUnblockUser(bu.userId)}
                   disabled={actionLoading === bu.userId}
-                  className="rounded-xl border border-green-300 px-3 py-1.5 text-sm font-medium text-green-700 hover:bg-green-50 disabled:opacity-50"
+                  className="rounded-xl border border-green-300 px-3 py-1.5 text-sm font-medium text-success hover:bg-successsoft disabled:opacity-50"
                 >
                   {actionLoading === bu.userId ? "..." : t("unblockUser")}
                 </button>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
@@ -77,15 +77,15 @@ export default function ReportPage() {
     <>
       <Navbar />
       <main className="mx-auto max-w-lg px-4 py-6 pb-24 sm:pb-8">
-        <button onClick={() => router.back()} className="mb-4 flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700">
+        <button onClick={() => router.back()} className="mb-4 flex items-center gap-1 text-sm text-muted hover:text-ink">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
           {commonT("back")}
         </button>
 
-        <h1 className="mb-6 text-2xl font-bold text-gray-900">{t("title")}</h1>
+        <h1 className="mb-6 text-2xl font-bold text-ink">{t("title")}</h1>
 
         {submitted && (
-          <div role="status" className="mb-4 rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-700">
+          <div role="status" className="mb-4 rounded-lg border border-success/30 bg-successsoft p-3 text-sm text-success">
             {t("submitted")}
           </div>
         )}
@@ -98,7 +98,7 @@ export default function ReportPage() {
 
         <form onSubmit={handleSubmit} className="mb-8 space-y-5">
           <div>
-            <label htmlFor="report-subject" className="mb-1.5 block text-sm font-medium text-gray-700">
+            <label htmlFor="report-subject" className="mb-1.5 block text-sm font-medium text-ink">
               {t("subject")}
             </label>
             <input
@@ -109,12 +109,12 @@ export default function ReportPage() {
               required
               maxLength={200}
               placeholder={t("subjectPlaceholder")}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-base outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="w-full rounded-xl border border-line px-4 py-3 text-base outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
             />
           </div>
 
           <div>
-            <label htmlFor="report-desc" className="mb-1.5 block text-sm font-medium text-gray-700">
+            <label htmlFor="report-desc" className="mb-1.5 block text-sm font-medium text-ink">
               {t("description")}
             </label>
             <textarea
@@ -125,14 +125,14 @@ export default function ReportPage() {
               maxLength={2000}
               rows={5}
               placeholder={t("descriptionPlaceholder")}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="w-full rounded-xl border border-line px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading || !subject.trim() || !description.trim()}
-            className="w-full rounded-xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50"
+            className="w-full rounded-xl bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50"
           >
             {loading ? commonT("loading") : t("submit")}
           </button>
@@ -141,18 +141,18 @@ export default function ReportPage() {
         {/* My Reports */}
         {reports.length > 0 && (
           <div>
-            <h2 className="mb-4 text-lg font-semibold text-gray-900">{t("myReports")}</h2>
+            <h2 className="mb-4 text-lg font-semibold text-ink">{t("myReports")}</h2>
             <div className="space-y-3">
               {reports.map((r) => (
-                <div key={r.id} className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+                <div key={r.id} className="rounded-xl border border-line bg-surface p-4 shadow-sm">
                   <div className="mb-1 flex items-center justify-between">
-                    <h3 className="text-sm font-semibold text-gray-900">{r.subject}</h3>
-                    <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
+                    <h3 className="text-sm font-semibold text-ink">{r.subject}</h3>
+                    <span className="rounded-full bg-surface2 px-2 py-0.5 text-xs font-medium text-muted">
                       {r.status}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500">{r.description.slice(0, 100)}{r.description.length > 100 ? "..." : ""}</p>
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="text-xs text-muted">{r.description.slice(0, 100)}{r.description.length > 100 ? "..." : ""}</p>
+                  <p className="mt-1 text-xs text-muted">
                     {new Date(r.createdAt).toLocaleDateString()}
                   </p>
                 </div>
