@@ -7,6 +7,7 @@ import { Sora, Inter, Noto_Nastaliq_Urdu, Noto_Naskh_Arabic } from "next/font/go
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 import RouteLoader from "@/components/ui/RouteLoader";
+import { Toaster } from "sonner";
 import { BrandAccent } from "@/components/ui/BrandAccent";
 
 const sora = Sora({ subsets: ["latin"], weight: ["600", "700", "800"], variable: "--font-sora", display: "swap" });
@@ -72,6 +73,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             {t("skipToContent")}
           </a>
           <RouteLoader />
+          <Toaster richColors position="top-center" toastOptions={{ classNames: { toast: "font-sans" } }} />
           <div id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
             {children}
           </div>

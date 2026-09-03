@@ -141,3 +141,41 @@ h1, h2, h3 {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ─── Motion: marquee / drift / twinkle / birds / float ─────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes marquee-r {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+@keyframes drift-a {
+  from { transform: translateX(0); }
+  to { transform: translateX(90px); }
+}
+@keyframes drift-b {
+  from { transform: translateX(0); }
+  to { transform: translateX(-110px); }
+}
+@keyframes birds {
+  from { transform: translate(-30px, 8px); }
+  to { transform: translate(70px, -14px); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 0.15; }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-marquee { animation: marquee 30s linear infinite; }
+.animate-marquee-r { animation: marquee-r 34s linear infinite; }
+.animate-drift-a { animation: drift-a 16s ease-in-out infinite alternate; }
+.animate-drift-b { animation: drift-b 20s ease-in-out infinite alternate; }
+.animate-birds { animation: birds 14s ease-in-out infinite alternate; }
+.animate-twinkle { animation: twinkle 2.6s ease-in-out infinite; }
+.animate-float { animation: float-y 5s ease-in-out infinite; }
