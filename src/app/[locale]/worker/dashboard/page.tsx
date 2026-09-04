@@ -191,7 +191,7 @@ export default function WorkerDashboardPage() {
             </p>
             <Link
               href="/worker/profile"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3 text-base font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-200 ease-out hover:shadow-xl hover:shadow-blue-300 motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.96] btn-shine"
             >
               {profileT("setupProfile")}
               <svg
@@ -219,7 +219,7 @@ export default function WorkerDashboardPage() {
             <div className="mb-6 grid grid-cols-3 gap-3">
               <Link
                 href="/worker/my-jobs"
-                className="rounded-2xl border border-line bg-surface p-4 text-center shadow-sm transition hover:shadow-md"
+                className="rounded-2xl border border-line bg-surface p-4 text-center shadow-sm transition-all duration-200 ease-out hover:border-primary/40 hover:shadow-lg motion-safe:hover:-translate-y-1 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.97]"
               >
                 <div className="mx-auto mb-1 flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-primary">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
@@ -229,7 +229,7 @@ export default function WorkerDashboardPage() {
               </Link>
               <Link
                 href="/worker/my-jobs"
-                className="rounded-2xl border border-line bg-surface p-4 text-center shadow-sm transition hover:shadow-md"
+                className="rounded-2xl border border-line bg-surface p-4 text-center shadow-sm transition-all duration-200 ease-out hover:border-primary/40 hover:shadow-lg motion-safe:hover:-translate-y-1 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.97]"
               >
                 <div className="mx-auto mb-1 flex h-8 w-8 items-center justify-center rounded-lg bg-successsoft text-success">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
@@ -256,7 +256,7 @@ export default function WorkerDashboardPage() {
                 </h2>
                 <Link
                   href="/worker/profile"
-                  className="inline-flex items-center gap-1 rounded-xl bg-primarysoft px-3 py-1.5 text-sm font-medium text-primary transition hover:bg-primarysoft"
+                  className="inline-flex items-center gap-1 rounded-xl bg-primarysoft px-3 py-1.5 text-sm font-medium text-primary transition-all duration-150 hover:bg-primarysoft motion-safe:active:scale-[0.94]"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -390,7 +390,7 @@ export default function WorkerDashboardPage() {
                 </h2>
                 <Link
                   href="/worker/my-jobs"
-                  className="inline-flex items-center gap-1 rounded-xl bg-primarysoft px-3 py-1.5 text-sm font-medium text-primary transition hover:bg-primarysoft"
+                  className="inline-flex items-center gap-1 rounded-xl bg-primarysoft px-3 py-1.5 text-sm font-medium text-primary transition-all duration-150 hover:bg-primarysoft motion-safe:active:scale-[0.94]"
                 >
                   {t("viewAll")}
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -405,7 +405,7 @@ export default function WorkerDashboardPage() {
                     <Link
                       key={job.jobId}
                       href={`/worker/my-jobs/${job.jobId}`}
-                      className="block rounded-xl border border-line bg-surface2 p-4 transition hover:border-primary/30 hover:bg-primarysoft"
+                      className="block rounded-xl border border-line bg-surface2 p-4 transition-all duration-200 ease-out hover:border-primary/30 hover:bg-primarysoft hover:shadow-md motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.99]"
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div>
