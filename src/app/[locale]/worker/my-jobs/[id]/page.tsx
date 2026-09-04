@@ -7,6 +7,7 @@ import { useRouter } from "@/i18n/navigation";
 import Navbar from "@/components/layout/Navbar";
 import { WorkerBottomNav } from "@/components/layout/WorkerBottomNav";
 import { Badge } from "@/components/ui";
+import { ErrorBanner } from "@/components/ui/Feedback";
 import {
   WORKER_CATEGORIES,
   SKILLS_MAP,
@@ -57,6 +58,7 @@ export default function WorkerMyJobDetailPage() {
 
   const [job, setJob] = useState<WorkerJobDetail | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
     async function loadJob() {
@@ -67,7 +69,7 @@ export default function WorkerMyJobDetailPage() {
           setJob(data.job);
         }
       } catch {
-        // silently fail
+        setLoadError(true);
       } finally {
         setLoading(false);
       }
@@ -183,6 +185,12 @@ export default function WorkerMyJobDetailPage() {
           </svg>
           {t("backToMyJobs")}
         </button>
+
+        {loadError && (
+          <div className="mb-4">
+            <ErrorBanner message={common("error")} retryLabel={common("retry")} onRetry={() => window.location.reload()} />
+          </div>
+        )}
 
         {/* Title + Status */}
         <div className="mb-4 flex items-start justify-between gap-2">

@@ -32,17 +32,15 @@ export async function POST(request: Request) {
       );
     }
 
-    // Verify OTP — skip if not provided (temporary bypass)
-    if (otpCode) {
-      const alreadyVerified = await isPhoneOTPVerified(phone, "PASSWORD_RESET");
-      if (!alreadyVerified) {
-        const otpResult = await verifyOTP(phone, otpCode, "PASSWORD_RESET");
-        if (!otpResult.valid) {
-          return NextResponse.json(
-            { error: otpResult.error || "Invalid OTP code" },
-            { status: 400 }
-          );
-        }
+    // Verify OTP — MANDATORY (demo mode shows the code in the UI).
+    const alreadyVerified = await isPhoneOTPVerified(phone, "PASSWORD_RESET");
+    if (!alreadyVerified) {
+      const otpResult = await verifyOTP(phone, otpCode, "PASSWORD_RESET");
+      if (!otpResult.valid) {
+        return NextResponse.json(
+          { error: otpResult.error || "Invalid OTP code" },
+          { status: 400 }
+        );
       }
     }
 

@@ -72,7 +72,7 @@ export default function LandingPage({ params }: Props) {
       <Navbar />
       <main>
         {/* ─── Hero: sky, skyline scene, floating tools, roles ─── */}
-        <section className="relative overflow-hidden bg-gradient-to-b from-[#0e7a5c] via-[#0a6350] to-[#0a4a3a] px-6 pb-40 pt-16 text-center sm:pt-20">
+        <section className="hero-aurora relative overflow-hidden bg-gradient-to-b from-[#0e7a5c] via-[#0a6350] to-[#0a4a3a] px-6 pb-40 pt-16 text-center sm:pt-20">
           {/* glow orbs */}
           <div className="pointer-events-none absolute -end-24 -top-24 h-80 w-80 rounded-full bg-amber-300/20 blur-3xl" />
           <div className="pointer-events-none absolute -start-24 top-40 h-72 w-72 rounded-full bg-emerald-300/15 blur-3xl" />
@@ -136,7 +136,7 @@ export default function LandingPage({ params }: Props) {
                 <TiltCard className="h-full">
                   <Link
                     href={cta.needWorker}
-                    className="group flex h-full flex-col rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl backdrop-blur-md transition hover:border-amber-300/50"
+                    className="panel-lift group flex h-full flex-col rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl backdrop-blur-md hover:border-amber-300/50"
                   >
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-lg">
                       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -157,7 +157,7 @@ export default function LandingPage({ params }: Props) {
                 <TiltCard className="h-full">
                   <Link
                     href={cta.amWorker}
-                    className="group flex h-full flex-col rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl backdrop-blur-md transition hover:border-emerald-300/50"
+                    className="panel-lift group flex h-full flex-col rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl backdrop-blur-md hover:border-emerald-300/50"
                   >
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg">
                       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

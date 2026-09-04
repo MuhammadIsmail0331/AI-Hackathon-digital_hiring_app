@@ -138,46 +138,6 @@ export default function RegisterPage() {
     }
   }
 
-  async function handleRegisterWithoutOTP() {
-    setError("");
-    setLoading(true);
-    try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, password, role }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        if (data.existingAccount) {
-          setDuplicateLogin(true);
-        }
-        setError(data.error || common("error"));
-        return;
-      }
-      // Auto-login worker and redirect to profile setup
-      if (role === "WORKER") {
-        const signInResult = await signIn("credentials", {
-          email,
-          password,
-          redirect: false,
-        });
-        if (signInResult?.error) {
-          router.push("/login");
-        } else {
-          router.push(role === "WORKER" ? "/worker/profile" : "/employer/dashboard");
-          router.refresh();
-        }
-      } else {
-        router.push("/login");
-      }
-    } catch {
-      setError(common("error"));
-    } finally {
-      setLoading(false);
-    }
-  }
-
   async function submitRegistration(code: string) {
     setError("");
     setLoading(true);
@@ -393,19 +353,6 @@ export default function RegisterPage() {
               className="w-full rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primarystrong disabled:opacity-50">
               {otpLoading ? common("loading") : otpT("sendCode")}
             </button>
-
-            <div className="flex items-center gap-3">
-              <div className="h-px flex-1 bg-line" />
-              <span className="text-xs text-muted">{common("or")}</span>
-              <div className="h-px flex-1 bg-line" />
-            </div>
-
-            <button type="button" onClick={handleRegisterWithoutOTP}
-              disabled={loading || otpLoading || pwErrors.length > 0 || !name || !email || !phone || !password}
-              className="w-full rounded-xl border-2 border-line bg-surface px-6 py-3.5 text-base font-semibold text-ink transition hover:border-line hover:bg-surface2 disabled:opacity-50">
-              {loading ? common("loading") : otpT("continueWithoutOTP")}
-            </button>
-            <p className="text-center text-xs text-muted">{otpT("skipOTPDescription")}</p>
           </form>
           </div>
         </div>

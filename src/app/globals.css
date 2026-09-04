@@ -233,3 +233,152 @@ h1, h2, h3 {
 .bh-spark { animation: bh-spark 0.9s ease-out 0.75s both; transform-origin: center; transform-box: fill-box; }
 .bh-mark { animation: bh-mark 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.95s both; transform-origin: center; transform-box: fill-box; }
 .bh-wordmark { animation: bh-wordmark 0.6s ease-out 1.5s both; }
+
+/* ─── Identity & Trust pass: glow / pulse / check / ripple / enter ─── */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.14); }
+}
+.animate-glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+
+@keyframes badge-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+}
+.animate-badge-pulse { animation: badge-pulse 1.6s ease-in-out infinite; }
+
+@keyframes draw-check {
+  from { stroke-dashoffset: 26; }
+  to { stroke-dashoffset: 0; }
+}
+.animate-draw-check {
+  stroke-dasharray: 26;
+  animation: draw-check 0.5s ease-out 0.15s both;
+}
+
+@keyframes ripple-anim {
+  from { transform: scale(0); opacity: 0.4; }
+  to { transform: scale(2.8); opacity: 0; }
+}
+.tap-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.tap-ripple > .ripple-ink {
+  position: absolute;
+  border-radius: 9999px;
+  background: currentColor;
+  pointer-events: none;
+  animation: ripple-anim 0.55s ease-out both;
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page-enter { animation: page-enter 0.4s ease-out both; }
+
+/* ═══ Heritage Craft signature layer ═══════════════════════════
+   Aurora canvas + ornate framing — the anti-"generic AI app" pass.
+   Everything theme-aware via tokens; motion guarded. */
+
+/* 1. Brand-tinted aurora on every page (replaces flat canvas) */
+body {
+  background-color: var(--canvas);
+  background-image:
+    radial-gradient(1100px 520px at 85% -10%, color-mix(in srgb, var(--primary) 9%, transparent), transparent 60%),
+    radial-gradient(900px 480px at -10% 22%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 55%),
+    radial-gradient(760px 520px at 50% 112%, color-mix(in srgb, var(--terracotta) 6%, transparent), transparent 62%);
+}
+.dark body {
+  background-image:
+    radial-gradient(1100px 520px at 85% -10%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 60%),
+    radial-gradient(900px 480px at -10% 22%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 55%),
+    radial-gradient(760px 520px at 50% 112%, color-mix(in srgb, var(--terracotta) 7%, transparent), transparent 62%);
+}
+
+/* 2. Faint workshop dot-grid, fading down the page (behind all content) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent 130vh);
+  mask-image: linear-gradient(to bottom, black, transparent 130vh);
+}
+
+/* 3. Ornate frame — double-line certificate border for feature panels */
+.frame-ornate {
+  position: relative;
+  border: 1px solid var(--line);
+  box-shadow:
+    0 1px 2px rgb(28 25 23 / 0.04),
+    0 10px 28px -14px rgb(28 25 23 / 0.16);
+}
+.frame-ornate::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid color-mix(in srgb, var(--primary) 26%, transparent);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* 4. Corner rivets — four amber corner dots on any card */
+.corner-rivets {
+  background-image:
+    radial-gradient(circle at 0 0, var(--accent) 2.4px, transparent 3.2px),
+    radial-gradient(circle at 100% 0, var(--accent) 2.4px, transparent 3.2px),
+    radial-gradient(circle at 0 100%, var(--accent) 2.4px, transparent 3.2px),
+    radial-gradient(circle at 100% 100%, var(--accent) 2.4px, transparent 3.2px);
+  background-repeat: no-repeat;
+  background-size: 13px 13px;
+  background-position: top left, top right, bottom left, bottom right;
+}
+
+/* 5. Hero aurora — two slow-drifting brand blobs behind the hero */
+.hero-aurora { position: relative; overflow: hidden; }
+.hero-aurora::before,
+.hero-aurora::after {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-aurora::before {
+  background: color-mix(in srgb, var(--primary) 42%, transparent);
+  top: -170px;
+  left: -130px;
+}
+.hero-aurora::after {
+  background: color-mix(in srgb, var(--accent) 38%, transparent);
+  bottom: -190px;
+  right: -110px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-aurora::before { animation: aurora-drift 14s ease-in-out infinite alternate; }
+  .hero-aurora::after { animation: aurora-drift 18s ease-in-out infinite alternate-reverse; }
+}
+@keyframes aurora-drift {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(64px, 44px) scale(1.16); }
+}
+
+/* 6. Card hover lift for non-interactive feature tiles */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .panel-lift {
+    transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms ease;
+  }
+  .panel-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px -14px rgb(28 25 23 / 0.22);
+  }
+}

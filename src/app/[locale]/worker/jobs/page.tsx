@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import Navbar from "@/components/layout/Navbar";
 import { WorkerBottomNav } from "@/components/layout/WorkerBottomNav";
 import { Badge } from "@/components/ui";
+import { ErrorBanner } from "@/components/ui/Feedback";
 import { WORKER_CATEGORIES, PAKISTAN_CITIES, SKILLS_MAP, TOOLS, MIN_DAILY_WAGE } from "@/lib/constants";
 import { prettyLabel } from "@/lib/labels";
 
@@ -51,6 +52,7 @@ export default function WorkerBrowseJobsPage() {
   const [pagination, setPagination] = useState<Pagination | null>(null);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [loadError, setLoadError] = useState(false);
 
   // Filters
   const [workerType, setWorkerType] = useState("");
@@ -109,7 +111,7 @@ export default function WorkerBrowseJobsPage() {
         setPagination(data.pagination || null);
       }
     } catch {
-      // silently fail
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -137,6 +139,12 @@ export default function WorkerBrowseJobsPage() {
       <Navbar />
       <main className="mx-auto max-w-3xl px-4 py-6 pb-24 sm:pb-8">
         <h1 className="mb-6 text-2xl font-bold text-ink">{browseT("title")}</h1>
+
+        {loadError && (
+          <div className="mb-4">
+            <ErrorBanner message={commonT("error")} retryLabel={commonT("retry")} onRetry={() => window.location.reload()} />
+          </div>
+        )}
 
         {/* Filters */}
         <div className="mb-6 space-y-3 rounded-2xl border border-line bg-surface p-4 shadow-sm">

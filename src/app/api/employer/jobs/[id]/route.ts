@@ -1,4 +1,5 @@
 ﻿import { NextResponse } from "next/server";
+import { z } from "zod";
 import { resolveSessionUser } from "@/lib/session";
 import { db } from "@/lib/db";
 
@@ -125,13 +126,26 @@ export async function PUT(request: Request, { params }: RouteContext) {
     }
 
     const body = await request.json();
+    const editSchema = z.object({
+      title: z.string().trim().min(3).max(100).optional(),
+      description: z.string().trim().max(1000).optional(),
+      wage: z.number().int().min(100).max(100000).optional(),
+      numberOfWorkers: z.number().int().min(1).max(50).optional(),
+    });
+    const parsed = editSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: parsed.error.issues[0]?.message || "Invalid edit data" },
+        { status: 400 }
+      );
+    }
     const updated = await db.job.update({
       where: { id },
       data: {
-        title: body.title ?? job.title,
-        description: body.description ?? job.description,
-        wage: body.wage ?? job.wage,
-        numberOfWorkers: body.numberOfWorkers ?? job.numberOfWorkers,
+        title: parsed.data.title ?? job.title,
+        description: parsed.data.description ?? job.description,
+        wage: parsed.data.wage ?? job.wage,
+        numberOfWorkers: parsed.data.numberOfWorkers ?? job.numberOfWorkers,
       },
     });
 

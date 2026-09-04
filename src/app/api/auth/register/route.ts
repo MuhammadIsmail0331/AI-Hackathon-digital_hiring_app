@@ -27,23 +27,20 @@ export async function POST(request: Request) {
       );
     }
 
-    // OTP verification — skip if not provided (temporary bypass)
-    let phoneVerified = false;
-    if (otpCode) {
-      // Check if OTP was already verified by the verify endpoint
-      const alreadyVerified = await isPhoneOTPVerified(phone, "REGISTRATION");
-      if (!alreadyVerified) {
-        // Try to verify now (handles case where user submitted code directly)
-        const otpResult = await verifyOTP(phone, otpCode, "REGISTRATION");
-        if (!otpResult.valid) {
-          return NextResponse.json(
-            { error: otpResult.error || "Invalid OTP code" },
-            { status: 400 }
-          );
-        }
+    // OTP verification — MANDATORY. In demo mode the code is displayed in
+    // the UI so the flow always completes; plug a real SMS provider in
+    // src/lib/otp.ts for production delivery.
+    const alreadyVerified = await isPhoneOTPVerified(phone, "REGISTRATION");
+    if (!alreadyVerified) {
+      const otpResult = await verifyOTP(phone, otpCode, "REGISTRATION");
+      if (!otpResult.valid) {
+        return NextResponse.json(
+          { error: otpResult.error || "Invalid OTP code" },
+          { status: 400 }
+        );
       }
-      phoneVerified = true;
     }
+    const phoneVerified = true;
 
     // Check if email already exists
     const existingEmail = await db.user.findUnique({

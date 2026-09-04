@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200 ease-out motion-safe:hover:-translate-y-1 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.95] disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
+  "tap-ripple inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200 ease-out motion-safe:hover:-translate-y-1 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.95] disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
   {
     variants: {
       variant: {
@@ -44,12 +44,30 @@ export interface ButtonProps
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, fullWidth, loading, children, disabled, ...props }, ref) => {
+  ({ className, variant, size, fullWidth, loading, children, disabled, onPointerDown, ...props }, ref) => {
+    /** Touch ripple — spawns a fading ink circle at the press point. */
+    function handlePointerDown(e: React.PointerEvent<HTMLButtonElement>) {
+      onPointerDown?.(e);
+      if (typeof window === "undefined") return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const btn = e.currentTarget;
+      const rect = btn.getBoundingClientRect();
+      const sizePx = Math.max(rect.width, rect.height);
+      const ink = document.createElement("span");
+      ink.className = "ripple-ink";
+      ink.style.width = ink.style.height = `${sizePx}px`;
+      ink.style.left = `${e.clientX - rect.left - sizePx / 2}px`;
+      ink.style.top = `${e.clientY - rect.top - sizePx / 2}px`;
+      btn.appendChild(ink);
+      window.setTimeout(() => ink.remove(), 600);
+    }
+
     return (
       <button
         ref={ref}
         className={cn(buttonVariants({ variant, size, fullWidth }), className)}
         disabled={disabled || loading}
+        onPointerDown={handlePointerDown}
         {...props}
       >
         {loading && (

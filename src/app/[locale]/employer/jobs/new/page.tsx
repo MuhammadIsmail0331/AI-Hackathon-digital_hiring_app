@@ -34,6 +34,7 @@ interface MatchCandidate {
 export default function CreateJobPage() {
   const t = useTranslations("Jobs");
   const commonT = useTranslations("Common");
+  const formT = useTranslations("JobForm");
   const locale = useLocale() as "en" | "ur";
   const router = useRouter();
 
@@ -322,8 +323,8 @@ export default function CreateJobPage() {
         <Navbar />
         <main className="mx-auto max-w-2xl px-4 py-6 pb-24 sm:pb-8">
           <div className="mb-6 text-center">
-            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-yellow-100">
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-yellow-600">
+            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-accentsoft">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.3-4.3" />
               </svg>
@@ -340,14 +341,14 @@ export default function CreateJobPage() {
               <button
                 type="button"
                 onClick={handleContinueSearching}
-                className="w-full rounded-xl bg-primary py-3.5 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                className="w-full rounded-xl bg-primary py-3.5 text-base font-semibold text-white shadow-sm transition hover:bg-primarystrong"
               >
                 {t("yesContinue")}
               </button>
               <button
                 type="button"
                 onClick={handleNoContinue}
-                className="w-full rounded-xl border border-line bg-white py-3.5 text-base font-semibold text-ink transition hover:bg-surface2"
+                className="w-full rounded-xl border border-line bg-surface py-3.5 text-base font-semibold text-ink transition hover:bg-surface2"
               >
                 {t("noGoBack")}
               </button>
@@ -364,10 +365,31 @@ export default function CreateJobPage() {
     <>
       <Navbar />
       <main className="mx-auto max-w-2xl px-4 py-6 pb-24 sm:pb-8">
-        <h1 className="mb-6 text-2xl font-bold text-ink">{t("createJob")}</h1>
+        <h1 className="mb-4 text-2xl font-bold text-ink">{t("createJob")}</h1>
+
+        {/* Step indicator — icon-led progress for low-reading users */}
+        <div className="mb-6 grid grid-cols-3 gap-2" aria-hidden="true">
+          {[
+            { icon: "📝", label: formT("step1"), done: !!workerType && skills.length > 0 },
+            { icon: "💰", label: formT("step2"), done: wage !== "" && date !== "" },
+            { icon: "✅", label: formT("step3"), done: false },
+          ].map((s, i) => (
+            <div
+              key={i}
+              className={`flex flex-col items-center gap-1 rounded-2xl border p-3 text-center transition-colors ${
+                s.done ? "border-primary/40 bg-primarysoft" : "border-line bg-surface"
+              }`}
+            >
+              <span className="text-xl">{s.icon}</span>
+              <span className={`text-[11px] font-semibold ${s.done ? "text-primary" : "text-muted"}`}>
+                {s.label}
+              </span>
+            </div>
+          ))}
+        </div>
 
         {error && (
-          <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-medium text-danger">
+          <div role="alert" className="mb-4 rounded-xl border border-danger/30 bg-dangersoft p-3 text-sm font-medium text-danger">
             {error}
           </div>
         )}

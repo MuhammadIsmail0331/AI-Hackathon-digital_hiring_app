@@ -1,12 +1,13 @@
 "use client";
 import { celebrate } from "@/lib/celebrate";
-import { prettyLabel } from "@/lib/labels";
+import { prettyLabel, renderMatchReason } from "@/lib/labels";
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Navbar from "@/components/layout/Navbar";
 import { WorkerBottomNav } from "@/components/layout/WorkerBottomNav";
 import { Badge } from "@/components/ui";
+import { ErrorBanner } from "@/components/ui/Feedback";
 import { Link, useRouter } from "@/i18n/navigation";
 import { WORKER_CATEGORIES, SKILLS_MAP, TOOLS, PAKISTAN_CITIES } from "@/lib/constants";
 
@@ -45,6 +46,7 @@ export default function WorkerOffersPage() {
   const jobsT = useTranslations("Jobs");
   const feedbackT = useTranslations("Feedback");
   const commonT = useTranslations("Common");
+  const mrT = useTranslations("MatchReason");
   const locale = useLocale() as "en" | "ur";
   const router = useRouter();
 
@@ -52,6 +54,7 @@ export default function WorkerOffersPage() {
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
     async function loadOffers() {
@@ -62,7 +65,7 @@ export default function WorkerOffersPage() {
           setOffers(data.offers || []);
         }
       } catch {
-        // silently fail
+        setLoadError(true);
       } finally {
         setLoading(false);
       }
@@ -118,7 +121,7 @@ export default function WorkerOffersPage() {
         }
       }
     } catch {
-      // silently fail
+      setLoadError(true);
     } finally {
       setProcessingId(null);
     }
@@ -129,10 +132,16 @@ export default function WorkerOffersPage() {
       <Navbar />
       <main className="mx-auto max-w-2xl px-4 py-6 pb-24 sm:pb-8">
         {/* Header Banner */}
-        <div className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 p-6 text-white shadow-lg shadow-emerald-200">
+        <div className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-primarystrong p-6 text-white shadow-lg shadow-primary/25">
           <h1 className="text-2xl font-bold">{t("jobOffers")}</h1>
-          <p className="mt-1 text-sm text-emerald-100">Review and respond to job offers from employers</p>
+          <p className="mt-1 text-sm text-white/80">{t("subtitle")}</p>
         </div>
+
+        {loadError && (
+          <div className="mb-4">
+            <ErrorBanner message={commonT("error")} retryLabel={commonT("retry")} onRetry={() => window.location.reload()} />
+          </div>
+        )}
 
         {/* Success banner with employer contact after acceptance */}
         {successMsg && (
@@ -270,7 +279,7 @@ export default function WorkerOffersPage() {
                     </div>
                   )}
                   {offer.matchReason && (
-                    <p className="mb-3 text-xs text-muted">✨ {offer.matchReason}</p>
+                    <p className="mb-3 text-xs text-muted">✨ {renderMatchReason(offer.matchReason, (k, v) => mrT(k, v))}</p>
                   )}
                   {/* Employer Phone (after acceptance) */}
                   {isAccepted && job.employerPhone && (

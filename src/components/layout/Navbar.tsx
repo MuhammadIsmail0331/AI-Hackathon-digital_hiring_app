@@ -98,7 +98,7 @@ export default function Navbar() {
                     <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
                   </svg>
                   {unreadCount > 0 && (
-                    <span className="absolute -end-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-terracotta px-1 text-[10px] font-bold text-white">
+                    <span className="animate-badge-pulse absolute -end-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-terracotta px-1 text-[10px] font-bold text-white">
                       {unreadCount > 9 ? "9+" : unreadCount}
                     </span>
                   )}
@@ -133,6 +133,9 @@ export default function Navbar() {
                     <Link href="/report" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink motion-safe:hover:-translate-y-0.5">
                       {nav("report")}
                     </Link>
+                    <Link href="/help" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink motion-safe:hover:-translate-y-0.5">
+                      {nav("help")}
+                    </Link>
                     <button
                       onClick={() => signOut({ callbackUrl: "/" })}
                       className="rounded-xl border border-danger/30 bg-dangersoft px-3 py-2 text-sm font-medium text-danger transition hover:bg-danger/10"
@@ -162,6 +165,9 @@ export default function Navbar() {
                       </Link>
                       <Link href="/report" onClick={() => setMenuOpen(false)} className="block rounded-xl px-3 py-2.5 text-sm text-ink transition hover:bg-surface2">
                         {nav("report")}
+                      </Link>
+                      <Link href="/help" onClick={() => setMenuOpen(false)} className="block rounded-xl px-3 py-2.5 text-sm text-ink transition hover:bg-surface2">
+                        {nav("help")}
                       </Link>
                       <button
                         onClick={() => signOut({ callbackUrl: "/" })}

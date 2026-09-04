@@ -136,7 +136,8 @@
     "browseJobs": "Browse Jobs",
     "modeWork": "Find Work",
     "modeHire": "Hire",
-    "findPro": "Find Professionals"
+    "findPro": "Find Professionals",
+    "help": "Help"
   },
   "Profile": {
     "title": "My Profile",
@@ -198,7 +199,11 @@
     "noCompletedJobs": "No completed jobs yet",
     "recentJobs": "Recent Jobs",
     "viewAll": "View All",
-    "comingSoon": "Coming Soon"
+    "comingSoon": "Coming Soon",
+    "availQuestion": "Are you available for work today?",
+    "availNow": "Available now",
+    "availOff": "Not available",
+    "voiceGuideWorker": "This is your worker dashboard. You can see your profile, your current jobs, and new job offers here. Open the Offers tab to see new work."
   },
   "Cities": {
     "karachi": "Karachi",
@@ -281,7 +286,7 @@
     "createJob": "Create Job",
     "postJob": "Post Job",
     "myJobs": "My Jobs",
-    "jobTitle": "Job Title",
+    "jobTitle": "Job title",
     "jobTitlePlaceholder": "e.g. Painting 2-bedroom apartment",
     "professionalType": "Professional Type Needed",
     "requiredSkills": "Required Skills",
@@ -360,7 +365,11 @@
     "wageTypical": "Typical: PKR {min}-{max}/day (from {count} jobs)",
     "fairWage": "Fair Wage",
     "specifyType": "Please specify the type of professional needed",
-    "specifyCity": "Please type the city name"
+    "specifyCity": "Please type the city name",
+    "saveChanges": "Save Changes",
+    "jobUpdated": "Job updated successfully",
+    "wage": "Wage",
+    "description": "Description"
   },
   "Employer": {
     "employerDashboard": "Employer Dashboard",
@@ -371,7 +380,9 @@
     "recentJobs": "Recent Jobs",
     "allJobs": "All Jobs",
     "comingSoon": "Coming Soon",
-    "welcome": "Welcome"
+    "welcome": "Welcome",
+    "wallet": "Wallet",
+    "voiceGuideEmployer": "This is your employer dashboard. Tap Create New Job to hire a worker. Your jobs and wallet are shown here."
   },
   "Offers": {
     "jobOffers": "Job Offers",
@@ -392,7 +403,8 @@
     "employerPhone": "Employer Contact",
     "contactAfterAccept": "Contact details will be shown after acceptance",
     "acceptedContactShared": "Offer accepted! You can now contact the employer at {phone}. Full details are in your notifications.",
-    "viewNotifications": "View contact details in notifications →"
+    "viewNotifications": "View contact details in notifications →",
+    "subtitle": "Review and respond to job offers from employers."
   },
   "Password": {
     "strength": "Password Strength",
@@ -616,5 +628,66 @@
     "paymentError": "Payment action failed. Please try again.",
     "securedAt": "Secured on",
     "releasedAt": "Released on"
+  },
+  "Voice": {
+    "listen": "Listen",
+    "notSupported": "Voice guidance is not available on this device."
+  },
+  "Help": {
+    "title": "Help & FAQ",
+    "subtitle": "Simple answers with pictures — no long reading needed.",
+    "items": [
+      {
+        "icon": "🛠️",
+        "q": "How do I get work?",
+        "a": "Make your worker profile, choose your skill and city, and keep yourself Available. Job offers arrive on your Offers page."
+      },
+      {
+        "icon": "🤝",
+        "q": "How do I hire someone?",
+        "a": "Create a job in one sentence with the AI helper. We find nearby workers and send offers for you."
+      },
+      {
+        "icon": "🔒",
+        "q": "Is my payment safe?",
+        "a": "Yes. The employer's money is locked in escrow before work starts, and released only when the work is finished."
+      },
+      {
+        "icon": "🔢",
+        "q": "What is the verification code?",
+        "a": "A 6-digit code that proves the phone number is really yours. In this demo the code appears on the screen."
+      },
+      {
+        "icon": "⭐",
+        "q": "How do ratings work?",
+        "a": "After every job, both sides give stars. Good ratings bring more offers."
+      },
+      {
+        "icon": "🔁",
+        "q": "Can one account do both?",
+        "a": "Yes! You can work for others AND hire workers from the same account."
+      },
+      {
+        "icon": "🚨",
+        "q": "Someone misbehaved. What can I do?",
+        "a": "Use the Report Issue page. Our admin team reviews every complaint and can block bad users."
+      },
+      {
+        "icon": "🌐",
+        "q": "How do I change the language?",
+        "a": "Tap the EN / اردو button at the top of any page."
+      }
+    ]
+  },
+  "MatchReason": {
+    "skill": "{skill}% skill match",
+    "distance": "{dist} km away",
+    "wageOk": "wage meets expectation",
+    "wageLow": "wage below expectation"
+  },
+  "JobForm": {
+    "step1": "Describe",
+    "step2": "Wage & Time",
+    "step3": "Review"
   }
 }

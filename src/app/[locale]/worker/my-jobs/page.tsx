@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import Navbar from "@/components/layout/Navbar";
 import { WorkerBottomNav } from "@/components/layout/WorkerBottomNav";
 import { Badge } from "@/components/ui";
+import { ErrorBanner } from "@/components/ui/Feedback";
 import { useRouter } from "@/i18n/navigation";
 import { WORKER_CATEGORIES, PAKISTAN_CITIES } from "@/lib/constants";
 import { prettyLabel } from "@/lib/labels";
@@ -45,6 +46,7 @@ export default function WorkerMyJobsPage() {
   const [stats, setStats] = useState({ activeJobs: 0, completedJobs: 0, avgRating: 0 });
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<"active" | "completed">("active");
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
     async function loadJobs() {
@@ -57,7 +59,7 @@ export default function WorkerMyJobsPage() {
           if (data.stats) setStats(data.stats);
         }
       } catch {
-        // silently fail
+        setLoadError(true);
       } finally {
         setLoading(false);
       }
@@ -199,12 +201,18 @@ export default function WorkerMyJobsPage() {
       <Navbar />
       <main className="mx-auto max-w-2xl px-4 py-6 pb-24 sm:pb-8">
         {/* Header Banner */}
-        <div className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white shadow-lg shadow-blue-200">
+        <div className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-primarystrong p-6 text-white shadow-lg shadow-primary/25">
           <h1 className="text-2xl font-bold">{t("title")}</h1>
-          <p className="mt-1 text-sm text-blue-100">
+          <p className="mt-1 text-sm text-white/80">
             {dashboardT("activeJobs")}: {stats.activeJobs} · {dashboardT("completedJobs")}: {stats.completedJobs}
           </p>
         </div>
+
+        {loadError && (
+          <div className="mb-4">
+            <ErrorBanner message={common("error")} retryLabel={common("retry")} onRetry={() => window.location.reload()} />
+          </div>
+        )}
 
         {/* Tabs */}
         <div role="group" aria-label={t("title")} className="mb-6 grid grid-cols-2 gap-2 rounded-2xl bg-surface2 p-1.5">

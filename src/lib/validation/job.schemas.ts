@@ -1,21 +1,26 @@
 import { z } from "zod";
 import { WORKER_CATEGORIES, PAKISTAN_CITIES } from "@/lib/constants";
 
+/** Strip ASCII control characters (keeps Urdu/emoji intact). */
+const stripCtrl = (s: string) => s.replace(/[\u0000-\u001F\u007F]/g, "");
+
 const categoryIds = WORKER_CATEGORIES.map((c) => c.id) as [string, ...string[]];
 const cityIds = PAKISTAN_CITIES.map((c) => c.id) as [string, ...string[]];
 
 export const jobSchema = z.object({
   title: z
     .string()
+    .trim()
     .min(3, "Title must be at least 3 characters")
-    .max(100, "Title must be 100 characters or less"),
+    .max(100, "Title must be 100 characters or less")
+    .transform(stripCtrl),
   workerType: z.enum(categoryIds, {
     message: "Please select the type of professional needed",
   }),
   /** Free-text profession when workerType === "other" (stored normalized). */
-  customWorkerType: z.string().trim().min(2, "Profession must be at least 2 characters").max(40).optional(),
+  customWorkerType: z.string().trim().min(2, "Profession must be at least 2 characters").max(40).transform(stripCtrl).optional(),
   requiredSkills: z
-    .array(z.string())
+    .array(z.string().trim().max(60))
     .min(1, "Please select at least one skill")
     .max(10),
   numberOfWorkers: z
@@ -43,7 +48,7 @@ export const jobSchema = z.object({
   customCity: z.string().trim().min(2, "City name must be at least 2 characters").max(40).optional(),
   locationLat: z.number().optional().nullable(),
   locationLng: z.number().optional().nullable(),
-  description: z.string().max(1000).optional(),
+  description: z.string().trim().max(1000).transform(stripCtrl).optional(),
 });
 
 export type JobInput = z.infer<typeof jobSchema>;

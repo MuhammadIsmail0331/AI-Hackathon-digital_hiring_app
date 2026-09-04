@@ -198,13 +198,14 @@ src/app/api/                  — All REST endpoints
 
 ## 5. KNOWN LIMITATIONS (honest disclosure)
 
-1. **OTP delivery**: No real SMS provider configured. In demo mode, the code appears in the UI. In production, integrate Twilio/Vonage or WhatsApp Business API.
+1. **OTP delivery**: No real SMS provider configured. In demo mode, the code appears in the UI. OTP is now **mandatory** for registration and password reset — the "continue without OTP" bypass has been removed from both the UI and the API (server-side Zod requires a 6-digit code; register/reset always verify it). For production, integrate Twilio/Vonage or WhatsApp Business API in `src/lib/otp.ts`.
 2. **Payments are simulated**: No real money moves. The escrow flow demonstrates the UX but does not integrate with Stripe/JazzCash/Easypaisa.
 3. **AI assistant fallback**: Without an OPENAI_API_KEY, the job-post assistant uses a keyword parser (still bilingual, still functional, but not true LLM understanding).
 4. **Background search cron**: Vercel Hobby plan limits crons to daily. For 10-minute cadence, use an external cron service hitting `/api/cron/background-search` with the CRON_SECRET.
 5. **Single-city radius**: Matching uses straight-line distance (Haversine), not actual travel distance.
 6. **No in-app chat**: Communication happens via revealed phone numbers after offer acceptance.
 7. **Limited image support**: No photo uploads for worker profiles or job images.
+8. **Match reason storage**: New offers store a structured JSON `{skillPct, distKm, wageOk}` in `matchReason`, rendered localized via `renderMatchReason()` (legacy plain-English rows display as-is until re-generated).
 
 ---
 

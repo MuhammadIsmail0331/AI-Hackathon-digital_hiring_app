@@ -19,7 +19,7 @@ export const registerSchema = z.object({
   role: z.enum(ROLES, {
     message: "Please select Worker or Employer",
   }),
-  otpCode: z.string().length(6, "Please enter the 6-digit OTP code").optional(),
+  otpCode: z.string().length(6, "Please enter the 6-digit OTP code"),
 });
 
 export const loginSchema = z.object({
@@ -36,7 +36,7 @@ export const forgotPasswordSchema = z.object({
 
 export const resetPasswordSchema = z.object({
   phone: z.string().min(1, "Phone number is required"),
-  otpCode: z.string().length(6, "Please enter the 6-digit OTP code").optional(),
+  otpCode: z.string().length(6, "Please enter the 6-digit OTP code"),
   newPassword: z
     .string()
     .min(8, "Password must be at least 8 characters")

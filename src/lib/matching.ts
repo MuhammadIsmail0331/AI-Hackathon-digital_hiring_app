@@ -147,22 +147,14 @@ export async function findMatchingProfessionals(
       skillScore + wageScore + expScore + ratingScore + availScore
     );
 
-    const reasonParts: string[] = [];
     const skillPct =
       requiredSkills.length > 0
         ? Math.round((matchingSkills.length / requiredSkills.length) * 100)
         : 100;
-    reasonParts.push(`${skillPct}% skill match`);
     const distKm =
       jobCoords && workerCoords
         ? haversineKm(jobCoords.lat, jobCoords.lng, workerCoords.lat, workerCoords.lng)
         : null;
-    if (distKm != null) reasonParts.push(`${distKm.toFixed(1)} km away`);
-    reasonParts.push(
-      job.wage >= w.expectedWage
-        ? "wage meets expectation"
-        : "wage below expectation"
-    );
 
     results.push({
       userId: w.user.id,
@@ -175,7 +167,11 @@ export async function findMatchingProfessionals(
       totalJobs: w.totalJobs,
       locationName: w.locationName,
       matchScore: totalScore,
-      reason: reasonParts.join(' | '),
+      reason: JSON.stringify({
+        skillPct,
+        distKm: distKm != null ? Math.round(distKm * 10) / 10 : null,
+        wageOk: job.wage >= w.expectedWage,
+      }),
     });
   }
 

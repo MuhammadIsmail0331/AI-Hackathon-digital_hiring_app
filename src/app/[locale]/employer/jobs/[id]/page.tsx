@@ -92,6 +92,12 @@ export default function JobDetailPage() {
   const [paymentProcessing, setPaymentProcessing] = useState(false);
   const [showSecureConfirm, setShowSecureConfirm] = useState(false);
   const [showReleaseConfirm, setShowReleaseConfirm] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [editTitle, setEditTitle] = useState("");
+  const [editWage, setEditWage] = useState(0);
+  const [editWorkers, setEditWorkers] = useState(1);
+  const [editDesc, setEditDesc] = useState("");
+  const [editSaving, setEditSaving] = useState(false);
 
   useEffect(() => {
     async function loadJob() {
@@ -289,10 +295,125 @@ export default function JobDetailPage() {
         </button>
 
         {/* Status + Title */}
-        <div className="mb-4 flex items-start justify-between">
+        <div className="mb-4 flex items-start justify-between gap-2">
           <h1 className="text-2xl font-bold text-ink">{job.title}</h1>
-          <Badge tone={badge.tone}>{badge.label}</Badge>
+          <div className="flex shrink-0 items-center gap-2">
+            {(job.status === "OPEN" || job.status === "DRAFT") && !editOpen && (
+              <button
+                type="button"
+                onClick={() => {
+                  setEditTitle(job.title);
+                  setEditWage(job.wage);
+                  setEditWorkers(job.numberOfWorkers);
+                  setEditDesc(job.description ?? "");
+                  setEditOpen(true);
+                }}
+                className="tap-ripple inline-flex items-center gap-1 rounded-xl bg-primarysoft px-3 py-1.5 text-xs font-semibold text-primary transition hover:brightness-95 motion-safe:active:scale-95"
+              >
+                ✏️ {t("editJob")}
+              </button>
+            )}
+            <Badge tone={badge.tone}>{badge.label}</Badge>
+          </div>
         </div>
+
+        {/* Inline edit panel (OPEN/DRAFT only) */}
+        {editOpen && (
+          <div className="mb-6 rounded-2xl border border-line bg-surface2 p-4">
+            <div className="space-y-3">
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-muted">{t("jobTitle")}</label>
+                <input
+                  type="text"
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                  maxLength={100}
+                  className="w-full rounded-xl border border-line bg-surface px-3 py-2.5 text-sm text-ink outline-none focus:border-primary focus:ring-2 focus:ring-primarysoft"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="mb-1 block text-xs font-semibold text-muted">{t("wage")} (PKR)</label>
+                  <input
+                    type="number"
+                    value={editWage || ""}
+                    onChange={(e) => setEditWage(Number(e.target.value))}
+                    min={100}
+                    max={100000}
+                    className="w-full rounded-xl border border-line bg-surface px-3 py-2.5 text-sm text-ink outline-none focus:border-primary focus:ring-2 focus:ring-primarysoft"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-semibold text-muted">{t("professionals")}</label>
+                  <input
+                    type="number"
+                    value={editWorkers || ""}
+                    onChange={(e) => setEditWorkers(Number(e.target.value))}
+                    min={1}
+                    max={50}
+                    className="w-full rounded-xl border border-line bg-surface px-3 py-2.5 text-sm text-ink outline-none focus:border-primary focus:ring-2 focus:ring-primarysoft"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-muted">{t("description")}</label>
+                <textarea
+                  value={editDesc}
+                  onChange={(e) => setEditDesc(e.target.value)}
+                  maxLength={1000}
+                  rows={3}
+                  className="w-full rounded-xl border border-line bg-surface px-3 py-2.5 text-sm text-ink outline-none focus:border-primary focus:ring-2 focus:ring-primarysoft"
+                />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  disabled={editSaving || editTitle.trim().length < 3 || editWage < 100}
+                  onClick={async () => {
+                    setEditSaving(true);
+                    setActionIsError(false);
+                    try {
+                      const res = await fetch(`/api/employer/jobs/${jobId}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          title: editTitle.trim(),
+                          wage: editWage,
+                          numberOfWorkers: editWorkers,
+                          description: editDesc.trim(),
+                        }),
+                      });
+                      const data = await res.json();
+                      if (res.ok && data.job) {
+                        setJob((prev) => (prev ? { ...prev, ...data.job } : prev));
+                        setEditOpen(false);
+                        setActionMessage(t("jobUpdated"));
+                      } else {
+                        setActionMessage(data.error || commonT("error"));
+                        setActionIsError(true);
+                      }
+                    } catch {
+                      setActionMessage(commonT("error"));
+                      setActionIsError(true);
+                    } finally {
+                      setEditSaving(false);
+                    }
+                  }}
+                  className="tap-ripple flex-1 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primarystrong disabled:opacity-50 motion-safe:active:scale-[0.97]"
+                >
+                  {editSaving ? commonT("loading") : t("saveChanges")}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEditOpen(false)}
+                  className="rounded-xl border border-line bg-surface px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-surface2 motion-safe:active:scale-[0.97]"
+                >
+                  {commonT("cancel")}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Progress bar for positions */}
         <div className="mb-6 rounded-xl bg-surface2 p-3">

@@ -77,21 +77,57 @@ export default function AdminPage() {
   async function blockUser() {
     if (!blockUserId.trim()) return;
     setBusy("block");
-    await fetch("/api/admin/blocked-users", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: blockUserId, reason: blockReason }) });
-    setBlockUserId(""); setBlockReason(""); setShowBlockForm(false);
-    await refresh(); setBusy(null);
+    setError("");
+    try {
+      const res = await fetch("/api/admin/blocked-users", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: blockUserId, reason: blockReason }) });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || "Failed to block user.");
+        return;
+      }
+      setBlockUserId(""); setBlockReason(""); setShowBlockForm(false);
+      await refresh();
+    } catch {
+      setError("Network error. Please try again.");
+    } finally {
+      setBusy(null);
+    }
   }
 
   async function unblockUser(userId: string) {
     setBusy(userId);
-    await fetch("/api/admin/blocked-users", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId }) });
-    await refresh(); setBusy(null);
+    setError("");
+    try {
+      const res = await fetch("/api/admin/blocked-users", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId }) });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || "Failed to unblock user.");
+        return;
+      }
+      await refresh();
+    } catch {
+      setError("Network error. Please try again.");
+    } finally {
+      setBusy(null);
+    }
   }
 
   async function setIssueStatus(issueId: string, status: string) {
     setBusy(issueId);
-    await fetch("/api/admin/issues", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ issueId, status }) });
-    await refresh(); setBusy(null);
+    setError("");
+    try {
+      const res = await fetch("/api/admin/issues", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ issueId, status }) });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || "Failed to update issue.");
+        return;
+      }
+      await refresh();
+    } catch {
+      setError("Network error. Please try again.");
+    } finally {
+      setBusy(null);
+    }
   }
 
   if (authorized === false) {
@@ -113,6 +149,12 @@ export default function AdminPage() {
       <Navbar />
       <main className="mx-auto max-w-4xl px-4 py-6 pb-24 sm:pb-8">
         <h1 className="mb-6 text-2xl font-bold text-ink">Admin Panel</h1>
+
+        {error && (
+          <div role="alert" className="mb-4 rounded-xl border border-danger/30 bg-dangersoft p-3 text-sm font-medium text-danger">
+            {error}
+          </div>
+        )}
 
         <div className="mb-6 flex gap-2 rounded-xl border border-line bg-surface p-1">
           {(["stats", "issues", "blocked"] as Tab[]).map((tabId) => (

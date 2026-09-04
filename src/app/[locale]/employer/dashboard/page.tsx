@@ -6,6 +6,8 @@ import { Link } from "@/i18n/navigation";
 import Navbar from "@/components/layout/Navbar";
 import { EmployerBottomNav } from "@/components/layout/EmployerBottomNav";
 import { Badge } from "@/components/ui";
+import { ErrorBanner } from "@/components/ui/Feedback";
+import { VoiceHelp } from "@/components/ui/VoiceHelp";
 import { WORKER_CATEGORIES } from "@/lib/constants";
 import { prettyLabel } from "@/lib/labels";
 
@@ -27,19 +29,23 @@ interface JobItem {
 export default function EmployerDashboardPage() {
   const t = useTranslations("Employer");
   const jobsT = useTranslations("Jobs");
+  const commonT = useTranslations("Common");
+  const voiceT = useTranslations("Voice");
   const locale = useLocale() as "en" | "ur";
 
   const [user, setUser] = useState<SessionUser | null>(null);
   const [jobs, setJobs] = useState<JobItem[]>([]);
   const [wallet, setWallet] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const [sessionRes, jobsRes] = await Promise.all([
+        const [sessionRes, jobsRes, walletRes] = await Promise.all([
           fetch("/api/auth/session"),
           fetch("/api/employer/jobs"),
+          fetch("/api/employer/wallet"),
         ]);
         if (sessionRes.ok) {
           const s = await sessionRes.json();
@@ -49,8 +55,12 @@ export default function EmployerDashboardPage() {
           const data = await jobsRes.json();
           setJobs(data.jobs || []);
         }
+        if (walletRes.ok) {
+          const w = await walletRes.json();
+          setWallet(typeof w.balance === "number" ? w.balance : 0);
+        }
       } catch {
-        // silently fail
+        setLoadError(true);
       } finally {
         setLoading(false);
       }
@@ -102,18 +112,28 @@ export default function EmployerDashboardPage() {
   return (
     <>
       <Navbar />
-      <main className="mx-auto max-w-2xl px-4 py-6 pb-24 sm:pb-8">
+      <main className="page-enter mx-auto max-w-2xl px-4 py-6 pb-24 sm:pb-8">
         {/* Welcome Banner */}
-        <div className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white shadow-lg shadow-blue-200">
+        <div className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-primarystrong p-6 text-white shadow-lg shadow-primary/25">
           <h1 className="text-2xl font-bold">
             {t("welcome")}, {user?.name || ""}!
           </h1>
-          <p className="mt-1 text-sm text-blue-100">{t("employerDashboard")}</p>
+          <p className="mt-1 text-sm text-white/80">{t("employerDashboard")}</p>
         </div>
+
+        {loadError && (
+          <div className="mb-4">
+            <ErrorBanner
+              message={commonT("error")}
+              retryLabel={commonT("retry")}
+              onRetry={() => window.location.reload()}
+            />
+          </div>
+        )}
 
         <div className="mb-6 grid grid-cols-3 gap-3">
           <div className="rounded-2xl border border-line bg-surface p-4 text-center shadow-sm">
-            <div className="mx-auto mb-1 flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-primary">
+            <div className="mx-auto mb-1 flex h-8 w-8 items-center justify-center rounded-lg bg-primarysoft text-primary">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
             </div>
             <div className="text-2xl font-bold text-ink">{activeJobs}</div>
@@ -141,7 +161,7 @@ export default function EmployerDashboardPage() {
             </Link>
             <Link
               href="/employer/jobs/new"
-          className="btn-shine flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-200 ease-out hover:shadow-xl hover:shadow-blue-300 hover:brightness-110 motion-safe:hover:-translate-y-1 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.95]"
+          className="btn-shine flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary/30 transition-all duration-200 ease-out hover:shadow-xl hover:shadow-primary/40 hover:brightness-110 motion-safe:hover:-translate-y-1 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.95]"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 5v14" />
@@ -152,7 +172,7 @@ export default function EmployerDashboardPage() {
           </div>
 
         <div className="mb-4 inline-flex items-center gap-2 rounded-xl bg-accentsoft px-4 py-2 text-sm font-semibold text-accent">
-          <span>💳</span> Wallet: {wallet !== null ? `${wallet.toLocaleString()} PKR` : "..."}
+          <span>💳</span> {t("wallet")}: {wallet !== null ? `${wallet.toLocaleString()} PKR` : "…"}
         </div>
         {recentJobs.length > 0 ? (
           <div>
@@ -199,7 +219,7 @@ export default function EmployerDashboardPage() {
           </div>
         ) : (
           <div className="rounded-2xl border-2 border-dashed border-primary/40 bg-primarysoft p-8 text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-100 shadow-sm">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primarysoft shadow-sm">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
                 <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
@@ -209,13 +229,18 @@ export default function EmployerDashboardPage() {
             <p className="mb-6 text-sm text-muted">{jobsT("noJobsDesc")}</p>
             <Link
               href="/employer/jobs/new"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300"
+              className="btn-shine inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3 text-base font-semibold text-white shadow-lg shadow-primary/30 transition hover:shadow-xl hover:shadow-primary/40"
             >
               {jobsT("createFirstJob")}
             </Link>
           </div>
         )}
       </main>
+      <VoiceHelp
+        text={t("voiceGuideEmployer")}
+        label={voiceT("listen")}
+        notSupportedLabel={voiceT("notSupported")}
+      />
       <EmployerBottomNav />
     </>
   );

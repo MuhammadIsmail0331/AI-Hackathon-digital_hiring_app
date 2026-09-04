@@ -6,6 +6,8 @@ import { Link } from "@/i18n/navigation";
 import Navbar from "@/components/layout/Navbar";
 import { WorkerBottomNav } from "@/components/layout/WorkerBottomNav";
 import { Badge } from "@/components/ui";
+import { ErrorBanner } from "@/components/ui/Feedback";
+import { VoiceHelp } from "@/components/ui/VoiceHelp";
 import {
   WORKER_CATEGORIES,
   PAKISTAN_CITIES,
@@ -63,12 +65,16 @@ export default function WorkerDashboardPage() {
   const t = useTranslations("Dashboard");
   const profileT = useTranslations("Profile");
   const jobsT = useTranslations("Jobs");
+  const commonT = useTranslations("Common");
+  const voiceT = useTranslations("Voice");
   const locale = useLocale() as "en" | "ur";
 
   const [user, setUser] = useState<SessionUser | null>(null);
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [myJobs, setMyJobs] = useState<MyJobsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  const [availSaving, setAvailSaving] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -97,7 +103,7 @@ export default function WorkerDashboardPage() {
           setMyJobs(myJobsData);
         }
       } catch {
-        // silently fail – UI shows loading/error states
+        setLoadError(true);
       } finally {
         setLoading(false);
       }
@@ -133,6 +139,36 @@ export default function WorkerDashboardPage() {
     return level ? level[locale] : `${years} years`;
   }
 
+  /** One-tap availability flip — optimistic update, full profile body. */
+  async function toggleAvailability() {
+    if (!profile || availSaving) return;
+    const next = !profile.isAvailable;
+    setProfile({ ...profile, isAvailable: next });
+    setAvailSaving(true);
+    try {
+      const res = await fetch("/api/worker/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          workerType: profile.workerType,
+          skills: profile.skills,
+          experience: profile.experience,
+          locationName: profile.locationName,
+          expectedWage: profile.expectedWage,
+          isAvailable: next,
+          availableDays: profile.availableDays,
+          bio: profile.bio ?? "",
+        }),
+      });
+      if (!res.ok) throw new Error("toggle failed");
+    } catch {
+      setProfile({ ...profile, isAvailable: !next });
+      setLoadError(true);
+    } finally {
+      setAvailSaving(false);
+    }
+  }
+
   if (loading) {
     return (
       <>
@@ -154,19 +190,29 @@ export default function WorkerDashboardPage() {
   return (
     <>
       <Navbar />
-      <main className="mx-auto max-w-2xl px-4 py-6 pb-24 sm:pb-8">
+      <main className="page-enter mx-auto max-w-2xl px-4 py-6 pb-24 sm:pb-8">
         {/* Welcome Banner */}
-        <div className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-primarystrong p-6 text-white shadow-lg shadow-blue-200">
+        <div className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-primarystrong p-6 text-white shadow-lg shadow-primary/25">
           <h1 className="text-2xl font-bold">
             {t("welcome")}, {user?.name || ""}!
           </h1>
-          <p className="mt-1 text-sm text-blue-100">{t("workerDashboard")}</p>
+          <p className="mt-1 text-sm text-white/80">{t("workerDashboard")}</p>
         </div>
+
+        {loadError && (
+          <div className="mb-4">
+            <ErrorBanner
+              message={commonT("error")}
+              retryLabel={commonT("retry")}
+              onRetry={() => window.location.reload()}
+            />
+          </div>
+        )}
 
         {/* No Profile Yet */}
         {!profile && (
           <div className="rounded-2xl border-2 border-dashed border-primary/40 bg-primarysoft p-8 text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-100 shadow-sm">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primarysoft shadow-sm">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="32"
@@ -191,7 +237,7 @@ export default function WorkerDashboardPage() {
             </p>
             <Link
               href="/worker/profile"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3 text-base font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-200 ease-out hover:shadow-xl hover:shadow-blue-300 hover:brightness-110 motion-safe:hover:-translate-y-1 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.95] btn-shine"
+              className="btn-shine inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3 text-base font-semibold text-white shadow-lg shadow-primary/30 transition-all duration-200 ease-out hover:shadow-xl hover:shadow-primary/40 hover:brightness-110 motion-safe:hover:-translate-y-1 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.95]"
             >
               {profileT("setupProfile")}
               <svg
@@ -221,7 +267,7 @@ export default function WorkerDashboardPage() {
                 href="/worker/my-jobs"
                 className="rounded-2xl border border-line bg-surface p-4 text-center shadow-sm transition-all duration-200 ease-out hover:border-primary/40 hover:shadow-lg motion-safe:hover:-translate-y-1 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.97]"
               >
-                <div className="mx-auto mb-1 flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-primary">
+                <div className="mx-auto mb-1 flex h-8 w-8 items-center justify-center rounded-lg bg-primarysoft text-primary">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                 </div>
                 <div className="text-2xl font-bold text-ink">{myJobs?.stats.activeJobs ?? 0}</div>
@@ -238,7 +284,7 @@ export default function WorkerDashboardPage() {
                 <div className="mt-0.5 text-xs text-muted">{t("completedJobs")}</div>
               </Link>
               <div className="rounded-2xl border border-line bg-surface p-4 text-center shadow-sm">
-                <div className="mx-auto mb-1 flex h-8 w-8 items-center justify-center rounded-lg bg-yellow-100 text-yellow-600">
+                <div className="mx-auto mb-1 flex h-8 w-8 items-center justify-center rounded-lg bg-accentsoft text-accent">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
                 <div className="text-2xl font-bold text-ink">
@@ -279,7 +325,7 @@ export default function WorkerDashboardPage() {
               {/* Worker Type + Availability */}
               <div className="mb-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 text-primary">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primarysoft to-surface2 text-primary">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -304,9 +350,33 @@ export default function WorkerDashboardPage() {
                     </div>
                   </div>
                 </div>
-                <Badge tone={profile.isAvailable ? "success" : "default"}>
-                  {profile.isAvailable ? t("available") : t("unavailable")}
-                </Badge>
+                <button
+                  type="button"
+                  onClick={toggleAvailability}
+                  disabled={availSaving}
+                  aria-pressed={profile.isAvailable}
+                  title={t("availQuestion")}
+                  className="tap-ripple flex items-center gap-2 rounded-full border border-line bg-surface2 px-3 py-1.5 text-xs font-semibold transition motion-safe:active:scale-95 disabled:opacity-60"
+                >
+                  <span
+                    className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full transition-colors ${
+                      profile.isAvailable ? "bg-success" : "bg-line"
+                    }`}
+                  >
+                    <span
+                      className={`absolute h-4 w-4 rounded-full bg-white shadow transition-all ${
+                        profile.isAvailable ? "start-[18px]" : "start-0.5"
+                      }`}
+                    />
+                  </span>
+                  <span className={profile.isAvailable ? "text-success" : "text-muted"}>
+                    {availSaving
+                      ? commonT("loading")
+                      : profile.isAvailable
+                        ? t("availNow")
+                        : t("availOff")}
+                  </span>
+                </button>
               </div>
 
               {/* Skills */}
@@ -442,6 +512,11 @@ export default function WorkerDashboardPage() {
           </>
         )}
       </main>
+      <VoiceHelp
+        text={t("voiceGuideWorker")}
+        label={voiceT("listen")}
+        notSupportedLabel={voiceT("notSupported")}
+      />
       <WorkerBottomNav />
     </>
   );
