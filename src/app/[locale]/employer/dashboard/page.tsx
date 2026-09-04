@@ -136,12 +136,12 @@ export default function EmployerDashboardPage() {
         </div>
 
           <div className="mb-6 flex flex-wrap items-center gap-3">
-            <Link href="/employer/find" className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-5 py-3.5 text-base font-semibold text-ink shadow-sm transition hover:bg-surface2">
+            <Link href="/employer/find" className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-5 py-3.5 text-base font-semibold text-ink shadow-sm transition-all duration-200 ease-out hover:bg-surface2 hover:shadow-md motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.96]">
               🔎 {locale === "ur" ? "پیشہ ور تلاش کریں" : "Find Professionals"}
             </Link>
             <Link
               href="/employer/jobs/new"
-          className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:shadow-xl hover:shadow-blue-300"
+          className="btn-shine flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-200 ease-out hover:shadow-xl hover:shadow-blue-300 motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.96]"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 5v14" />
@@ -169,7 +169,7 @@ export default function EmployerDashboardPage() {
                   <Link
                     key={job.id}
                     href={`/employer/jobs/${job.id}`}
-                    className="block rounded-2xl border border-line bg-surface p-4 shadow-sm transition hover:border-primary/30 hover:shadow-md"
+                    className="block rounded-2xl border border-line bg-surface p-4 shadow-sm transition-all duration-200 ease-out hover:border-primary/30 hover:shadow-lg motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.99]"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">

@@ -178,7 +178,32 @@ h1, h2, h3 {
 .animate-drift-b { animation: drift-b 20s ease-in-out infinite alternate; }
 .animate-birds { animation: birds 14s ease-in-out infinite alternate; }
 .animate-twinkle { animation: twinkle 2.6s ease-in-out infinite; }
-.animate-float { animation: float-y 5s ease-in-out infinite; }/* ─── SideGarland sway ─────────── */
+.animate-float { animation: float-y 5s ease-in-out infinite; }/* ─── Interactive button feedback (hover lift + press) ─── */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 58%
+  );
+  transform: translateX(-130%);
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .btn-shine:hover::after {
+    transform: translateX(130%);
+  }
+}
+
+/* ─── SideGarland sway ─────────── */
 @keyframes sway {
   0%, 100% { transform: rotate(-4deg); }
   50% { transform: rotate(4deg); }
