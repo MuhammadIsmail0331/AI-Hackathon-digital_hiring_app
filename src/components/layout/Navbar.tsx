@@ -91,7 +91,7 @@ export default function Navbar() {
                       ? `${notifT("title")} — ${unreadCount} ${notifT("unread")}`
                       : notifT("title")
                   }
-                  className="relative rounded-xl p-2 text-muted transition hover:bg-surface2 hover:text-ink"
+                  className="relative rounded-xl p-2 text-muted transition hover:bg-surface2 hover:text-ink motion-safe:hover:-translate-y-0.5"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
@@ -118,19 +118,19 @@ export default function Navbar() {
 
                   {/* Desktop links */}
                   <div className="hidden items-center gap-2 md:flex">
-                    <Link href="/worker/dashboard" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink">
+                    <Link href="/worker/dashboard" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink motion-safe:hover:-translate-y-0.5">
                   {nav("modeWork")}
                 </Link>
-                <Link href="/employer/dashboard" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink">
+                <Link href="/employer/dashboard" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink motion-safe:hover:-translate-y-0.5">
                   {nav("modeHire")}
                 </Link>
-                <Link href="/employer/find" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink">
+                <Link href="/employer/find" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink motion-safe:hover:-translate-y-0.5">
                   {nav("findPro")}
                 </Link>
-                <Link href="/terms" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink">
+                <Link href="/terms" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink motion-safe:hover:-translate-y-0.5">
                       {nav("terms")}
                     </Link>
-                    <Link href="/report" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink">
+                    <Link href="/report" className="rounded-lg px-2 py-1.5 text-xs text-muted transition hover:bg-surface2 hover:text-ink motion-safe:hover:-translate-y-0.5">
                       {nav("report")}
                     </Link>
                     <button
@@ -183,7 +183,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   href="/register"
-                  className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primarystrong"
+                  className="btn-shine rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primarystrong hover:shadow-lg hover:shadow-primary/40 motion-safe:hover:-translate-y-0.5"
                 >
                   {nav("register")}
                 </Link>

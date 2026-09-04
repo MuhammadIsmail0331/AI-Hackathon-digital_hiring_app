@@ -141,7 +141,7 @@ export default function EmployerDashboardPage() {
             </Link>
             <Link
               href="/employer/jobs/new"
-          className="btn-shine flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-200 ease-out hover:shadow-xl hover:shadow-blue-300 motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.96]"
+          className="btn-shine flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-200 ease-out hover:shadow-xl hover:shadow-blue-300 hover:brightness-110 motion-safe:hover:-translate-y-1 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.95]"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 5v14" />

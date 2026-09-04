@@ -5,19 +5,19 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.96] disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
+  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200 ease-out motion-safe:hover:-translate-y-1 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.95] disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-canvas",
   {
     variants: {
       variant: {
         primary:
-          "btn-shine bg-primary text-white shadow-sm hover:bg-primarystrong hover:shadow-lg hover:shadow-primary/30 focus-visible:ring-ring",
+          "btn-shine bg-primary text-white shadow-sm hover:bg-primarystrong hover:brightness-110 hover:shadow-lg hover:shadow-primary/40 focus-visible:ring-ring",
         secondary:
-          "btn-shine bg-accent text-white shadow-sm hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/30 focus-visible:ring-accent",
+          "btn-shine bg-accent text-white shadow-sm hover:bg-accent/90 hover:brightness-110 hover:shadow-lg hover:shadow-accent/40 focus-visible:ring-accent",
         outline:
-          "border border-line bg-surface text-ink shadow-sm hover:bg-surface2 hover:shadow-md focus-visible:ring-ring",
+          "border border-line bg-surface text-ink shadow-sm hover:bg-surface2 hover:shadow-md hover:brightness-[1.02] focus-visible:ring-ring",
         ghost: "text-ink hover:bg-surface2 focus-visible:ring-ring",
         danger:
-          "btn-shine bg-danger text-white shadow-sm hover:bg-danger/90 hover:shadow-lg hover:shadow-danger/30 focus-visible:ring-danger",
+          "btn-shine bg-danger text-white shadow-sm hover:bg-danger/90 hover:brightness-110 hover:shadow-lg hover:shadow-danger/40 focus-visible:ring-danger",
       },
       size: {
         sm: "px-3 py-2 text-sm",

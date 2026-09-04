@@ -51,3 +51,8 @@ All respect `prefers-reduced-motion: reduce`.
 3. All text via i18n keys (en + ur)
 4. Focus rings: `focus-visible:ring-ring` on all interactive elements
 5. Reduced motion: all animations respect `prefers-reduced-motion`
+## Interaction & Motion System (final)
+
+- **Press (all devices):** every `button`, `a`, and `[role=button]` squishes to `scale(0.95)` + dims to `brightness(0.92)` on `:active` (80ms) — global rule in `globals.css`, so nav links, bottom tabs, and cards all respond consistently.
+- **Hover (pointer devices only):** primary/secondary/danger buttons lift 4px with a colored glow + `brightness(1.10)` + a diagonal shine sweep (`btn-shine`, 650ms). Outline/ghost elements lift 2px. Desktop nav links lift 2px.
+- **Reduced motion:** all of the above is wrapped in `motion-safe:` / `prefers-reduced-motion` guards; the shine only fires under `@media (hover: hover)`.

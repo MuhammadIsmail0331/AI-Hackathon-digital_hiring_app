@@ -9,7 +9,8 @@
     "lint": "eslint src",
     "setup": "npm install && prisma db push && prisma db seed",
     "postinstall": "prisma generate",
-    "test:e2e": "npm run build && prisma db seed && playwright test"
+    "test:e2e": "npm run build && prisma db seed && playwright test",
+    "demo:record": "node scripts/record-demo.mjs"
   },
   "dependencies": {
     "@eslint/eslintrc": "^3.3.6",

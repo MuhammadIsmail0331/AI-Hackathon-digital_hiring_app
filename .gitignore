@@ -55,3 +55,9 @@ playwright-report/
 
 # screenshots
 shots/
+
+# demo recordings
+demo-video/
+
+# IDE configs
+.qoder/

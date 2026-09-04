@@ -9,6 +9,7 @@ import { WorkCrew } from "@/components/illustrations/characters";
 import { CountUp, Marquee, Reveal, TiltCard } from "@/components/motion";
 import { WORKER_CATEGORIES } from "@/lib/constants";
 import { db } from "@/lib/db";
+import { resolveSessionUser } from "@/lib/session";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -33,6 +34,29 @@ async function getStats() {
   }
 }
 
+/**
+ * Role-aware CTA destinations:
+ * - Logged out      -> register with the role preselected
+ * - "I need a worker" (logged in) -> employer dashboard (hiring hub)
+ * - "I am a worker"   (logged in) -> worker dashboard if a profile exists,
+ *   otherwise the profile-setup page first
+ */
+async function getCtaHrefs() {
+  try {
+    const user = await resolveSessionUser();
+    if (!user) {
+      return { needWorker: "/register?role=EMPLOYER", amWorker: "/register?role=WORKER" };
+    }
+    const profileCount = await db.workerProfile.count({ where: { userId: user.id } });
+    return {
+      needWorker: "/employer/dashboard",
+      amWorker: profileCount > 0 ? "/worker/dashboard" : "/worker/profile/edit",
+    };
+  } catch {
+    return { needWorker: "/register?role=EMPLOYER", amWorker: "/register?role=WORKER" };
+  }
+}
+
 export default function LandingPage({ params }: Props) {
   const { locale } = use(params);
   setRequestLocale(locale);
@@ -41,6 +65,7 @@ export default function LandingPage({ params }: Props) {
   const t = useTranslations("Landing");
   const app = useTranslations("App");
   const stats = use(getStats());
+  const cta = use(getCtaHrefs());
 
   return (
     <>
@@ -110,7 +135,7 @@ export default function LandingPage({ params }: Props) {
               <div className="mx-auto grid max-w-2xl gap-4 text-start sm:grid-cols-2">
                 <TiltCard className="h-full">
                   <Link
-                    href="/register?role=EMPLOYER"
+                    href={cta.needWorker}
                     className="group flex h-full flex-col rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl backdrop-blur-md transition hover:border-amber-300/50"
                   >
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-lg">
@@ -131,7 +156,7 @@ export default function LandingPage({ params }: Props) {
                 </TiltCard>
                 <TiltCard className="h-full">
                   <Link
-                    href="/register?role=WORKER"
+                    href={cta.amWorker}
                     className="group flex h-full flex-col rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl backdrop-blur-md transition hover:border-emerald-300/50"
                   >
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg">
@@ -255,7 +280,7 @@ export default function LandingPage({ params }: Props) {
               <h2 className="mb-3 text-2xl font-bold text-white sm:text-3xl">{app("tagline")}</h2>
               <p className="mx-auto mb-6 max-w-xl text-sm text-emerald-50/90 sm:text-base">{t("description")}</p>
               <Link
-                href="/register?role=EMPLOYER"
+                href={cta.needWorker}
                 className="inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-base font-bold text-primary shadow-lg transition hover:gap-3 hover:shadow-xl"
               >
                 {t("needWorker")}

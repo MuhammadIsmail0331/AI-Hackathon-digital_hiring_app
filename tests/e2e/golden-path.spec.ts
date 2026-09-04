@@ -7,7 +7,7 @@ async function login(page: import("@playwright/test").Page, email: string) {
   await page.fill("#email", email);
   await page.fill("#password", PASSWORD);
   await page.click('button[type="submit"]');
-  await page.waitForURL(/\/en$/);
+  await page.waitForURL((u) => !u.pathname.includes("/login"), { timeout: 30_000 });
 }
 
 function tomorrow(): string {

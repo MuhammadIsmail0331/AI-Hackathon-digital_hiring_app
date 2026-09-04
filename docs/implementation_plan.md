@@ -1,6 +1,4 @@
-# Implementation Plan — "Heritage Craft" UI Overhaul + Dark Mode + Phase 1 Completion
-
-> Saved here (Desktop) because plan mode sandboxing only permits writes outside the repo. **On approval, step 0 of implementation copies this file to the repo root and commits it.**
+# Initial Temp Implementation Plan 
 
 ## [Overview]
 
@@ -105,3 +103,13 @@ No class components exist; all React function components. Only structural additi
 9. **Ship:** lint + build; merge dev→main; push; live verification; update `docs/ROADMAP.md` + issue #3; phase summary.
 
 **Guardrails:** no business-logic edits beyond listed; all new text via i18n keys (en+ur); logical CSS properties (ps/pe/ms/me/start/end) everywhere for RTL; preserve all existing `aria-*`, the skip-link, and the loading video; no DB schema changes; seed data untouched (E2E runs against it); commit + push after each step per the owner's git workflow.
+
+---
+
+## Postscript — delivered beyond the original scope (submission round)
+
+- Role-aware landing CTAs (dual-mode routing per team spec)
+- One-command demo recorder: `npm run demo:record` (webm + ffmpeg mp4)
+- Global press-feedback system + boosted hover animations (see docs/DESIGN.md)
+- `docs/PROJECT_SUMMARY.md` (paste-ready judge summary), `docs/DESIGN-BRIEF.md` (design iteration brief)
+- Repo hygiene: legacy test screenshots -> version_1.0-tests/, brand video -> brand-assets/, debug scripts and IDE configs removed

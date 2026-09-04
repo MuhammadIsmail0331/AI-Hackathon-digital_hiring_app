@@ -39,10 +39,13 @@ Pakistan has **millions of skilled daily-wage workers** — painters, plumbers, 
 ### Platform
 - **OTP phone verification** — every account verified
 - **Escrow payment flow** — SECURED → HELD → RELEASED
+- **Explainable matching** — every offer shows its score and reason ("92% skill match · 2.3 km · wage meets expectation")
+- **Role-aware dual-mode** — one account can work *and* hire; the landing buttons route each user to the right dashboard
 - **Fair Wage badge** — jobs paying above minimum wage
-- **Admin panel** — block/unblock users, delete jobs
+- **Admin panel** — block/unblock users, delete jobs, resolve reported issues
 - **PWA manifest** — installable on Android
 - **Dark mode** — midnight emerald theme with full contrast
+- **Demo recorder** — `npm run demo:record` films the full user journey automatically (webm + mp4)
 
 ## Tech Stack
 
@@ -80,6 +83,15 @@ Or use the one-command bootstrap:
 ```bash
 npm run setup
 ```
+
+### Record a demo video
+
+```bash
+# Films the full golden path on the live deployment (webm + mp4, ~3 min)
+npm run demo:record
+```
+
+Output lands in `demo-video/`. Add a voice-over in CapCut/Clipchamp and upload.
 
 ## Demo Accounts
 
@@ -178,7 +190,7 @@ See `docs/DESIGN.md` for the full token reference.
 
 - [Roadmap & execution log](docs/ROADMAP.md)
 - [Design system](docs/DESIGN.md)
-- [Implementation plan](implementation_plan.md)
+- [Implementation plan](docs/implementation_plan.md)
 
 ## License
 

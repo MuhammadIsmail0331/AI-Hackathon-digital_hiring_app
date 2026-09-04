@@ -191,7 +191,7 @@ export default function WorkerDashboardPage() {
             </p>
             <Link
               href="/worker/profile"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3 text-base font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-200 ease-out hover:shadow-xl hover:shadow-blue-300 motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.96] btn-shine"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primarystrong px-6 py-3 text-base font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-200 ease-out hover:shadow-xl hover:shadow-blue-300 hover:brightness-110 motion-safe:hover:-translate-y-1 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.95] btn-shine"
             >
               {profileT("setupProfile")}
               <svg
