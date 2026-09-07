@@ -7,9 +7,11 @@ import { Sora, Inter, Noto_Nastaliq_Urdu, Noto_Naskh_Arabic } from "next/font/go
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 import RouteLoader from "@/components/ui/RouteLoader";
+import { ScrollToInvalid } from "@/components/ui/ScrollToInvalid";
 import { Toaster } from "sonner";
 import { HeritageFrame } from "@/components/layout/HeritageFrame";
 import { SessionSplash } from "@/components/brand/SessionSplash";
+import { AutoNav } from "@/components/layout/AutoNav";
 import { LayeredBackground } from "@/components/ui/LayeredBackground";
 import { BrandAccent } from "@/components/ui/BrandAccent";
 
@@ -79,11 +81,13 @@ export default async function LocaleLayout({ children, params }: Props) {
             {t("skipToContent")}
           </a>
           <RouteLoader />
+          <ScrollToInvalid />
           <SessionSplash />
           <Toaster richColors position="top-center" toastOptions={{ classNames: { toast: "font-sans" } }} />
           <div id="main-content" tabIndex={-1} className="relative z-10 flex flex-1 flex-col focus:outline-none">
             {children}
           </div>
+          <AutoNav />
           <footer className="relative z-10 mt-auto">
             <BrandAccent height="sm" />
             <div className="bg-surface py-3 pb-20 text-center sm:pb-3">

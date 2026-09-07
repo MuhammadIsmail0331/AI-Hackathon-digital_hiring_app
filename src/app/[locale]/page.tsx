@@ -1,4 +1,5 @@
 import { use } from "react";
+import { redirect } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -66,6 +67,10 @@ export default function LandingPage({ params }: Props) {
   const app = useTranslations("App");
   const stats = use(getStats());
   const cta = use(getCtaHrefs());
+
+  // Logged-in users go straight to their dashboard (easy mobile re-entry).
+  const sess = use(resolveSessionUser());
+  if (sess) redirect(sess.isAdmin ? "/admin" : sess.role === "WORKER" ? "/worker/dashboard" : "/employer/dashboard");
 
   return (
     <>
