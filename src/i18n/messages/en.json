@@ -78,7 +78,10 @@
     "clear": "Clear",
     "skipToContent": "Skip to content",
     "or": "or",
-    "retry": "Retry"
+    "retry": "Retry",
+    "photoMaxReached": "Photo Max Reached",
+    "photoError": "Photo Error",
+    "removePhoto": "Remove Photo"
   },
   "Categories": {
     "title": "Worker Type",

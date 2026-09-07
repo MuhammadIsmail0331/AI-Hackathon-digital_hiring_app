@@ -78,7 +78,10 @@
     "clear": "صاف کریں",
     "skipToContent": "مرکزی مواد پر جائیں",
     "or": "یا",
-    "retry": "دوبارہ کوشش کریں"
+    "retry": "دوبارہ کوشش کریں",
+    "photoMaxReached": "photoMaxReached",
+    "photoError": "photoError",
+    "removePhoto": "removePhoto"
   },
   "Categories": {
     "title": "مزدور کی قسم",

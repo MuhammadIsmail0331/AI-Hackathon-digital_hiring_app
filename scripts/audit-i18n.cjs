@@ -1,0 +1,9 @@
+﻿const fs=require('fs'),path=require('path');
+function findMsg(){const out=[];(function w(d){for(const f of fs.readdirSync(d)){const p=path.join(d,f);const s=fs.statSync(p);if(s.isDirectory())w(p);else if(/^(en|ur)\.json$/.test(f))out.push(p);}})('src');return out;}
+const comp=['src/app/[locale]/chat/page.tsx','src/app/[locale]/worker/media/page.tsx','src/components/ui/PhotoUpload.tsx','src/components/ui/LocationMap.tsx','src/components/layout/AutoNav.tsx'];
+const need={};
+for(const c of comp){if(!fs.existsSync(c)){console.log('MISSING FILE:',c);continue;}const s=fs.readFileSync(c,'utf8');let m;const re=/useTranslations\(\s*["']([^"']+)["']\s*\)/g;while(m=re.exec(s)){const ns=m[1];need[ns]=need[ns]||new Set();const keyRe=/\bt\(\s*["']([^"']+)["']/g;let k;while(k=keyRe.exec(s)){need[ns].add(k[1]);}}}
+for(const f of findMsg()){const ur=f.includes('ur');const j=JSON.parse(fs.readFileSync(f,'utf8'));let add=0;for(const ns of Object.keys(need)){j[ns]=j[ns]||{};for(const k of need[ns]){if(j[ns][k]===undefined){j[ns][k]=ur?k:k.replace(/([a-z])([A-Z])/g,'$1 $2').replace(/^./,ch=>ch.toUpperCase());add++;}}}if(add){fs.writeFileSync(f,JSON.stringify(j,null,2)+'\n');console.log(f,'+'+add+' keys');}else console.log(f,'ok');}
+const an=fs.readFileSync('src/components/layout/AutoNav.tsx','utf8');console.log('AutoNav chat link:',/chat/i.test(an));
+const pe=fs.existsSync('src/app/[locale]/worker/profile/edit/page.tsx')?fs.readFileSync('src/app/[locale]/worker/profile/edit/page.tsx','utf8'):'';console.log('Edit uses PhotoUpload:',pe.includes('PhotoUpload'),'| LocationMap:',pe.includes('LocationMap'));
+console.log('chat page:',fs.existsSync('src/app/[locale]/chat/page.tsx'),'| media page:',fs.existsSync('src/app/[locale]/worker/media/page.tsx'),'| support API:',fs.existsSync('src/app/api/chat/support/route.ts'),'| threads API:',fs.existsSync('src/app/api/chat/messages/route.ts'));
