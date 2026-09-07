@@ -1,0 +1,179 @@
+﻿
+> digital-hiring-app@0.1.0 build
+> next build
+
+   Γû▓ Next.js 15.5.24
+   - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully in 3.1s
+   Linting and checking validity of types ...
+
+./src/app/api/auth/otp/send/route.ts
+80:12  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/employer/jobs/[id]/background-search/route.ts
+4:10  Warning: 'findMatchingProfessionals' is defined but never used.  @typescript-eslint/no-unused-vars
+5:30  Warning: 'createBulkNotifications' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/[locale]/admin/page.tsx
+43:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/[locale]/employer/find/page.tsx
+105:20  Warning: 'openDetail' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/[locale]/employer/jobs/new/page.tsx
+69:10  Warning: 'createdJobId' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+73:21  Warning: 'setWageStats' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+111:12  Warning: 'getCategoryName' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/[locale]/employer/jobs/[id]/page.tsx
+9:17  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/[locale]/feedback/[jobId]/page.tsx
+12:9  Warning: 'locale' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/[locale]/register/page.tsx
+37:10  Warning: 'phoneVerified' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/[locale]/worker/jobs/page.tsx
+122:6  Warning: React Hook useEffect has a missing dependency: 'loadJobs'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/worker/offers/page.tsx
+12:29  Warning: 'SKILLS_MAP' is defined but never used.  @typescript-eslint/no-unused-vars
+12:41  Warning: 'TOOLS' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/[locale]/worker/profile/edit/page.tsx
+52:10  Warning: 'isEdit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/layout/ThemeToggle.tsx
+7:6  Warning: 'Mode' is defined but never used.  @typescript-eslint/no-unused-vars
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/72) ...
+   Generating static pages (18/72) 
+   Generating static pages (36/72) 
+   Generating static pages (54/72) 
+ Γ£ô Generating static pages (72/72)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                       Size  First Load JS
+Γöî Γùï /_not-found                                  998 B         104 kB
+Γö£ ΓùÅ /[locale]                                  48.8 kB         191 kB
+Γö£   Γö£ /en
+Γö£   Γöö /ur
+Γö£ ΓùÅ /[locale]/admin                            3.53 kB         146 kB
+Γö£   Γö£ /en/admin
+Γö£   Γöö /ur/admin
+Γö£ ΓùÅ /[locale]/employer/dashboard               2.92 kB         158 kB
+Γö£   Γö£ /en/employer/dashboard
+Γö£   Γöö /ur/employer/dashboard
+Γö£ ΓùÅ /[locale]/employer/find                    3.59 kB         159 kB
+Γö£   Γö£ /en/employer/find
+Γö£   Γöö /ur/employer/find
+Γö£ ΓùÅ /[locale]/employer/jobs                    3.71 kB         146 kB
+Γö£   Γö£ /en/employer/jobs
+Γö£   Γöö /ur/employer/jobs
+Γö£ ╞Æ /[locale]/employer/jobs/[id]                  7 kB         149 kB
+Γö£ ΓùÅ /[locale]/employer/jobs/new                6.11 kB         158 kB
+Γö£   Γö£ /en/employer/jobs/new
+Γö£   Γöö /ur/employer/jobs/new
+Γö£ ΓùÅ /[locale]/employer/profile                 4.06 kB         146 kB
+Γö£   Γö£ /en/employer/profile
+Γö£   Γöö /ur/employer/profile
+Γö£ ╞Æ /[locale]/feedback/[jobId]                 2.54 kB         136 kB
+Γö£ ΓùÅ /[locale]/forgot-password                   3.2 kB         137 kB
+Γö£   Γö£ /en/forgot-password
+Γö£   Γöö /ur/forgot-password
+Γö£ ΓùÅ /[locale]/help                               287 B         134 kB
+Γö£   Γö£ /en/help
+Γö£   Γöö /ur/help
+Γö£ ΓùÅ /[locale]/login                            2.17 kB         136 kB
+Γö£   Γö£ /en/login
+Γö£   Γöö /ur/login
+Γö£ ΓùÅ /[locale]/notifications                    3.48 kB         146 kB
+Γö£   Γö£ /en/notifications
+Γö£   Γöö /ur/notifications
+Γö£ ΓùÅ /[locale]/register                         4.11 kB         138 kB
+Γö£   Γö£ /en/register
+Γö£   Γöö /ur/register
+Γö£ ΓùÅ /[locale]/report                           1.61 kB         136 kB
+Γö£   Γö£ /en/report
+Γö£   Γöö /ur/report
+Γö£ ΓùÅ /[locale]/terms                              699 B         135 kB
+Γö£   Γö£ /en/terms
+Γö£   Γöö /ur/terms
+Γö£ ΓùÅ /[locale]/worker/dashboard                 3.65 kB         158 kB
+Γö£   Γö£ /en/worker/dashboard
+Γö£   Γöö /ur/worker/dashboard
+Γö£ ΓùÅ /[locale]/worker/jobs                      4.41 kB         147 kB
+Γö£   Γö£ /en/worker/jobs
+Γö£   Γöö /ur/worker/jobs
+Γö£ ΓùÅ /[locale]/worker/my-jobs                   4.33 kB         147 kB
+Γö£   Γö£ /en/worker/my-jobs
+Γö£   Γöö /ur/worker/my-jobs
+Γö£ ╞Æ /[locale]/worker/my-jobs/[id]               4.8 kB         147 kB
+Γö£ ΓùÅ /[locale]/worker/offers                    9.26 kB         152 kB
+Γö£   Γö£ /en/worker/offers
+Γö£   Γöö /ur/worker/offers
+Γö£ ΓùÅ /[locale]/worker/profile                   1.87 kB         148 kB
+Γö£   Γö£ /en/worker/profile
+Γö£   Γöö /ur/worker/profile
+Γö£ ΓùÅ /[locale]/worker/profile/edit               5.2 kB         157 kB
+Γö£   Γö£ /en/worker/profile/edit
+Γö£   Γöö /ur/worker/profile/edit
+Γö£ ╞Æ /api/admin/blocked-users                     232 B         103 kB
+Γö£ ╞Æ /api/admin/issues                            232 B         103 kB
+Γö£ ╞Æ /api/admin/stats                             232 B         103 kB
+Γö£ ╞Æ /api/ai/parse-job                            232 B         103 kB
+Γö£ ╞Æ /api/ai/wage-stats                           232 B         103 kB
+Γö£ ╞Æ /api/auth/[...nextauth]                      232 B         103 kB
+Γö£ ╞Æ /api/auth/forgot-password                    232 B         103 kB
+Γö£ ╞Æ /api/auth/otp/send                           232 B         103 kB
+Γö£ ╞Æ /api/auth/otp/verify                         232 B         103 kB
+Γö£ ╞Æ /api/auth/register                           232 B         103 kB
+Γö£ ╞Æ /api/auth/reset-password                     232 B         103 kB
+Γö£ ╞Æ /api/chat/messages                           232 B         103 kB
+Γö£ ╞Æ /api/chat/support                            232 B         103 kB
+Γö£ ╞Æ /api/cron/background-search                  232 B         103 kB
+Γö£ ╞Æ /api/employer/jobs                           232 B         103 kB
+Γö£ ╞Æ /api/employer/jobs/[id]                      232 B         103 kB
+Γö£ ╞Æ /api/employer/jobs/[id]/background-search    232 B         103 kB
+Γö£ ╞Æ /api/employer/jobs/[id]/boost                232 B         103 kB
+Γö£ ╞Æ /api/employer/jobs/[id]/cancel               232 B         103 kB
+Γö£ ╞Æ /api/employer/jobs/[id]/complete             232 B         103 kB
+Γö£ ╞Æ /api/employer/jobs/[id]/match                232 B         103 kB
+Γö£ ╞Æ /api/employer/jobs/[id]/offer                232 B         103 kB
+Γö£ ╞Æ /api/employer/jobs/[id]/payment              232 B         103 kB
+Γö£ ╞Æ /api/employer/profile                        232 B         103 kB
+Γö£ ╞Æ /api/employer/wallet                         232 B         103 kB
+Γö£ ╞Æ /api/employer/workers                        232 B         103 kB
+Γö£ ╞Æ /api/employer/workers/[workerId]             232 B         103 kB
+Γö£ ╞Æ /api/feedback                                232 B         103 kB
+Γö£ ╞Æ /api/issues                                  232 B         103 kB
+Γö£ ╞Æ /api/me                                      232 B         103 kB
+Γö£ ╞Æ /api/notifications                           232 B         103 kB
+Γö£ ╞Æ /api/user/avatar                             232 B         103 kB
+Γö£ ╞Æ /api/worker/jobs                             232 B         103 kB
+Γö£ ╞Æ /api/worker/my-jobs                          232 B         103 kB
+Γö£ ╞Æ /api/worker/my-jobs/[jobId]                  232 B         103 kB
+Γö£ ╞Æ /api/worker/offers                           232 B         103 kB
+Γö£ ╞Æ /api/worker/offers/[id]                      232 B         103 kB
+Γö£ ╞Æ /api/worker/portfolio                        232 B         103 kB
+Γö£ ╞Æ /api/worker/profile                          232 B         103 kB
+Γö£ ╞Æ /api/worker/profiles                         232 B         103 kB
+Γöö Γùï /icon.svg                                      0 B            0 B
++ First Load JS shared by all                   103 kB
+  Γö£ chunks/1255-fc6c00ab2f765339.js            46.4 kB
+  Γö£ chunks/4bd1b696-f785427dddbba9fb.js        54.2 kB
+  Γöö other shared chunks (total)                   2 kB
+
+
+╞Æ Middleware                                     99 kB
+
+Γùï  (Static)   prerendered as static content
+ΓùÅ  (SSG)      prerendered as static HTML (uses generateStaticParams)
+╞Æ  (Dynamic)  server-rendered on demand
+
