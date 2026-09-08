@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "@/i18n/navigation";
+import { useRouter, Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import Navbar from "@/components/layout/Navbar";
 import { WorkerBottomNav } from "@/components/layout/WorkerBottomNav";
@@ -215,7 +215,12 @@ export default function WorkerProfileEditPage() {
           <div role="status" className="mb-4 rounded-xl border border-success/30 bg-successsoft p-4 text-sm text-success">{t("profileSaved")}</div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+                {/* ROZ-WIRE:media-link */}
+        <Link href="/worker/media" className="mb-4 flex items-center justify-between rounded-2xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm font-semibold text-primary transition hover:bg-primary/10">
+          <span>📸 Add photos — avatar &amp; work gallery</span>
+          <span aria-hidden="true">→</span>
+        </Link>
+<form onSubmit={handleSubmit} className="space-y-6">
           {/* â”€â”€ 1: Worker Type â”€â”€ */}
           <section className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
             <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-ink">
