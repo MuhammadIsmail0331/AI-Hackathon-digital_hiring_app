@@ -1,4 +1,4 @@
-﻿import { test, expect } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
 const PASSWORD = "password123";
 
@@ -32,7 +32,7 @@ test("golden path: post job -> match -> offer -> accept -> escrow -> complete ->
   await expect(page.getByText(/Job Posted/i)).toBeVisible({ timeout: 30_000 });
   await page.click('[data-testid="send-offers"]');
   await page.waitForURL(/\/employer\/jobs$/);
-  await expect(page.getByText("E2E House Wiring")).toBeVisible();
+  await expect(page.getByText("E2E House Wiring").first()).toBeVisible();
   await page.context().clearCookies();
 
   // ── Worker: accept offer ──

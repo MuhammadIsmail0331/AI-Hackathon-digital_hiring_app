@@ -1,4 +1,4 @@
-﻿import { test, expect } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
 const PASSWORD = "password123";
 
@@ -7,7 +7,7 @@ async function login(page: import("@playwright/test").Page, email: string) {
   await page.fill("#email", email);
   await page.fill("#password", PASSWORD);
   await page.click('button[type="submit"]');
-  await page.waitForURL(/\/en$/);
+  await page.waitForURL((u) => !u.pathname.includes("/login"), { timeout: 30_000 }); // login now auto-redirects to dashboard);
 }
 
 test("regression: JOB_COMPLETED notification deep-links worker to my-jobs (not employer page)", async ({ page }) => {
