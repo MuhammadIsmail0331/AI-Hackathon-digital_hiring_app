@@ -94,7 +94,6 @@ export default async function LocaleLayout({ children, params }: Props) {
               <div className="mb-1.5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs font-semibold">
                 <a href="./help" className="text-primary hover:underline">Help · مدد</a>
                 <a href="./chat" className="text-primary hover:underline">Chat & Support · چیٹ</a>
-                <a href="./map" className="text-primary hover:underline">Map · نقشہ</a>
                 <a href="./worker/media" className="text-primary hover:underline">My Photos · تصاویر</a>
               </div>
               <p className="text-xs text-muted">

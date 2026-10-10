@@ -1294,5 +1294,34 @@
   "bio": "Bio",
   "bioPlaceholder": "Bio Placeholder",
   "bioHint": "Bio Hint",
-  "saveProfile": "Save Profile"
+  "saveProfile": "Save Profile",
+  "ChatPage": {
+    "title": "Chat & Support",
+    "subtitle": "Message people you work with, or ask our AI assistant",
+    "tabPeople": "People",
+    "tabAI": "AI Assistant",
+    "chatError": "Could not load messages. Please try again.",
+    "backToList": "All chats",
+    "noMessagesYet": "No messages yet — say hello!",
+    "typeMessage": "Type a message…",
+    "send": "Send",
+    "noChats": "No conversations yet",
+    "noChatsDesc": "When an offer is accepted, you can chat with each other here.",
+    "aiHello": "Hello! I am the Rozgaar assistant. Ask me anything about OTP codes, payments, or finding work.",
+    "aiPlaceholder": "Ask a question…",
+    "thinking": "Thinking…"
+  },
+  "MediaPage": {
+    "title": "My Photos",
+    "subtitle": "Your profile photo and past-work photos",
+    "loadError": "Something went wrong. Please try again.",
+    "saved": "Saved!",
+    "saving": "Saving…",
+    "save": "Save",
+    "avatar": "Profile photo",
+    "avatarHint": "Shown on your profile to employers",
+    "portfolio": "Work photos",
+    "portfolioHint": "Show employers your best past work (up to 6 per profession)",
+    "noProfiles": "Add a profession in your profile first, then upload its work photos here."
+  }
 }
