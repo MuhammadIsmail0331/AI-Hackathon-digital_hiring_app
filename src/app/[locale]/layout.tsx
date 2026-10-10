@@ -92,9 +92,9 @@ export default async function LocaleLayout({ children, params }: Props) {
             <BrandAccent height="sm" />
             <div className="bg-surface py-3 pb-20 text-center sm:pb-3">
               <div className="mb-1.5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs font-semibold">
-                <a href="./help" className="text-primary hover:underline">Help · مدد</a>
-                <a href="./chat" className="text-primary hover:underline">Chat & Support · چیٹ</a>
-                <a href="./worker/media" className="text-primary hover:underline">My Photos · تصاویر</a>
+                <a href={`/${locale}/help`} className="text-primary hover:underline">Help · مدد</a>
+                <a href={`/${locale}/chat`} className="text-primary hover:underline">Chat & Support · چیٹ</a>
+                <a href={`/${locale}/worker/media`} className="text-primary hover:underline">My Photos · تصاویر</a>
               </div>
               <p className="text-xs text-muted">
                 Developed and Tested by Students of <span className="font-semibold text-ink">NUST</span> <span className="text-muted">(Nasir Ud Din &amp; Sh. M. Ismail)</span>
