@@ -17,7 +17,15 @@ function parseProfile(p: {
   bio: string | null;
   avgRating: number;
   totalJobs: number;
+  portfolioJson: string | null;
 }) {
+  let images: string[] = [];
+  try {
+    const v = p.portfolioJson ? JSON.parse(p.portfolioJson) : [];
+    if (Array.isArray(v)) images = v.filter((x) => typeof x === "string").slice(0, 6);
+  } catch {
+    images = [];
+  }
   return {
     workerType: p.workerType,
     skills: JSON.parse(p.skills || "[]"),
@@ -29,6 +37,7 @@ function parseProfile(p: {
     bio: p.bio,
     avgRating: p.avgRating,
     totalJobs: p.totalJobs,
+    images,
   };
 }
 
@@ -55,6 +64,7 @@ export async function GET(
       select: {
         id: true,
         name: true,
+        avatarUrl: true,
         createdAt: true,
         workerProfiles: {
           orderBy: { createdAt: "asc" as const },
@@ -71,6 +81,7 @@ export async function GET(
         worker: {
           id: worker.id,
           name: worker.name,
+          avatarUrl: worker.avatarUrl,
           memberSince: worker.createdAt,
           profiles: worker.workerProfiles.map((p) =>
             parseProfile({
@@ -84,6 +95,7 @@ export async function GET(
               bio: p.bio,
               avgRating: p.avgRating,
               totalJobs: p.totalJobs,
+              portfolioJson: p.portfolioJson,
             })
           ),
         },

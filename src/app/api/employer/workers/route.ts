@@ -29,7 +29,7 @@ export async function GET(request: Request) {
         ...(q ? { user: { name: { contains: q } } } : {}),
       },
       include: {
-        user: { select: { id: true, name: true, isBlocked: true } },
+        user: { select: { id: true, name: true, isBlocked: true, avatarUrl: true } },
       },
       orderBy: [{ avgRating: "desc" }, { totalJobs: "desc" }],
       take: 40,
@@ -40,6 +40,7 @@ export async function GET(request: Request) {
       .map((p) => ({
         userId: p.user.id,
         name: p.user.name,
+        avatarUrl: p.user.avatarUrl,
         workerType: p.workerType,
         skills: JSON.parse(p.skills || "[]"),
         experience: p.experience,

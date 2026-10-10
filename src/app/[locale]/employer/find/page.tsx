@@ -12,6 +12,7 @@ import { toast } from "sonner";
 interface WorkerCard {
   userId: string;
   name: string;
+  avatarUrl: string | null;
   workerType: string;
   skills: string[];
   experience: number;
@@ -26,6 +27,7 @@ interface DetailData {
   worker: {
     id: string;
     name: string;
+    avatarUrl: string | null;
     memberSince: string;
     profiles: Array<{
       workerType: string;
@@ -38,6 +40,7 @@ interface DetailData {
       bio: string | null;
       avgRating: number;
       totalJobs: number;
+      images: string[];
     }>;
   };
 }
@@ -197,7 +200,16 @@ export default function FindProfessionalsPage() {
           <div className="space-y-4">
             {workers.map((w) => (
               <div key={w.userId} onClick={() => openDetail(w.userId)} className="flex cursor-pointer items-start gap-4 rounded-2xl border border-line bg-surface p-5 shadow-sm transition hover:shadow-md">
-                <WorkerCharacter type={(w.workerType as never) || "generic"} className="w-16 shrink-0" />
+                {w.avatarUrl ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={w.avatarUrl}
+                    alt={w.name}
+                    className="h-16 w-16 shrink-0 rounded-2xl border border-line object-cover"
+                  />
+                ) : (
+                  <WorkerCharacter type={(w.workerType as never) || "generic"} className="w-16 shrink-0" />
+                )}
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
                     <h3 className="truncate text-base font-bold text-ink">{w.name}</h3>
@@ -275,10 +287,19 @@ export default function FindProfessionalsPage() {
               <>
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <WorkerCharacter
-                      type={(detail.worker.profiles[0]?.workerType as never) || "generic"}
-                      className="w-14 shrink-0"
-                    />
+                    {detail.worker.avatarUrl ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={detail.worker.avatarUrl}
+                        alt={detail.worker.name}
+                        className="h-14 w-14 shrink-0 rounded-2xl border border-line object-cover"
+                      />
+                    ) : (
+                      <WorkerCharacter
+                        type={(detail.worker.profiles[0]?.workerType as never) || "generic"}
+                        className="w-14 shrink-0"
+                      />
+                    )}
                     <div>
                       <h3 className="text-xl font-bold text-ink">{detail.worker.name}</h3>
                       <p className="text-xs text-muted">
@@ -323,6 +344,24 @@ export default function FindProfessionalsPage() {
                         ))}
                       </div>
                       {p.bio && <p className="mt-2 text-xs leading-relaxed text-muted">{p.bio}</p>}
+                      {p.images.length > 0 && (
+                        <div className="mt-3">
+                          <p className="mb-1.5 text-[11px] font-semibold text-muted">
+                            {isUr ? "کام کی تصاویر" : "Past work photos"}
+                          </p>
+                          <div className="grid grid-cols-3 gap-1.5">
+                            {p.images.slice(0, 6).map((img, k) => (
+                              /* eslint-disable-next-line @next/next/no-img-element */
+                              <img
+                                key={k}
+                                src={img}
+                                alt={`${p.workerType} work ${k + 1}`}
+                                className="h-20 w-full rounded-xl border border-line object-cover"
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      )}
                       {p.isAvailable && (
                         <p className="mt-2 text-xs font-semibold text-success">
                           ✓ {isUr ? "دستیاب" : "Available now"}
