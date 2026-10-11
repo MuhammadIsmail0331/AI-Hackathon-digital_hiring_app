@@ -115,7 +115,7 @@ export function CategorySelector({
   const t = useTranslations("Categories");
 
   return (
-    <div className="space-y-3">
+    <div id="category-selector" className="space-y-3">
       <label className="block text-sm font-medium text-ink">
         {t("title")}
       </label>

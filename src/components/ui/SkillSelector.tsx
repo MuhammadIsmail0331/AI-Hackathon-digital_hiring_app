@@ -52,7 +52,7 @@ export function SkillSelector({ category, value, onChange, label }: SkillSelecto
   const customSelected = value.filter((id) => !skills.some((s) => s.id === id));
 
   return (
-    <div className="space-y-3">
+    <div id="skill-selector" className="space-y-3">
       <div
         role="group"
         aria-label={label}

@@ -137,19 +137,28 @@ export default function WorkerProfileEditPage() {
     if (level) setExperience(level.years);
   }
 
+  /** Scroll + focus the exact field that is wrong (low-literacy friendly). */
+  function focusField(sel: string) {
+    const el = document.querySelector(sel) as HTMLElement | null;
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    const target = el.matches("input, textarea, select") ? el : el.querySelector("input, textarea, select, button");
+    (target as HTMLElement | null)?.focus({ preventScroll: true });
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     setSuccess(false);
 
-    if (!workerType) { setError(t("workerType")); return; }
-    if (workerType === "other" && customWorkerType.trim().length < 2) { setError(t("specifyType")); return; }
-    if (skills.length === 0) { setError(t("selectSkills")); return; }
-    if (!locationName) { setError(t("selectCity")); return; }
-    if (locationName === "other_city" && customCity.trim().length < 2) { setError(t("specifyCity")); return; }
-    if (availableDays.length === 0) { setError(t("availability")); return; }
+    if (!workerType) { setError(t("workerType")); focusField("#category-selector"); return; }
+    if (workerType === "other" && customWorkerType.trim().length < 2) { setError(t("specifyType")); focusField("#category-selector"); return; }
+    if (skills.length === 0) { setError(t("selectSkills")); focusField("#skill-selector"); return; }
+    if (!locationName) { setError(t("selectCity")); focusField("#city-selector"); return; }
+    if (locationName === "other_city" && customCity.trim().length < 2) { setError(t("specifyCity")); focusField("#city-selector"); return; }
+    if (availableDays.length === 0) { setError(t("availability")); focusField("#days-selector"); return; }
     const wage = parseInt(expectedWage, 10);
-    if (!wage || wage < 100) { setError(t("wageHint")); return; }
+    if (!wage || wage < 100) { setError(t("wageHint")); focusField("#wage-input"); return; }
 
     setSaving(true);
     try {
@@ -348,7 +357,7 @@ export default function WorkerProfileEditPage() {
                 <div className={cn("absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition-all", isAvailable ? "start-5" : "start-0.5")} />
               </div>
             </button>
-            <DayPicker value={availableDays} onChange={(days) => setAvailableDays(days as DayId[])} />
+            <div id="days-selector"><DayPicker value={availableDays} onChange={(days) => setAvailableDays(days as DayId[])} /></div>
           </section>
 
           {/* â”€â”€ 6: Expected Wage â”€â”€ */}
@@ -358,7 +367,7 @@ export default function WorkerProfileEditPage() {
               {t("expectedWage")}<span className="text-xs text-red-500">*</span>
             </h2>
             <div className="flex items-center gap-3">
-              <input type="number" value={expectedWage} onChange={(e) => setExpectedWage(e.target.value)}
+              <input type="number" value={expectedWage} onChange={(e) => setExpectedWage(e.target.value)} id="wage-input"
                 placeholder={t("wagePlaceholder")} min={100} max={100000}
                 className="w-full rounded-xl border border-line px-4 py-3 text-lg font-semibold outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200" />
               <div className="flex h-12 shrink-0 items-center rounded-xl bg-blue-100 px-4 text-sm font-bold text-primary">

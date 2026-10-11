@@ -25,7 +25,7 @@ export function CitySelector({
   const t = useTranslations("Cities");
 
   return (
-    <div className="space-y-3">
+    <div id="city-selector" className="space-y-3">
       <div
         role="group"
         aria-label={label}

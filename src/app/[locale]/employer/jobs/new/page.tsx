@@ -156,24 +156,57 @@ export default function CreateJobPage() {
     );
   }
 
+  /** Scroll + focus the exact field that is wrong (low-literacy friendly). */
+  function focusField(sel: string) {
+    const el = document.querySelector(sel) as HTMLElement | null;
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    const target = el.matches("input, textarea, select") ? el : el.querySelector("input, textarea, select");
+    (target as HTMLElement | null)?.focus({ preventScroll: true });
+  }
+
   async function handleSubmit() {
     setError("");
 
-    if (!title.trim() || !workerType || skills.length === 0 || !date || !locationName) {
+    if (!title.trim()) {
       setError(t("fillRequired"));
+      focusField('[data-testid="job-title"]');
+      return;
+    }
+    if (!workerType) {
+      setError(t("fillRequired"));
+      focusField("#category-selector");
       return;
     }
     if (workerType === "other" && customWorkerType.trim().length < 2) {
       setError(t("specifyType"));
+      focusField("#category-selector");
+      return;
+    }
+    if (skills.length === 0) {
+      setError(t("fillRequired"));
+      focusField("#skill-selector");
+      return;
+    }
+    if (!date) {
+      setError(t("fillRequired"));
+      focusField('input[type="date"]');
+      return;
+    }
+    if (!locationName) {
+      setError(t("fillRequired"));
+      focusField("#city-selector");
       return;
     }
     if (locationName === "other_city" && customCity.trim().length < 2) {
       setError(t("specifyCity"));
+      focusField("#city-selector");
       return;
     }
     const wageNum = Number(wage);
     if (!wageNum || wageNum < 100 || wageNum > 100000) {
       setError(t("wageInvalid"));
+      focusField('input[placeholder="2000"]');
       return;
     }
 
